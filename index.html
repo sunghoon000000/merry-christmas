@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>우리들의 크리스마스</title>
-<meta name="description" content="내 트리를 만들어 공유하면 친구들이 편지를 달아 줘요. 편지는 크리스마스에 열려요.">
+<title>설야 — 편지로 짓는 겨울 마을</title>
+<meta name="description" content="내 마을 링크를 보내면 친구들이 편지를 담은 집을 하나씩 지어 줘요. 편지는 크리스마스에 열려요.">
 <meta name="theme-color" content="#07201a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="우리들의 크리스마스">
-<meta property="og:description" content="내 트리에 편지를 달아 줘! 편지는 크리스마스에 열려요">
+<meta property="og:title" content="설야 — 편지로 짓는 겨울 마을">
+<meta property="og:description" content="내 마을에 집을 하나 지어 줘! 편지는 크리스마스에 열려요">
 <meta property="og:image" content="https://sunghoon000000.github.io/merry-christmas/og.jpg">
 <meta property="og:url" content="https://sunghoon000000.github.io/merry-christmas/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f3b2e'/%3E%3Cpath d='M50 14 L80 78 L20 78 Z' fill='%231f6b4a'/%3E%3Ccircle cx='50' cy='16' r='8' fill='%23e2c98f'/%3E%3Ccircle cx='42' cy='52' r='6' fill='%23b3261e'/%3E%3Ccircle cx='60' cy='66' r='6' fill='%23fbf6ea'/%3E%3C/svg%3E">
@@ -75,16 +75,17 @@
   .hero-cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
   .hero-cta .linkish{color:var(--paper)}
   .clock{margin-top:24px;font-size:14px;color:rgba(251,246,234,.62);font-variant-numeric:tabular-nums}
-  .hero-tree{position:relative;width:100%;max-width:440px;margin:0 auto}
+  .hero-tree{position:relative;width:100%;max-width:540px;margin:0 auto}
   .hero-tree .tree,#treeSvg{display:block;width:100%;height:auto;overflow:visible}
-  .postmark{position:absolute;right:0;top:5%;width:34%;min-width:120px;max-width:160px;color:var(--brass-soft);transform:rotate(-12deg);animation:stamp .55s .5s cubic-bezier(.2,1.3,.4,1) both}
+  .postmark{position:absolute;right:0;top:0;width:34%;min-width:120px;max-width:160px;color:var(--brass-soft);transform:rotate(-12deg);animation:stamp .55s .5s cubic-bezier(.2,1.3,.4,1) both}
   .postmark text{fill:currentColor;font-family:var(--display)}
   .postmark circle,.postmark path{fill:none;stroke:currentColor}
   @keyframes stamp{from{opacity:0;transform:rotate(-26deg) scale(1.7)}to{opacity:1;transform:rotate(-12deg) scale(1)}}
   @media(min-width:900px){
     .hero-grid{grid-template-columns:1.1fr .9fr;align-items:end;padding-top:64px;gap:32px}
     .hero-copy{padding-bottom:110px}
-    .postmark{right:-6%}
+    .postmark{right:-6%;top:-8%}
+    .hero-tree .tree{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
   }
 
   /* ---------- nav ---------- */
@@ -106,7 +107,7 @@
   .step b{font-family:var(--display);font-weight:700;font-size:34px;line-height:1.1;color:var(--red)}
   .step h3{font-size:17px;font-weight:600}
   .step p{font-size:15px;color:var(--muted)}
-  @media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr);gap:28px}.step{grid-template-columns:1fr;border-top:2px solid var(--ink);padding-top:16px}}
+  @media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr);gap:24px}.step{grid-template-columns:1fr;border-top:2px solid var(--ink);padding-top:16px}}
   .mytrees{margin-top:20px;display:flex;flex-direction:column;gap:8px}
   .mytree{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink)}
   .mytree b{font-family:var(--display)}
@@ -153,21 +154,6 @@
   .door.locked .door-face{filter:saturate(.72)}
   .door.locked .door-inner{visibility:hidden}
 
-  /* ---------- christmas card ---------- */
-  .letter-grid{display:grid;gap:24px}
-  @media(min-width:760px){.letter-grid{grid-template-columns:1fr 1fr;align-items:start;gap:36px}}
-  .colors{display:flex;gap:12px}
-  .cbtn{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--rule)}
-  .cbtn[aria-pressed="true"]{box-shadow:0 0 0 3px var(--snow),0 0 0 5px var(--ink)}
-  .xcard{border-radius:4px;padding:38px 30px 30px;min-height:320px;display:flex;flex-direction:column;position:relative;box-shadow:0 14px 34px rgba(22,36,31,.16)}
-  .xcard.t-red{background:var(--red);color:var(--paper)}
-  .xcard.t-pine{background:var(--spruce);color:var(--paper)}
-  .xcard.t-snow{background:var(--paper);color:var(--ink)}
-  .xcard .stitch{position:absolute;inset:12px;border:1px solid currentColor;opacity:.4;border-radius:2px;pointer-events:none}
-  .xcard .to{font-family:var(--display);font-weight:700;font-size:19px;margin-bottom:14px}
-  .xcard .msg{font-family:var(--hand);font-size:27px;line-height:1.5;white-space:pre-wrap;flex:1}
-  .xcard .from{text-align:right;margin-top:18px;font-family:var(--hand);font-size:24px}
-
   footer{margin-top:88px;background:var(--spruce-deep);color:rgba(251,246,234,.7)}
   footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:26px;padding-bottom:34px;font-size:13.5px}
   footer b{font-family:var(--display);color:var(--paper)}
@@ -183,7 +169,7 @@
   .lockline{display:inline-block;margin-top:12px;font-size:13px;font-weight:500;color:var(--brass-soft);box-shadow:inset 0 0 0 1px rgba(226,201,143,.45);padding:5px 14px;border-radius:999px}
   .demo-banner{position:relative;z-index:3;display:inline-block;margin-top:10px;font-size:12px;font-weight:500;background:var(--brass-soft);color:var(--ink);padding:3px 12px;border-radius:999px}
   .scene{position:relative;z-index:1;flex:1;display:flex;align-items:flex-end;justify-content:center;padding:0 6px}
-  #treeSvg{max-width:470px;user-select:none;-webkit-user-select:none}
+  #treeSvg{max-width:600px;user-select:none;-webkit-user-select:none}
   .pager{position:absolute;z-index:3;left:0;right:0;bottom:24%;display:flex;justify-content:space-between;padding:0 8px;pointer-events:none}
   .pager button{pointer-events:auto;width:44px;height:44px;border-radius:50%;background:rgba(7,32,26,.6);box-shadow:inset 0 0 0 1px var(--rule-light);color:var(--paper);font-size:22px;line-height:1}
   .pager button:disabled{opacity:0;pointer-events:none}
@@ -194,6 +180,33 @@
   .tp-bar .sub{text-align:center}
   .tp-state{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:16px}
   .tp-state h1{font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:-.02em}
+  .lvl{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:8px;font-size:14px;color:rgba(251,246,234,.85)}
+  .lvl-badge{font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink);background:var(--brass-soft);padding:2px 10px;border-radius:999px}
+  .lvbar{width:min(240px,64vw);height:5px;margin:10px auto 0;border-radius:999px;background:rgba(251,246,234,.16);overflow:hidden}
+  .lvbar i{display:block;height:100%;width:0;background:var(--brass-soft);border-radius:999px;transition:width .8s ease}
+  .streak{display:inline-block;margin-top:8px;font-size:13px;color:var(--brass-soft)}
+  .win{fill:#9c7a45}
+  .glow .win{fill:#ffd98a}
+  .open .win{fill:#ffe1a0;animation:winOn .9s var(--d,0s) both}
+  @keyframes winOn{0%{fill:#2a1f14}60%{fill:#fff2c9}100%{fill:#ffe1a0}}
+  .lampglow{opacity:.35}.glow .lampglow,.open .lampglow{opacity:.75}
+  .smoke{display:none;transform-box:fill-box;transform-origin:bottom;animation:smoke 3.2s ease-in-out infinite}
+  .smoky .smoke{display:inline}
+  @keyframes smoke{0%{opacity:0;transform:translateY(3px) scaleY(.6)}35%{opacity:.85}100%{opacity:0;transform:translateY(-8px) scaleY(1.1)}}
+  .aurora{animation:aur 9s ease-in-out infinite alternate}
+  @keyframes aur{from{opacity:.35;transform:translateX(-8px)}to{opacity:.75;transform:translateX(8px)}}
+  .shoot{animation:shoot 7s ease-in 2s infinite;opacity:0}
+  @keyframes shoot{0%{opacity:0;transform:translate(0,0)}4%{opacity:1}12%{opacity:0;transform:translate(-120px,60px)}100%{opacity:0;transform:translate(-120px,60px)}}
+  .sleigh{animation:sleigh 18s linear infinite}
+  @keyframes sleigh{from{transform:translate(-140px,0)}to{transform:translate(560px,-40px)}}
+  .lantern{transform-box:fill-box;animation:float 6s ease-in-out infinite alternate}
+  @keyframes float{from{transform:translateY(4px)}to{transform:translateY(-6px)}}
+  .yearcard{background:var(--spruce);color:var(--paper);border-radius:10px;padding:22px 18px 6px;margin:-4px 0 4px}
+  .yc-kicker{font-size:13px;color:var(--brass-soft)}
+  .yearcard h3{color:var(--paper);margin:2px 0 6px}
+  .yearcard svg{display:block;width:100%;height:auto;border-radius:6px;background:linear-gradient(180deg,var(--night),var(--spruce))}
+  .yearcard .lucky{border-top:1px solid var(--rule-light);margin-top:12px}
+  .yearcard .lucky small{color:rgba(251,246,234,.65)}
   .orn-g{cursor:pointer}
   .orn-g .orn{transform-box:fill-box;transform-origin:center;transition:transform .15s ease}
   .orn-g.new .orn{animation:pop .5s cubic-bezier(.3,1.6,.6,1)}
@@ -259,6 +272,7 @@
     <radialGradient id="gBlue" cx="35%" cy="30%"><stop offset="0" stop-color="#d4f0fa"/><stop offset=".45" stop-color="#3d8fd1"/><stop offset="1" stop-color="#16406b"/></radialGradient>
     <radialGradient id="gGlow"><stop offset="0" stop-color="#ffe2a0" stop-opacity=".2"/><stop offset="1" stop-color="#ffe2a0" stop-opacity="0"/></radialGradient>
     <linearGradient id="gShade" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".13"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".52" stop-color="#000" stop-opacity=".07"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>
+    <linearGradient id="gAur" x1="0" x2="1"><stop offset="0" stop-color="#5fe3b0" stop-opacity="0"/><stop offset=".3" stop-color="#5fe3b0" stop-opacity=".55"/><stop offset=".7" stop-color="#7ab8ff" stop-opacity=".45"/><stop offset="1" stop-color="#b38cff" stop-opacity="0"/></linearGradient>
     <g id="tierClips"></g>
   </defs>
 </svg>
@@ -268,7 +282,7 @@
   <header class="hero" id="hero">
     <canvas class="snowfx" id="snow1" aria-hidden="true"></canvas>
     <div class="hero-top">
-      <span class="wordmark">우리들의 크리스마스</span>
+      <span class="wordmark">설야</span>
       <div class="row" style="gap:6px">
         <button class="chip" id="musicBtn" aria-pressed="false">♪ 징글벨</button>
         <button class="chip snowBtn" aria-pressed="true">눈 내리기</button>
@@ -276,21 +290,21 @@
     </div>
     <div class="hero-grid">
       <div class="hero-copy">
-        <h1>트리에 걸어 둔 편지,<br>크리스마스에 열어요</h1>
-        <p class="hero-sub">내 트리를 만들어 링크를 보내면 친구들이 장식과 편지를 달아 줘요. 편지는 나만 읽을 수 있어요.</p>
+        <h1>편지로 짓는<br>겨울 마을</h1>
+        <p class="hero-sub">내 마을 링크를 보내면 친구들이 편지를 담은 집을 하나씩 지어 줘요. 편지가 쌓일수록 마을이 자라고, 크리스마스에 창문마다 불이 켜지면 나만 열어 볼 수 있어요.</p>
         <div class="hero-cta">
-          <button class="btn red big" id="createBtn">내 트리 만들기</button>
+          <button class="btn red big" id="createBtn">내 마을 만들기</button>
           <a class="linkish" href="#how">어떻게 하는 거예요?</a>
         </div>
         <p class="clock" id="clock">&nbsp;</p>
       </div>
       <div class="hero-tree">
-        <svg class="tree lit" viewBox="0 0 360 450" aria-hidden="true"><g id="hTree"></g><g id="hBulbs"></g><g id="hOrn"></g></svg>
+        <svg class="tree lit" id="heroSvg" viewBox="0 0 400 360" aria-hidden="true"></svg>
         <svg class="postmark" viewBox="0 0 200 200" role="img" aria-labelledby="nights lead">
           <defs><path id="pmArc" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"/></defs>
           <circle cx="100" cy="100" r="96" stroke-width="3"/>
           <circle cx="100" cy="100" r="60" stroke-width="1.5"/>
-          <text font-size="14.5" font-weight="500" letter-spacing="2.2"><textPath href="#pmArc" id="pmText">우리들의 크리스마스 ★ 12.25 개봉 ★</textPath></text>
+          <text font-size="14.5" font-weight="500" letter-spacing="2.2"><textPath href="#pmArc" id="pmText">설야 ★ 편지 개봉일 12.25 ★</textPath></text>
           <text x="100" y="80" text-anchor="middle" font-size="13" font-weight="500">크리스마스까지</text>
           <text x="100" y="124" text-anchor="middle" font-size="50" font-weight="700" id="nights">0</text>
           <text x="100" y="144" text-anchor="middle" font-size="13" font-weight="500" id="lead">밤</text>
@@ -301,24 +315,24 @@
 
   <nav class="nav" aria-label="섹션">
     <div class="wrap">
-      <a href="#how">트리 편지</a>
+      <a href="#how">마을 짓기</a>
       <a href="#fortune">크리스마스 운세</a>
       <a href="#advent-sec">어드벤트 캘린더</a>
-      <a href="#letter-sec">카드 쓰기</a>
     </div>
   </nav>
 
   <section class="blk" id="how">
     <div class="wrap">
-      <h2>트리에 편지 받기</h2>
-      <p class="desc">로그인 없이 만들 수 있어요. 친구들이 단 장식은 누구나 보지만, 편지는 트리 주인만 읽을 수 있어요.</p>
+      <h2>편지로 마을 짓기</h2>
+      <p class="desc">로그인 없이 만들 수 있어요. 누가 어떤 집을 지었는지는 모두 보이지만, 집 안의 편지는 마을 주인만 크리스마스에 열어 볼 수 있어요.</p>
       <div class="steps">
-        <div class="step"><b>1</b><div><h3>트리를 만들어요</h3><p>이름을 적고 트리 색을 고르면 끝이에요.</p></div></div>
-        <div class="step"><b>2</b><div><h3>링크를 보내요</h3><p>카톡이나 인스타에 올리면 친구들이 장식과 편지를 달아 줘요.</p></div></div>
-        <div class="step"><b>3</b><div><h3>크리스마스에 열어요</h3><p>12월 25일부터 편지를 읽을 수 있어요. 그 전엔 누가 달았는지만 보여요.</p></div></div>
+        <div class="step"><b>1</b><div><h3>마을을 만들어요</h3><p>이름을 적으면 언덕 위에 작은 트리 하나가 있는 마을이 생겨요.</p></div></div>
+        <div class="step"><b>2</b><div><h3>친구들이 집을 지어 줘요</h3><p>링크를 받은 친구가 오두막, 빵집, 눈사람 같은 것을 고르고 그 안에 편지를 넣어요.</p></div></div>
+        <div class="step"><b>3</b><div><h3>마을이 자라요</h3><p>편지가 쌓일수록 트리가 커지고 가로등, 얼음 연못, 오로라가 생겨요. 매일 불을 밝히면 보상도 있어요.</p></div></div>
+        <div class="step"><b>4</b><div><h3>크리스마스에 열어요</h3><p>12월 25일, 창문마다 불이 켜지면 편지를 열어 보고 올해의 마을 카드를 받아요.</p></div></div>
       </div>
       <div class="mytrees" id="myTrees"></div>
-      <div class="row" style="margin-top:22px"><button class="btn red" id="createBtn2">내 트리 만들기</button></div>
+      <div class="row" style="margin-top:22px"><button class="btn red" id="createBtn2">내 마을 만들기</button></div>
     </div>
   </section>
 
@@ -345,32 +359,10 @@
     </div>
   </section>
 
-  <section class="blk" id="letter-sec">
-    <div class="wrap">
-      <h2>카드 쓰기</h2>
-      <p class="desc">마음을 적고 색을 고른 뒤, 내용을 복사해서 메시지로 보내요.</p>
-      <div class="letter-grid">
-        <div>
-          <div class="field"><label for="cTo">받는 사람</label><input id="cTo" maxlength="30" placeholder="사랑하는 엄마에게"></div>
-          <div class="field"><label for="cMsg">메시지</label><textarea id="cMsg" rows="5" maxlength="400" placeholder="올 한 해도 고마웠어요. 따뜻한 크리스마스 보내세요!"></textarea></div>
-          <div class="field"><label for="cFrom">보내는 사람</label><input id="cFrom" maxlength="30" placeholder="막내가"></div>
-          <div class="field"><span class="lbl">카드 색</span>
-            <div class="colors">
-              <button class="cbtn" data-t="red" style="background:var(--red)" aria-label="빨강" aria-pressed="true"></button>
-              <button class="cbtn" data-t="pine" style="background:var(--spruce)" aria-label="초록" aria-pressed="false"></button>
-              <button class="cbtn" data-t="snow" style="background:var(--paper)" aria-label="흰색" aria-pressed="false"></button>
-            </div>
-          </div>
-          <div class="row"><button class="btn red" id="copyBtn">카드 내용 복사</button><button class="btn line" id="ideaBtn">문구 추천</button></div>
-        </div>
-        <div class="xcard t-red" id="xcard"><div class="stitch"></div><div class="to" id="pTo"></div><div class="msg" id="pMsg"></div><div class="from" id="pFrom"></div></div>
-      </div>
-    </div>
-  </section>
 
   <footer>
     <div class="airmail" aria-hidden="true"></div>
-    <div class="wrap"><b>우리들의 크리스마스</b><span>따뜻한 연말 보내세요</span></div>
+    <div class="wrap"><b>설야</b><span>눈 내리는 밤, 편지로 짓는 겨울 마을</span></div>
   </footer>
 </div>
 
@@ -384,26 +376,24 @@
       <button class="chip" id="lightsBtn" aria-pressed="true">전구</button>
     </div>
   </div>
-  <div id="tpLoading" class="tp-state"><p>트리를 불러오는 중이에요…</p></div>
+  <div id="tpLoading" class="tp-state"><p>마을을 불러오는 중이에요…</p></div>
   <div id="tpMissing" class="tp-state" hidden>
-    <h1>트리를 찾을 수 없어요</h1>
-    <p>링크가 잘못되었거나 지워진 트리예요.</p>
+    <h1>마을을 찾을 수 없어요</h1>
+    <p>링크가 잘못되었거나 지워진 마을이에요.</p>
     <a class="btn snow" href="#">처음으로 가기</a>
   </div>
   <div id="tpMain" hidden style="display:flex;flex-direction:column;flex:1">
     <div class="tp-head">
       <h1 id="tpTitle"></h1>
+      <div class="lvl"><span class="lvl-badge" id="lvBadge"></span><span id="lvName"></span></div>
+      <div class="lvbar" aria-hidden="true"><i id="lvFill"></i></div>
       <p id="tpCount"></p>
       <span class="lockline" id="tpLock" hidden></span>
     </div>
     <div style="text-align:center"><span class="demo-banner" id="demoBanner" hidden>미리보기 모드: 이 기기에만 저장돼요</span></div>
     <div class="scene">
-      <svg id="treeSvg" viewBox="0 0 360 450" role="img" aria-label="크리스마스 트리">
-        <g id="tTree"></g>
-        <g id="tBulbs"></g>
-        <g id="tOrn"></g>
-      </svg>
-      <div class="pager"><button id="prevPg" aria-label="이전 장식">‹</button><button id="nextPg" aria-label="다음 장식">›</button></div>
+      <svg id="treeSvg" viewBox="0 0 400 360" role="img" aria-label="겨울 마을"></svg>
+      <div class="pager"><button id="prevPg" aria-label="이전 집들">‹</button><button id="nextPg" aria-label="다음 집들">›</button></div>
       <div class="pageinfo" id="pageInfo"></div>
     </div>
     <div class="tp-bar" id="tpBar"></div>
@@ -413,43 +403,37 @@
 <!-- ================= SHEETS ================= -->
 <div class="sheet-bg" id="createSheet" role="dialog" aria-modal="true" aria-labelledby="csT">
   <form class="sheet" id="createForm">
-    <h3 id="csT">내 트리 만들기</h3>
-    <p class="lead">친구들이 볼 이름이에요. 트리 제목은 "○○의 트리"가 돼요.</p>
+    <h3 id="csT">내 마을 만들기</h3>
+    <p class="lead">친구들이 볼 이름이에요. 마을 이름은 "○○의 마을"이 돼요.</p>
     <div class="field"><label for="tName">이름</label><input id="tName" maxlength="10" required placeholder="예: 지민"></div>
-    <div class="field"><span class="lbl">트리 색</span><div class="styles" id="styleRow"></div></div>
-    <div class="field"><span class="lbl">편지 열기</span>
-      <div class="opts" id="openRow">
-        <button type="button" class="opt" data-v="xmas" aria-pressed="true"><span class="dot"></span><div><b>크리스마스에 열기</b><span>12월 25일 0시부터 읽을 수 있어요</span></div></button>
-        <button type="button" class="opt" data-v="now" aria-pressed="false"><span class="dot"></span><div><b>바로바로 읽기</b><span>편지가 달리면 바로 읽을 수 있어요</span></div></button>
-      </div>
-    </div>
-    <div class="row"><button class="btn red" type="submit" id="createSubmit" style="flex:1">트리 만들기</button><button class="btn line" type="button" data-close>취소</button></div>
+    <div class="field"><span class="lbl">마을 한가운데 트리 색</span><div class="styles" id="styleRow"></div></div>
+    <div class="row"><button class="btn red" type="submit" id="createSubmit" style="flex:1">마을 만들기</button><button class="btn line" type="button" data-close>취소</button></div>
   </form>
 </div>
 
 <div class="sheet-bg" id="doneSheet" role="dialog" aria-modal="true" aria-labelledby="dsT">
   <div class="sheet">
-    <h3 id="dsT">트리가 생겼어요!</h3>
-    <p class="lead">이 링크를 친구들에게 보내요.</p>
+    <h3 id="dsT">마을이 생겼어요!</h3>
+    <p class="lead">이 링크를 친구들에게 보내면 집을 지어 줄 수 있어요.</p>
     <div class="linkbox" id="dsLink"></div>
     <button class="btn red wide" id="dsShare">링크 공유하기</button>
     <div style="margin-top:22px">
       <b style="font-size:15px">관리 코드</b>
-      <p class="note">다른 휴대폰이나 브라우저에서 내 트리를 열 때 필요해요. 캡처해 두세요.</p>
+      <p class="note">다른 휴대폰이나 브라우저에서 내 마을을 열 때 필요해요. 캡처해 두세요.</p>
       <div class="codebox" id="dsCode"></div>
     </div>
-    <div class="row" style="margin-top:14px"><button class="btn line wide" data-close>내 트리 보러 가기</button></div>
+    <div class="row" style="margin-top:14px"><button class="btn line wide" data-close>내 마을 보러 가기</button></div>
   </div>
 </div>
 
 <div class="sheet-bg" id="writeSheet" role="dialog" aria-modal="true" aria-labelledby="wsT">
   <form class="sheet" id="writeForm">
-    <h3 id="wsT">편지 달기</h3>
+    <h3 id="wsT">집 지어 주기</h3>
     <p class="lead" id="wsLead"></p>
-    <div class="field"><span class="lbl">장식 고르기</span><div class="picks" id="picks"></div></div>
-    <div class="field"><label for="wNick">보내는 사람</label><input id="wNick" maxlength="10" required placeholder="장식 아래에 보일 이름"></div>
-    <div class="field"><label for="wText">편지</label><textarea class="paper" id="wText" maxlength="500" required placeholder="하고 싶은 말을 적어 주세요"></textarea><div class="counter" id="wCount">0 / 500</div></div>
-    <div class="row"><button class="btn red" type="submit" id="writeSubmit" style="flex:1">트리에 달기</button><button class="btn line" type="button" data-close>취소</button></div>
+    <div class="field"><span class="lbl">지을 것 고르기</span><div class="picks" id="picks"></div></div>
+    <div class="field"><label for="wNick">보내는 사람</label><input id="wNick" maxlength="10" required placeholder="집 아래에 보일 이름"></div>
+    <div class="field"><label for="wText">집 안에 넣을 편지</label><textarea class="paper" id="wText" maxlength="500" required placeholder="하고 싶은 말을 적어 주세요"></textarea><div class="counter" id="wCount">0 / 500</div></div>
+    <div class="row"><button class="btn red" type="submit" id="writeSubmit" style="flex:1">집 짓기</button><button class="btn line" type="button" data-close>취소</button></div>
   </form>
 </div>
 
@@ -459,7 +443,7 @@
     <h3 id="rsT" style="text-align:center"></h3>
     <p class="lead" id="rsLead" style="text-align:center"></p>
     <div id="rsBody"></div>
-    <div class="row" style="justify-content:center"><button class="btn" data-close>닫기</button><button class="btn line" id="rsDelete" hidden>장식 떼기</button></div>
+    <div class="row" style="justify-content:center"><button class="btn" data-close>닫기</button><button class="btn line" id="rsDelete" hidden>집 치우기</button></div>
   </div>
 </div>
 
@@ -472,11 +456,23 @@
   </div>
 </div>
 
+<div class="sheet-bg" id="yearSheet" role="dialog" aria-modal="true" aria-labelledby="ycT">
+  <div class="sheet">
+    <div class="yearcard">
+      <p class="yc-kicker" id="ycKicker"></p>
+      <h3 id="ycT"></h3>
+      <svg id="ycSvg" viewBox="0 0 400 360" aria-hidden="true"></svg>
+      <div class="lucky" id="ycStats"></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn red" id="ycCopy" style="flex:1">결과 복사</button><button class="btn line" data-close>닫기</button></div>
+  </div>
+</div>
+
 <div class="sheet-bg" id="ownerSheet" role="dialog" aria-modal="true" aria-labelledby="osT">
   <div class="sheet">
-    <h3 id="osT">트리 관리</h3>
+    <h3 id="osT">마을 관리</h3>
     <div id="osHasCode">
-      <p class="lead">다른 기기에서 이 트리의 주인이 되려면 이 코드를 입력하면 돼요.</p>
+      <p class="lead">다른 기기에서 이 마을의 주인이 되려면 이 코드를 입력하면 돼요.</p>
       <div class="codebox" id="osCode"></div>
       <button class="btn line wide" id="osCopy" style="margin-bottom:10px">코드 복사</button>
     </div>
@@ -487,8 +483,8 @@
 
 <div class="sheet-bg" id="claimSheet" role="dialog" aria-modal="true" aria-labelledby="clT">
   <form class="sheet" id="claimForm">
-    <h3 id="clT">내 트리 불러오기</h3>
-    <p class="lead">트리를 만들 때 받은 관리 코드를 넣으면, 이 기기에서도 주인으로 편지를 읽을 수 있어요.</p>
+    <h3 id="clT">내 마을 불러오기</h3>
+    <p class="lead">마을을 만들 때 받은 관리 코드를 넣으면, 이 기기에서도 주인으로 편지를 읽을 수 있어요.</p>
     <div class="field"><label for="clCode">관리 코드</label><input id="clCode" maxlength="14" required placeholder="ABCD-EFGH-JKLM" autocapitalize="characters" autocomplete="off" style="letter-spacing:.08em"></div>
     <div class="row"><button class="btn red" type="submit" style="flex:1">불러오기</button><button class="btn line" type="button" data-close>취소</button></div>
   </form>
@@ -525,7 +521,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   const CODE_ALPHA='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const fmtCode=c=>c.replace(/(.{4})(?=.)/g,'$1-');
   const normCode=c=>String(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
-  const lettersOpen=t=>t&&(t.openMode==='now'||Date.now()>=OPEN_AT);
+  const lettersOpen=()=>Date.now()>=OPEN_AT;
   const daysToOpen=()=>Math.max(0,Math.ceil((OPEN_AT-Date.now())/864e5));
   async function copyText(text){
     try{ await navigator.clipboard.writeText(text); return true; }
@@ -563,7 +559,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   /* ================= countdown ================= */
   const now0=new Date(); let xYear=now0.getFullYear(); if(now0.getMonth()===11&&now0.getDate()>25) xYear++;
   const target=new Date(xYear,11,25); const pad=n=>String(n).padStart(2,'0');
-  $('pmText').textContent=`우리들의 크리스마스 ★ ${xYear}.12.25 개봉 ★`;
+  $('pmText').textContent=`설야 ★ 편지 개봉일 ${xYear}.12.25 ★`;
   function tick(){
     const now=new Date();
     if(now.getFullYear()===xYear&&now.getMonth()===11&&now.getDate()===25){ $('nights').textContent='오늘'; $('nights').setAttribute('font-size','40'); $('nights').setAttribute('y','120'); $('lead').textContent='열어 보세요'; $('clock').textContent='메리 크리스마스! 트리에 달린 편지를 열어 보세요'; return; }
@@ -587,23 +583,26 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('musicBtn').onclick=()=>playing?stop():play();
 
   /* ================= ornaments & tree art ================= */
-  const KINDS=[['red','빨간 방울'],['gold','금빛 방울'],['blue','파란 방울'],['star','별'],['candy','지팡이 사탕'],['sock','양말'],['gift','선물 상자'],['bell','종'],['flake','눈송이'],['ginger','쿠키']];
+  const KINDS=[['cabin','통나무 오두막'],['house','빨간 지붕 집'],['bakery','빵집'],['tower','종탑'],['lodge','산장'],['snowman','눈사람'],['lamp','가로등'],['sled','선물 썰매'],['deer','루돌프'],['fir','작은 전나무']];
   const KIND_IDS=KINDS.map(k=>k[0]); const KIND_NAME=Object.fromEntries(KINDS);
+  const SNOW='#f6f8f4';
+  const smoke=x=>`<path class="smoke" d="M${x} -41 q-4 -5 0 -9 q4 -4 0 -9" fill="none" stroke="#e6ece9" stroke-width="2.2" stroke-linecap="round"/>`;
   function ornSVG(k){
-    const ball=g=>`<line x1="0" y1="-16" x2="0" y2="-11" stroke="#d8d8d8" stroke-width="1.4"/><rect x="-3.2" y="-14" width="6.4" height="4" rx="1" fill="#d9c27a"/><circle r="11.5" fill="url(#${g})"/><ellipse cx="-3.8" cy="-4.2" rx="3" ry="1.8" fill="#fff" opacity=".7"/>`;
     switch(k){
-      case 'red': return ball('gRed'); case 'gold': return ball('gGold'); case 'blue': return ball('gBlue');
-      case 'star': return `<path d="M0 -14 L4.1 -4.3 L14.6 -4.3 L6.2 2.1 L9.1 12.4 L0 6.4 L-9.1 12.4 L-6.2 2.1 L-14.6 -4.3 L-4.1 -4.3 Z" fill="#f2b632" stroke="#fff3c6" stroke-width="1.2" stroke-linejoin="round"/>`;
-      case 'candy': return `<path d="M4 14 L4 -5 A6.5 6.5 0 0 0 -9 -5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M4 14 L4 -5 A6.5 6.5 0 0 0 -9 -5" fill="none" stroke="#d63b2f" stroke-width="5" stroke-dasharray="3 3.4"/>`;
-      case 'sock': return `<path d="M-7 -9 L6 -9 L6 3 L11 7 Q15 13 9 15 L-2 13 Q-8 12 -7 5 Z" fill="#c8372d"/><path d="M-1 13 Q-6 11 -6.2 6" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/><rect x="-8.5" y="-15" width="16" height="7" rx="2.5" fill="#f4f6f2"/>`;
-      case 'gift': return `<rect x="-11" y="-6" width="22" height="18" rx="2" fill="#3d8fd1"/><rect x="-12.5" y="-11" width="25" height="6.5" rx="1.5" fill="#5aa7e3"/><rect x="-2" y="-11" width="4" height="23" fill="#f2b632"/><path d="M0 -11 C-9 -20 -12 -9 0 -11 C12 -9 9 -20 0 -11" fill="none" stroke="#f2b632" stroke-width="2.6"/>`;
-      case 'bell': return `<path d="M-4.5 -14.5 Q0 -19 4.5 -14.5" fill="none" stroke="#c8372d" stroke-width="2.4"/><path d="M0 -14 C8 -14 9.5 -6 9.5 1 L13 8 L-13 8 L-9.5 1 C-9.5 -6 -8 -14 0 -14 Z" fill="url(#gGold)"/><circle cy="11" r="3.2" fill="#a77a22"/>`;
-      case 'flake': return `<circle r="13" fill="#2a5d8a" opacity=".55"/><g stroke="#eef9fd" stroke-width="2.4" stroke-linecap="round" fill="none"><path d="M0 -11V11M-9.5 -5.5L9.5 5.5M-9.5 5.5L9.5 -5.5"/><path d="M-3 -9L0 -6L3 -9M-3 9L0 6L3 9M-9.6 -1.6L-6.3 -3.5L-7.4 -7M9.6 1.6L6.3 3.5L7.4 7M-7.4 7L-6.3 3.5L-9.6 1.6M7.4 -7L6.3 -3.5L9.6 -1.6"/></g>`;
-      case 'ginger': return `<circle cy="-9" r="5.5" fill="#b5733a"/><path d="M-5 -4 L5 -4 L12 0 Q14 3 11 4.5 L6 2.5 L6 6 L10 13 Q11 16 7.5 16 L3 9.5 L-3 9.5 L-7.5 16 Q-11 16 -10 13 L-6 6 L-6 2.5 L-11 4.5 Q-14 3 -12 0 Z" fill="#b5733a"/><circle cx="-2" cy="-10" r="1" fill="#3a2414"/><circle cx="2" cy="-10" r="1" fill="#3a2414"/><path d="M-2.2 -7 Q0 -5.4 2.2 -7" stroke="#fff" stroke-width="1" fill="none"/><circle cy="0" r="1.3" fill="#fff"/><circle cy="4.5" r="1.3" fill="#fff"/><path d="M8 1 L11.5 2.5M-8 1L-11.5 2.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>`;
+      case 'cabin': return smoke(11)+`<rect x="9" y="-38" width="5" height="11" fill="#5c361d"/><rect x="-18" y="-24" width="36" height="24" fill="#7a4a2a"/><path d="M-18 -18H18M-18 -12H18M-18 -6H18" stroke="#5c361d" stroke-width="1"/><path d="M-23 -22 L0 -41 L23 -22Z" fill="#4a2c1a"/><path d="M-23 -22 L0 -41 L23 -22 L18 -21 L0 -35 L-18 -21Z" fill="${SNOW}"/><rect x="-4" y="-12" width="8" height="12" fill="#3a2414"/><rect class="win" x="7" y="-17" width="7" height="7"/><rect class="win" x="-14" y="-17" width="7" height="7"/>`;
+      case 'house': return smoke(-10)+`<rect x="-12" y="-40" width="5" height="12" fill="#7a3a2a"/><rect x="-16" y="-26" width="32" height="26" fill="#efe6d2"/><path d="M-21 -24 L0 -43 L21 -24Z" fill="#b3261e"/><path d="M-21 -24 L0 -43 L21 -24 L16 -23 L0 -37 L-16 -23Z" fill="${SNOW}"/><rect class="win" x="-12" y="-20" width="7" height="7"/><rect class="win" x="5" y="-20" width="7" height="7"/><rect x="-3" y="-11" width="6" height="11" fill="#6b3a22"/>`;
+      case 'bakery': return `<rect x="-20" y="-28" width="40" height="28" fill="#e9d3b0"/><rect x="-22" y="-32" width="44" height="5" fill="#8a5a3a"/><rect x="-23" y="-35" width="46" height="4" rx="2" fill="${SNOW}"/>`+[0,1,2,3,4,5,6,7].map(i=>`<rect x="${-20+i*5}" y="-22" width="5" height="6" fill="${i%2?'#fbf6ea':'#b3261e'}"/>`).join('')+`<rect class="win" x="-16" y="-14" width="17" height="10"/><rect x="5" y="-14" width="9" height="14" fill="#6b3a22"/><circle cx="12" cy="-27" r="0"/>`;
+      case 'tower': return `<rect x="-10" y="-46" width="20" height="46" fill="#d9d2c4"/><rect x="-10" y="-46" width="20" height="46" fill="url(#gShade)"/><path d="M-13 -44 L0 -64 L13 -44Z" fill="#14402f"/><path d="M-13 -44 L0 -64 L13 -44 L9 -43 L0 -58 L-9 -43Z" fill="${SNOW}"/><path class="win" d="M-5 -28 v-7 a5 5 0 0 1 10 0 v7z"/><path d="M-3 -29 q0 -5 3 -5 q3 0 3 5z" fill="#c9a35c"/><rect x="-4" y="-11" width="8" height="11" rx="4" fill="#5c361d"/>`;
+      case 'lodge': return smoke(15)+`<rect x="13" y="-40" width="5" height="12" fill="#3a2414"/><path d="M-24 0 L-24 -18 L0 -40 L24 -18 L24 0Z" fill="#6b4428"/><path d="M-29 -15 L0 -44 L29 -15" fill="none" stroke="#3a2414" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M-29 -17 L0 -46 L29 -17" fill="none" stroke="${SNOW}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path class="win" d="M-8 -15 L0 -27 L8 -15Z"/><rect x="-4" y="-11" width="8" height="11" fill="#3a2414"/><rect class="win" x="-19" y="-12" width="6" height="6"/><rect class="win" x="13" y="-12" width="6" height="6"/>`;
+      case 'snowman': return `<ellipse cx="0" cy="0" rx="14" ry="2.5" fill="#000" opacity=".08"/><circle cy="-12" r="12" fill="${SNOW}" stroke="#cfd8d3"/><circle cy="-30" r="9" fill="${SNOW}" stroke="#cfd8d3"/><circle cy="-44" r="7" fill="${SNOW}" stroke="#cfd8d3"/><circle cx="-2.5" cy="-46" r="1.1" fill="#1b1b1b"/><circle cx="2.5" cy="-46" r="1.1" fill="#1b1b1b"/><path d="M0 -44 l7 1.5 l-7 1.5z" fill="#e07a2e"/><path d="M-8 -37 h16 v3 h-16z M4 -35 v8 h3 v-8z" fill="#b3261e"/><rect x="-6" y="-57" width="12" height="8" fill="#1b1b1b"/><rect x="-9" y="-50" width="18" height="2" fill="#1b1b1b"/><circle cy="-30" r="1.2" fill="#1b1b1b"/><circle cy="-25" r="1.2" fill="#1b1b1b"/>`;
+      case 'lamp': return `<circle class="lampglow" cy="-54" r="14" fill="#ffd98a" opacity=".35"/><rect x="-5" y="-3" width="10" height="3" fill="#2b3a35"/><rect x="-1.5" y="-50" width="3" height="48" fill="#2b3a35"/><path d="M-6 -50 h12 l-2 -9 h-8z" fill="#2b3a35"/><rect class="win" x="-4" y="-58" width="8" height="7"/><path d="M-7 -60 h14 l-7 -5z" fill="${SNOW}"/><circle cy="-34" r="5" fill="none" stroke="#1f6b4a" stroke-width="3"/><path d="M-2 -30 l2 3 l2 -3z" fill="#b3261e"/>`;
+      case 'sled': return `<path d="M-24 0 h38 q7 0 7 -7" fill="none" stroke="#c9a35c" stroke-width="2.6" stroke-linecap="round"/><path d="M-16 0 v-4 M8 0 v-4" stroke="#c9a35c" stroke-width="2"/><path d="M-22 -4 h34 l5 -15 h-39z" fill="#b3261e"/><rect x="-16" y="-31" width="13" height="12" fill="#3d8fd1"/><rect x="-10.5" y="-31" width="2" height="12" fill="#fbf6ea"/><rect x="-1" y="-28" width="11" height="9" fill="#e2c98f"/><rect x="3.5" y="-28" width="2" height="9" fill="#b3261e"/>`;
+      case 'deer': return `<path d="M-9 -9 l-2 9 M-4 -9 l1 9 M7 -9 l-1 9 M11 -9 l2 9" stroke="#7a5233" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="1" cy="-15" rx="14" ry="8" fill="#9a6a42"/><path d="M9 -20 q4 -8 6 -12" stroke="#9a6a42" stroke-width="6" stroke-linecap="round"/><ellipse cx="17" cy="-33" rx="6" ry="4.6" fill="#9a6a42"/><circle cx="23" cy="-33" r="2.4" fill="#e5322d"/><circle cx="16" cy="-35" r=".9" fill="#1b1b1b"/><path d="M13 -37 l-3 -8 M11 -42 l-4 -1 M18 -37 l2 -8 M19.5 -42 l4 -2" stroke="#6b4428" stroke-width="1.6" stroke-linecap="round"/><path d="M-13 -17 q-4 -1 -4 3" stroke="#9a6a42" stroke-width="3" stroke-linecap="round" fill="none"/>`;
+      case 'fir': return `<rect x="-2.5" y="-7" width="5" height="7" fill="#5f3d24"/><path d="M0 -44 L14 -20 L-14 -20Z" fill="#1f6b4a"/><path d="M0 -30 L18 -6 L-18 -6Z" fill="#1f6b4a"/><path d="M-18 -6 Q-9 -3 0 -6 Q9 -3 18 -6" fill="none" stroke="${SNOW}" stroke-width="3" stroke-linecap="round"/><path d="M-14 -20 Q-7 -17 0 -20 Q7 -17 14 -20" fill="none" stroke="${SNOW}" stroke-width="3" stroke-linecap="round"/><path d="M0 -51 l2 4.5 h4.5 l-3.6 2.8 1.4 4.6 -4.3 -2.8 -4.3 2.8 1.4 -4.6 -3.6 -2.8 h4.5z" fill="#f0c665"/>`;
     }
     return '';
   }
-  const iconSVG=k=>`<svg viewBox="-17 -19 34 36" aria-hidden="true">${ornSVG(k)}</svg>`;
+  const iconSVG=k=>`<svg viewBox="-30 -66 60 70" aria-hidden="true">${ornSVG(k)}</svg>`;
   const STYLES={
     classic:{label:'초록',base:'#1f6b4a',snow:'#f6f8f4'},
     frost:{label:'눈꽃',base:'#7fb4c6',snow:'#ffffff'},
@@ -638,10 +637,60 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         h+=`<g class="bulb" style="animation-delay:${(i*.29%1.8).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="6" fill="${c}" opacity=".25"/><circle cx="${x}" cy="${y}" r="2.4" fill="${c}"/></g>`; i++; } });
     el.innerHTML=h;
   }
-  const SLOTS=[[163,110],[200,122],[136,182],[182,197],[226,180],[110,262],[160,274],[208,262],[256,272],[98,344],[180,352],[262,342]];
+  const LEVELS=[[0,'빈 언덕'],[3,'반짝이는 언덕'],[7,'가로등 길'],[12,'얼음 연못 마을'],[20,'오로라 마을'],[30,'산타가 들르는 마을']];
+  function levelOf(n){ let l=1; LEVELS.forEach(([min],i)=>{ if(n>=min) l=i+1; }); return l; }
+  const SLOTS=[[40,214,.8],[98,210,.8],[302,210,.8],[360,214,.8],[30,260,1],[88,256,1],[146,264,1],[254,264,1],[312,256,1],[370,260,1],[50,324,1.22],[124,328,1.22],[276,328,1.22],[350,324,1.22]];
   const PER=SLOTS.length;
-  $('hTree').innerHTML=treeArt('classic'); bulbsInto($('hBulbs'));
-  $('hOrn').innerHTML=['red','gold','candy','star','blue','gift','sock','bell','flake','ginger','red','gold'].map((k,i)=>`<g transform="translate(${SLOTS[i][0]} ${SLOTS[i][1]})">${ornSVG(k)}</g>`).join('');
+  const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function bulbsSVG(){
+    const cols=['#ffd96a','#ff6b5e','#a9d6e5','#9ef08a']; let i=0,h='';
+    TIERS.forEach(([a,b,w])=>{ const f1=(b-40-a)/(b-a)*.95,f2=(b-52-a)/(b-a)*.95; const x0=180-w*f1,y0=b-40,x1=180,y1=b-6,x2=180+w*f2,y2=b-52;
+      h+=`<path d="M${x0.toFixed(1)} ${y0} Q${x1} ${y1} ${x2.toFixed(1)} ${y2}" fill="none" stroke="rgba(4,20,15,.45)" stroke-width="1.5"/>`;
+      const n=Math.max(4,Math.round(w/11));
+      for(let k=0;k<=n;k++){ const t=k/n,u=1-t,x=(u*u*x0+2*u*t*x1+t*t*x2).toFixed(1),y=(u*u*y0+2*u*t*y1+t*t*y2).toFixed(1),c=cols[i%4];
+        h+=`<g class="bulb" style="animation-delay:${(i*.29%1.8).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="9" fill="${c}" opacity=".25"/><circle cx="${x}" cy="${y}" r="4.2" fill="${c}"/></g>`; i++; } });
+    return h;
+  }
+  function villageTree(style,L){
+    const s=STYLES[style]||STYLES.classic, sc=[.32,.4,.43,.46,.5,.54][L-1]; let g='';
+    g+=`<g transform="translate(${(200-180*sc).toFixed(1)} ${(222-400*sc).toFixed(1)}) scale(${sc})">`;
+    g+=`<ellipse cx="180" cy="215" rx="230" ry="240" fill="url(#gGlow)"/><ellipse cx="180" cy="400" rx="130" ry="12" fill="#092a20" opacity=".12"/>`;
+    g+=`<rect x="163" y="360" width="34" height="40" rx="3" fill="#5f3d24"/><rect x="180" y="360" width="17" height="40" fill="#000" opacity=".18"/>`;
+    TIERS.forEach(([a,b,w,n],i)=>{ const p=tierPaths(a,b,w,n);
+      if(i>0) g+=`<g clip-path="url(#tc${i-1})"><path d="${p.d}" transform="translate(0 13)" fill="#04140f" opacity=".3"/></g>`;
+      g+=`<path d="${p.d}" fill="${s.base}"/><path d="${p.d}" fill="url(#gShade)"/><path d="${p.edge}" fill="none" stroke="${s.snow}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>`; });
+    if(L>=2) g+=bulbsSVG();
+    g+=`<circle cx="180" cy="34" r="50" fill="url(#gGlow)"/><g class="topstar" transform="translate(180 34)"><path d="M0 -26 L7.6 -8 L27 -8 L11.5 4 L17 23 L0 12 L-17 23 L-11.5 4 L-27 -8 L-7.6 -8 Z" fill="#f0c665" stroke="#fff3cf" stroke-width="1.5" stroke-linejoin="round"/></g>`;
+    if(L>=2) g+=`<g transform="translate(108 378)"><rect width="46" height="30" rx="3" fill="#b3261e"/><rect x="20" width="6" height="30" fill="#e2c98f"/><rect y="12" width="46" height="6" fill="#e2c98f"/></g><g transform="translate(214 386)"><rect width="40" height="22" rx="3" fill="#fbf6ea"/><rect x="17" width="6" height="22" fill="#b3261e"/></g>`;
+    return g+'</g>';
+  }
+  function streakOf(t){ const l=t&&t.lit; if(!l||!l.last) return 0; return (l.last===dayKey(0)||l.last===dayKey(-1))?(Number(l.days)||0):0; }
+  function dayKey(off){ return new Date(Date.now()+9*36e5+off*864e5).toISOString().slice(0,10); }
+  // o: {style, level, streak, open, items:[{id,kind,nick,isNew}], labels}
+  function villageSVG(o){
+    const L=o.level; let g='';
+    g+=`<circle cx="62" cy="58" r="17" fill="#f3ead2" opacity=".92"/><circle cx="69" cy="53" r="15" fill="#0b2a20" opacity=".25"/>`;
+    if(L>=5) g+=`<g class="aurora" opacity=".6"><path d="M-10 70 Q80 20 170 60 T360 40 T420 60 V110 Q330 80 250 105 T80 100 T-10 120Z" fill="url(#gAur)"/></g><g class="shoot"><path d="M300 26 l26 -12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></g>`;
+    if(o.streak>=14) g+=[[60,70],[110,40],[250,52],[300,90]].map(([x,y],i)=>`<g class="lantern" style="animation-delay:${i*.7}s"><rect x="${x-4}" y="${y-6}" width="8" height="10" rx="2" fill="#ffb347"/><rect x="${x-4}" y="${y-6}" width="8" height="10" rx="2" fill="#fff" opacity=".25"/></g>`).join('');
+    if(L>=6) g+=`<g class="sleigh"><g transform="translate(0 70) scale(.7)" fill="#16241f" opacity=".75"><path d="M0 10 h34 q6 0 6 -6 M6 10 v-4 M26 10 v-4" stroke="#16241f" stroke-width="2" fill="none"/><path d="M4 6 h26 l3 -10 h-29z"/><circle cx="20" cy="-8" r="5"/><path d="M40 2 l18 -2 M58 0 l10 -6 l4 2 l-6 6z M66 -6 l-2 -6 M70 -4 l2 -6"/><path d="M40 2 q10 -4 16 -2" stroke="#16241f" stroke-width="1" fill="none"/></g></g>`;
+    g+=`<path d="M0 232 Q90 192 200 206 Q310 190 400 226 V360 H0Z" fill="#d9e3df"/>`;
+    if(L>=4) g+=`<ellipse cx="330" cy="236" rx="50" ry="9" fill="#a9d6e5" opacity=".9"/><path d="M302 234 h18 M338 238 h16" stroke="#fff" stroke-width="1.5" opacity=".75" stroke-linecap="round"/>`;
+    g+=`<path d="M0 264 Q100 238 200 252 Q300 238 400 260 V360 H0Z" fill="#e9f0ec"/>`;
+    if(L>=3) g+=`<path d="M176 360 Q186 300 195 262 Q199 238 199 214 L203 214 Q205 238 211 262 Q224 300 238 360Z" fill="#dbe5e0"/>`;
+    g+=villageTree(o.style,L);
+    g+=`<path d="M0 302 Q120 286 200 294 Q290 284 400 302 V360 H0Z" fill="#f7faf8"/>`;
+    if(L>=3) g+=[[172,312],[230,312]].map(([x,y])=>`<g transform="translate(${x} ${y}) scale(.85)">${ornSVG('lamp')}</g>`).join('');
+    const slots=o.items.slice(0,PER).map((it,i)=>({it,i,slot:SLOTS[i]})).sort((a,b)=>a.slot[1]-b.slot[1]);
+    slots.forEach(({it,i,slot:[x,y,sc]})=>{
+      const nick=String(it.nick||'').slice(0,10)||'익명', short=nick.length>5?nick.slice(0,5)+'…':nick, w=Math.max(26,short.length*9.5+12);
+      const lab=o.labels?`<g class="lab" transform="translate(0 4)"><rect x="${-w/2}" y="0" width="${w}" height="15" rx="3" fill="#fbf6ea"/><text text-anchor="middle" y="11" font-size="9.5" font-weight="500" fill="#16241f" font-family="IBM Plex Sans KR, sans-serif">${esc(short)}</text></g>`:'';
+      const attrs=it.id?` class="orn-g${it.isNew?' new':''}" data-id="${esc(it.id)}" tabindex="0" role="button" aria-label="${esc(nick)}님이 지은 ${KIND_NAME[it.kind]}"`:'';
+      g+=`<g transform="translate(${x} ${y})"${attrs}><g class="orn" style="--d:${(i*.22).toFixed(2)}s"><g transform="scale(${sc})"><rect x="-22" y="-50" width="44" height="52" fill="transparent"/>${ornSVG(it.kind)}</g></g>${lab}</g>`;
+    });
+    return g;
+  }
+  function paintVillage(svg,o){ svg.innerHTML=villageSVG(o); svg.classList.toggle('glow',o.streak>=7||!!o.open); svg.classList.toggle('smoky',o.streak>=3||!!o.open); svg.classList.toggle('open',!!o.open); }
+  paintVillage($('heroSvg'),{style:'classic',level:5,streak:7,open:false,labels:false,items:['lodge','house','cabin','tower','snowman','bakery','fir','sled','house','deer','cabin','lamp','bakery','snowman'].map(k=>({kind:k}))});
 
   /* ================= backends ================= */
   function demoBackend(){
@@ -657,10 +706,11 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       async createTree(d){ const db=load(); const id=rand(8), code=rand(12,CODE_ALPHA); db.trees[id]={...d,ownerUid:uid,createdAt:Date.now()}; db.keys[id]=code; db.orn[id]=[]; db.letters[id]={}; save(db); return {id,code}; },
       watchTree(id,cb){ return sub(()=>cb(load().trees[id]||null)); },
       watchOrnaments(id,cb){ return sub(()=>cb((load().orn[id]||[]).slice())); },
+      async lightUp(id,lit){ const db=load(); db.trees[id].lit=lit; save(db); },
       async isOwner(id,t){ return t.ownerUid===uid||(load().owners[id]||[]).includes(uid); },
       async claim(id,code){ const db=load(); if(db.keys[id]&&db.keys[id]===code){ (db.owners[id]=db.owners[id]||[]).push(uid); save(db); return true; } return false; },
       async addLetter(id,{kind,nick,text}){ const db=load(); if(!db.trees[id]) throw new Error('missing'); const oid=rand(16); const at=Date.now(); db.orn[id].push({id:oid,kind,nick,createdAt:at,authorUid:uid}); db.letters[id][oid]={text,nick,createdAt:at}; save(db); return oid; },
-      async readLetters(id){ const db=load(); if(!lettersOpen(db.trees[id])) throw new Error('locked'); return db.letters[id]||{}; },
+      async readLetters(id){ const db=load(); if(!lettersOpen()) throw new Error('locked'); return db.letters[id]||{}; },
       async removeLetter(id,oid){ const db=load(); db.orn[id]=(db.orn[id]||[]).filter(o=>o.id!==oid); if(db.letters[id]) delete db.letters[id][oid]; save(db); }
     };
   }
@@ -670,7 +720,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     const app=appM.initializeApp(cfg); const auth=authM.getAuth(app); const db=fs.getFirestore(app);
     await auth.authStateReady(); if(!auth.currentUser) await authM.signInAnonymously(auth);
     const uid=auth.currentUser.uid;
-    const {doc,getDoc,setDoc,collection,writeBatch,serverTimestamp,onSnapshot,query,orderBy,getDocs}=fs;
+    const {doc,getDoc,setDoc,updateDoc,collection,writeBatch,serverTimestamp,onSnapshot,query,orderBy,getDocs}=fs;
     const ms=v=>v&&typeof v.toMillis==='function'?v.toMillis():Date.now();
     return {
       mode:'live', uid,
@@ -681,6 +731,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       },
       watchTree(id,cb,err){ return onSnapshot(doc(db,'trees',id),s=>cb(s.exists()?s.data():null),err); },
       watchOrnaments(id,cb,err){ return onSnapshot(query(collection(db,'trees',id,'ornaments'),orderBy('createdAt')),s=>cb(s.docs.map(d=>{ const x=d.data({serverTimestamps:'estimate'}); return {id:d.id,kind:x.kind,nick:x.nick,createdAt:ms(x.createdAt),authorUid:x.authorUid}; })),err); },
+      async lightUp(id,lit){ await updateDoc(doc(db,'trees',id),{lit}); },
       async isOwner(id,t){ if(t.ownerUid===uid) return true; try{ return (await getDoc(doc(db,'trees',id,'owners',uid))).exists(); }catch(e){ return false; } },
       async claim(id,code){ try{ await setDoc(doc(db,'trees',id,'owners',uid),{key:code}); return true; }catch(e){ return false; } },
       async addLetter(id,{kind,nick,text}){ const ref=doc(collection(db,'trees',id,'ornaments')); const b=writeBatch(db);
@@ -705,36 +756,35 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   function renderMine(){
     const box=$('myTrees'); box.innerHTML='';
     myTrees.forEach(t=>{ const a=document.createElement('a'); a.className='mytree'; a.href='#t-'+t.id;
-      const b=document.createElement('b'); b.textContent=`${t.name}의 트리`; const s=document.createElement('span'); s.textContent='내 트리 보러 가기';
+      const b=document.createElement('b'); b.textContent=`${t.name}의 마을`; const s=document.createElement('span'); s.textContent='내 마을 보러 가기';
       a.append(b,s); box.appendChild(a); });
-    $('createBtn').textContent = myTrees.length ? '내 트리 보러 가기' : '내 트리 만들기';
+    $('createBtn').textContent = myTrees.length ? '내 마을 보러 가기' : '내 마을 만들기';
   }
   renderMine();
   $('createBtn').onclick=()=>{ if(myTrees.length) location.hash='t-'+myTrees[0].id; else openCreate(); };
   $('createBtn2').onclick=openCreate;
 
   /* ================= create flow ================= */
-  let cStyle='classic', cOpen='xmas';
+  let cStyle='classic';
   Object.keys(STYLES).forEach(k=>{ const b=document.createElement('button'); b.type='button'; b.className='stylebtn'; b.dataset.s=k; b.innerHTML=miniTree(k)+`<span>${STYLES[k].label}</span>`; b.onclick=()=>{ cStyle=k; syncCreate(); }; $('styleRow').appendChild(b); });
-  $('openRow').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ cOpen=b.dataset.v; syncCreate(); });
-  function syncCreate(){ $('styleRow').querySelectorAll('.stylebtn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.s===cStyle)); $('openRow').querySelectorAll('.opt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===cOpen)); }
+  function syncCreate(){ $('styleRow').querySelectorAll('.stylebtn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.s===cStyle)); }
   function openCreate(){ syncCreate(); openSheet('createSheet'); }
   $('createForm').addEventListener('submit',async e=>{
     e.preventDefault(); const name=$('tName').value.trim().slice(0,10); if(!name){ toast('이름을 적어 주세요'); return; }
     const btn=$('createSubmit'); btn.disabled=true; btn.textContent='만드는 중…';
     try{
-      const a=await api(); const {id,code}=await a.createTree({name,style:cStyle,openMode:cOpen});
+      const a=await api(); const {id,code}=await a.createTree({name,style:cStyle});
       saveMine({id,name,code}); closeSheet('createSheet'); $('tName').value='';
       location.hash='t-'+id;
       $('dsLink').textContent=shareUrl(id); $('dsCode').textContent=fmtCode(code); $('dsShare').onclick=()=>share(id,name);
       setTimeout(()=>openSheet('doneSheet'),250);
     }catch(err){ console.error(err); toast('트리를 만들지 못했어요. 잠시 후 다시 해 주세요'); }
-    finally{ btn.disabled=false; btn.textContent='트리 만들기'; }
+    finally{ btn.disabled=false; btn.textContent='마을 만들기'; }
   });
   const shareUrl=id=>location.origin+location.pathname+'#t-'+id;
   async function share(id,name){
-    const url=shareUrl(id), text=`${name}의 크리스마스 트리에 편지를 달아 줘!`;
-    if(navigator.share){ try{ await navigator.share({title:'우리들의 크리스마스',text,url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+    const url=shareUrl(id), text=`${name}의 겨울 마을에 집을 하나 지어 줘! 편지는 크리스마스에 열려요`;
+    if(navigator.share){ try{ await navigator.share({title:'설야',text,url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
     toast(await copyText(`${text}\n${url}`)?'링크를 복사했어요. 카톡에 붙여 넣어 보내요':'링크를 길게 눌러 복사해 주세요');
   }
 
@@ -748,7 +798,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     $('landing').hidden=true; $('treePage').hidden=false; snow1.stop(); snow2.start(); window.scrollTo(0,0);
     if(cur&&cur.id===id) return;
     leaveTree();
-    cur={id,tree:null,orns:[],owner:false,page:0,unsubs:[],letters:null,lastNew:null,firstLoad:true};
+    cur={id,tree:null,orns:[],owner:false,page:0,unsubs:[],letters:null,lastNew:null,firstLoad:true,level:0};
     $('tpLoading').hidden=false; $('tpMissing').hidden=true; $('tpMain').hidden=true;
     const mine=myTrees.find(t=>t.id===id);
     api().then(a=>{
@@ -759,73 +809,80 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         clearTimeout(loadTimer);
         if(!cur||cur.id!==id) return;
         if(!t){ $('tpLoading').hidden=true; $('tpMain').hidden=true; $('tpMissing').hidden=false; return; }
-        const styleChanged=!cur.tree||cur.tree.style!==t.style; cur.tree=t;
+        cur.tree=t;
         cur.owner=await a.isOwner(id,t);
         if(cur.owner&&!mine) saveMine({id,name:t.name,code:''});
         $('tpLoading').hidden=true; $('tpMissing').hidden=true; $('tpMain').hidden=false;
-        if(styleChanged) drawTree();
-        renderTreeMeta(); renderBar(); snow2.start();
-      },e=>{ console.error(e); $('tpLoading').querySelector('p').textContent='트리를 불러오지 못했어요. 페이지를 새로 고쳐 주세요.'; }));
+        renderOrns(); renderTreeMeta(); renderBar(); snow2.start();
+      },e=>{ console.error(e); $('tpLoading').querySelector('p').textContent='마을을 불러오지 못했어요. 페이지를 새로 고쳐 주세요.'; }));
       cur.unsubs.push(a.watchOrnaments(id,list=>{
         if(!cur||cur.id!==id) return;
         const before=new Set(cur.orns.map(o=>o.id));
         cur.orns=list.filter(o=>KIND_IDS.includes(o.kind)).sort((x,y)=>x.createdAt-y.createdAt);
         if(!cur.firstLoad){ const nw=cur.orns.find(o=>!before.has(o.id)); if(nw){ cur.lastNew=nw.id; cur.page=Math.floor(cur.orns.indexOf(nw)/PER); } }
+        const lv=levelOf(cur.orns.length); if(!cur.firstLoad&&cur.level&&lv>cur.level) toast(`마을이 Lv.${lv} ${LEVELS[lv-1][1]}(으)로 자랐어요!`); cur.level=lv;
         cur.firstLoad=false; cur.letters=null;
-        renderOrns(); renderTreeMeta();
+        if(cur.tree){ renderOrns(); renderTreeMeta(); renderBar(); }
       },e=>console.error(e)));
     }).catch(()=>{ $('tpLoading').querySelector('p').textContent='서버에 연결하지 못했어요.'; });
   }
   function leaveTree(){ if(cur){ cur.unsubs.forEach(u=>{ try{u()}catch(e){} }); } cur=null; }
   function showLanding(){ leaveTree(); $('treePage').hidden=true; $('landing').hidden=false; snow2.stop(); snow1.start(); renderMine(); }
 
-  function drawTree(){ $('tTree').innerHTML=treeArt(cur.tree.style); bulbsInto($('tBulbs')); }
   function renderTreeMeta(){
     const t=cur.tree; if(!t) return;
-    $('tpTitle').textContent=`${t.name}의 트리`;
-    const n=cur.orns.length;
-    $('tpCount').textContent = n ? `편지 ${n}통이 달렸어요` : (cur.owner ? '아직 편지가 없어요. 링크를 보내 보세요!' : '첫 번째 편지를 달아 주세요!');
+    const n=cur.orns.length, L=levelOf(n), next=LEVELS[L]?LEVELS[L][0]:null, prev=LEVELS[L-1][0], st=streakOf(t);
+    $('tpTitle').textContent=`${t.name}의 마을`;
+    $('lvBadge').textContent=`Lv.${L}`; $('lvName').textContent=LEVELS[L-1][1];
+    $('lvFill').style.width=(next===null?100:Math.round((n-prev)/(next-prev)*100))+'%';
+    let line = n ? `집 ${n}채` : (cur.owner?'아직 집이 없어요. 링크를 보내 보세요':'첫 번째 집을 지어 주세요');
+    if(next!==null) line+=` · 다음 단계까지 편지 ${next-n}통`; else line+=' · 최고 단계예요';
+    $('tpCount').textContent=line;
     const lock=$('tpLock');
-    if(t.openMode==='xmas' && !lettersOpen(t)){ lock.hidden=false; lock.textContent=`편지는 12월 25일에 열려요 · D-${daysToOpen()}`; }
-    else if(lettersOpen(t) && cur.owner && n){ lock.hidden=false; lock.textContent='편지를 읽을 수 있어요. 장식을 눌러 보세요'; }
+    if(!lettersOpen()){ lock.hidden=false; lock.textContent=`편지 개봉일 12월 25일 · D-${daysToOpen()}`+(st?` · 연속 ${st}일째 불 밝힘`:''); }
+    else if(cur.owner&&n){ lock.hidden=false; lock.textContent='창문마다 불이 켜졌어요. 집을 눌러 편지를 열어 보세요'; }
     else lock.hidden=true;
-    document.title=`${t.name}의 트리 · 우리들의 크리스마스`;
+    document.title=`${t.name}의 마을 · 설야`;
   }
   function renderBar(){
     const bar=$('tpBar'); bar.innerHTML='';
     const row=document.createElement('div'); row.className='row';
     const mk=(txt,cls,fn)=>{ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=txt; b.onclick=fn; return b; };
     const sub=document.createElement('div'); sub.className='sub';
+    const link=(txt,fn)=>{ const a=document.createElement('button'); a.className='linkish note'; a.style.margin='0 8px'; a.textContent=txt; a.onclick=fn; sub.appendChild(a); };
     if(cur.owner){
-      row.append(mk('링크 공유하기','red',()=>share(cur.id,cur.tree.name)));
-      if(lettersOpen(cur.tree)) row.append(mk('편지 모아 보기','',openAll));
-      const a=document.createElement('button'); a.className='linkish note'; a.textContent='관리 코드 보기'; a.onclick=openOwner; sub.appendChild(a);
+      if(lettersOpen()){ row.append(mk('편지 모아 보기','red',openAll),mk('올해의 마을 카드','',openYear)); link('링크 공유하기',()=>share(cur.id,cur.tree.name)); }
+      else {
+        const lit=cur.tree.lit&&cur.tree.lit.last===dayKey(0);
+        const b=mk(lit?`오늘 불 밝힘 · ${streakOf(cur.tree)}일째`:'오늘 불 밝히기','',lightUp); b.disabled=!!lit;
+        row.append(mk('링크 공유하기','red',()=>share(cur.id,cur.tree.name)),b);
+        link('보상 보기',()=>toast('연속 3일: 굴뚝 연기 · 7일: 창문 불빛 · 14일: 하늘 등불'));
+      }
+      link('관리 코드 보기',openOwner);
     } else {
-      row.append(mk('편지 달기','red',openWrite));
+      row.append(mk('집 지어 주기','red',openWrite));
       row.append(mk('나도 만들기','line',()=>{ location.hash=''; setTimeout(openCreate,200); }));
-      const a=document.createElement('button'); a.className='linkish note'; a.textContent='내 트리인데 주인으로 안 보여요'; a.onclick=()=>openSheet('claimSheet'); sub.appendChild(a);
+      link('내 마을인데 주인으로 안 보여요',()=>openSheet('claimSheet'));
     }
     bar.append(row,sub);
   }
+  let lighting=false;
+  async function lightUp(){
+    if(lighting||!cur||!cur.owner) return; lighting=true;
+    const prev=cur.tree.lit||{}, days=(prev.last===dayKey(-1)?(Number(prev.days)||0):0)+1;
+    try{ const a=await api(); await a.lightUp(cur.id,{days,last:dayKey(0)});
+      const reward={3:' 굴뚝에서 연기가 나기 시작했어요',7:' 창문마다 불빛이 밝아졌어요',14:' 하늘에 등불이 떠올랐어요'}[days]||'';
+      toast(`연속 ${days}일째 불을 밝혔어요.`+reward);
+    }catch(e){ console.error(e); toast('불을 밝히지 못했어요. 잠시 후 다시 눌러 주세요'); }
+    finally{ lighting=false; }
+  }
   function renderOrns(){
-    const g=$('tOrn'); g.innerHTML='';
-    const pages=Math.max(1,Math.ceil(cur.orns.length/PER)); cur.page=Math.min(cur.page,pages-1);
-    const slice=cur.orns.slice(cur.page*PER,cur.page*PER+PER);
-    slice.forEach((o,i)=>{
-      const [x,y]=SLOTS[i];
-      const og=document.createElementNS(NS,'g'); og.setAttribute('class','orn-g'+(o.id===cur.lastNew?' new':'')); og.setAttribute('transform',`translate(${x} ${y})`);
-      og.setAttribute('tabindex','0'); og.setAttribute('role','button');
-      const nick=String(o.nick||'').slice(0,10)||'익명'; og.setAttribute('aria-label',`${nick}님의 ${KIND_NAME[o.kind]}`);
-      const inner=document.createElementNS(NS,'g'); inner.setAttribute('class','orn'); inner.innerHTML=`<circle r="18" fill="transparent"/>`+ornSVG(o.kind);
-      const lab=document.createElementNS(NS,'g'); lab.setAttribute('class','lab'); lab.setAttribute('transform','translate(0 26)');
-      const short=nick.length>5?nick.slice(0,5)+'…':nick; const w=Math.max(28,short.length*10+12);
-      const r=document.createElementNS(NS,'rect'); r.setAttribute('x',-w/2); r.setAttribute('y',-8); r.setAttribute('width',w); r.setAttribute('height',16); r.setAttribute('rx',3); r.setAttribute('fill','#fbf6ea');
-      const tx=document.createElementNS(NS,'text'); tx.setAttribute('text-anchor','middle'); tx.setAttribute('y',4); tx.setAttribute('font-size','10.5'); tx.setAttribute('fill','#16241f'); tx.setAttribute('font-weight','500'); tx.setAttribute('font-family','IBM Plex Sans KR, sans-serif'); tx.textContent=short;
-      lab.append(r,tx); og.append(inner,lab);
-      og.addEventListener('click',()=>openOrn(o));
-      og.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openOrn(o); } });
-      g.appendChild(og);
-    });
+    const svg=$('treeSvg'); const pages=Math.max(1,Math.ceil(cur.orns.length/PER)); cur.page=Math.min(cur.page,pages-1);
+    const slice=cur.orns.slice(cur.page*PER,cur.page*PER+PER).map(o=>({...o,isNew:o.id===cur.lastNew}));
+    paintVillage(svg,{style:cur.tree?cur.tree.style:'classic',level:levelOf(cur.orns.length),streak:streakOf(cur.tree),open:lettersOpen(),labels:true,items:slice});
+    svg.classList.toggle('lit',lit);
+    svg.querySelectorAll('.orn-g').forEach(el=>{ const o=cur.orns.find(x=>x.id===el.dataset.id); if(!o) return;
+      el.addEventListener('click',()=>openOrn(o)); el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openOrn(o); } }); });
     cur.lastNew=null;
     $('prevPg').disabled=cur.page<=0; $('nextPg').disabled=cur.page>=pages-1;
     $('pageInfo').textContent= pages>1 ? `${cur.page+1} / ${pages}` : '';
@@ -840,22 +897,22 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   async function openOrn(o){
     const t=cur.tree; const nick=String(o.nick||'익명');
     $('rsOrn').innerHTML=iconSVG(o.kind); $('rsBody').innerHTML=''; $('rsDelete').hidden=true;
-    $('rsT').textContent=`${nick}님의 ${KIND_NAME[o.kind]}`;
-    if(!cur.owner){ $('rsLead').textContent=`편지는 ${t.name}님만 읽을 수 있어요.`; openSheet('readSheet'); return; }
+    $('rsT').textContent=`${nick}님이 지은 ${KIND_NAME[o.kind]}`;
+    if(!cur.owner){ $('rsLead').textContent=`안에 든 편지는 ${t.name}님만 크리스마스에 열어 볼 수 있어요.`; openSheet('readSheet'); return; }
     $('rsDelete').hidden=false; $('rsDelete').onclick=()=>removeOrn(o);
-    if(!lettersOpen(t)){ $('rsLead').textContent=`12월 25일에 열려요. ${daysToOpen()}일만 기다려요!`; openSheet('readSheet'); return; }
+    if(!lettersOpen()){ $('rsLead').textContent=`편지가 집 안에 봉인돼 있어요. 12월 25일에 열려요 · D-${daysToOpen()}`; openSheet('readSheet'); return; }
     $('rsLead').textContent='편지를 여는 중…'; openSheet('readSheet');
     try{ const L=await getLetters(); const l=L[o.id];
       if(!l){ $('rsLead').textContent='편지를 찾을 수 없어요.'; return; }
-      $('rsLead').textContent=new Date(l.createdAt||o.createdAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'})+'에 달린 편지';
+      $('rsLead').textContent=new Date(l.createdAt||o.createdAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'})+'에 지어진 집';
       $('rsBody').appendChild(letterEl(l.text,nick));
     }catch(e){ console.error(e); $('rsLead').textContent='편지를 열지 못했어요. 잠시 후 다시 눌러 주세요.'; }
   }
   function letterEl(text,nick){ const d=document.createElement('div'); d.className='readletter'; const p=document.createElement('div'); p.textContent=text; const f=document.createElement('div'); f.className='readfrom'; f.textContent=`— ${nick}`; d.append(p,f); return d; }
   async function removeOrn(o){
-    const b=$('rsDelete'); if(b.dataset.confirm!=='1'){ b.dataset.confirm='1'; b.textContent='한 번 더 누르면 떼어져요'; setTimeout(()=>{ b.dataset.confirm=''; b.textContent='장식 떼기'; },3000); return; }
-    b.dataset.confirm=''; b.textContent='장식 떼기';
-    try{ const a=await api(); await a.removeLetter(cur.id,o.id); closeSheet('readSheet'); toast('장식을 뗐어요'); }catch(e){ toast('떼지 못했어요'); }
+    const b=$('rsDelete'); if(b.dataset.confirm!=='1'){ b.dataset.confirm='1'; b.textContent='한 번 더 누르면 치워져요'; setTimeout(()=>{ b.dataset.confirm=''; b.textContent='집 치우기'; },3000); return; }
+    b.dataset.confirm=''; b.textContent='집 치우기';
+    try{ const a=await api(); await a.removeLetter(cur.id,o.id); closeSheet('readSheet'); toast('집을 치웠어요'); }catch(e){ toast('치우지 못했어요'); }
   }
   async function openAll(){
     $('asList').innerHTML=''; $('asLead').textContent='편지를 여는 중…'; openSheet('allSheet');
@@ -864,12 +921,23 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       list.forEach(o=>$('asList').appendChild(letterEl(L[o.id].text,String(o.nick||'익명'))));
     }catch(e){ $('asLead').textContent='편지를 열지 못했어요.'; }
   }
+  function openYear(){
+    const t=cur.tree, n=cur.orns.length, L=levelOf(n), st=Number((t.lit||{}).days)||0;
+    const cnt={}; cur.orns.forEach(o=>cnt[o.kind]=(cnt[o.kind]||0)+1); const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+    const first=cur.orns[0];
+    $('ycKicker').textContent=`${xYear} 설야 · 올해의 마을`; $('ycT').textContent=`${t.name}의 마을`;
+    paintVillage($('ycSvg'),{style:t.style,level:L,streak:st,open:true,labels:false,items:cur.orns.slice(0,PER)});
+    const stats=[['지어진 집',`${n}채`],['마을 단계',`Lv.${L} ${LEVELS[L-1][1]}`],['연속 불 밝힘',`${st}일`],['첫 번째로 지어 준 친구',first?String(first.nick||'익명').slice(0,10):'-'],['가장 많이 지어진 것',top?`${KIND_NAME[top[0]]} ${top[1]}채`:'-']];
+    $('ycStats').innerHTML=''; stats.forEach(([a,b])=>{ const d=document.createElement('div'); const s1=document.createElement('small'); s1.textContent=a; const b1=document.createElement('b'); b1.textContent=b; d.append(s1,b1); $('ycStats').appendChild(d); });
+    $('ycCopy').onclick=async()=>{ const text=[`${xYear} 설야 · ${t.name}의 마을`,...stats.map(([a,b])=>`${a}: ${b}`),'',shareUrl(cur.id)].join('\n'); toast(await copyText(text)?'마을 카드를 복사했어요':'복사가 막혀 있어요'); };
+    openSheet('yearSheet');
+  }
   function openOwner(){ const m=myTrees.find(t=>t.id===cur.id); const has=!!(m&&m.code); $('osHasCode').hidden=!has; $('osNoCode').hidden=has; if(has) $('osCode').textContent=fmtCode(m.code); openSheet('ownerSheet'); }
   $('osCopy').onclick=async()=>{ toast(await copyText($('osCode').textContent)?'코드를 복사했어요':'코드를 길게 눌러 복사해 주세요'); };
   $('claimForm').addEventListener('submit',async e=>{
     e.preventDefault(); const code=normCode($('clCode').value); if(code.length!==12){ toast('코드 12자리를 확인해 주세요'); return; }
     const a=await api(); const ok=await a.claim(cur.id,code);
-    if(ok){ cur.owner=true; saveMine({id:cur.id,name:cur.tree.name,code}); closeSheet('claimSheet'); $('clCode').value=''; renderTreeMeta(); renderBar(); toast('이제 이 기기에서도 내 트리예요'); }
+    if(ok){ cur.owner=true; saveMine({id:cur.id,name:cur.tree.name,code}); closeSheet('claimSheet'); $('clCode').value=''; renderTreeMeta(); renderBar(); toast('이제 이 기기에서도 내 마을이에요'); }
     else toast('코드가 맞지 않아요');
   });
 
@@ -880,8 +948,8 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('wText').addEventListener('input',()=>{ $('wCount').textContent=`${$('wText').value.length} / 500`; });
   function openWrite(){
     const t=cur.tree; wKind=KIND_IDS[Math.floor(Math.random()*KIND_IDS.length)]; syncPicks();
-    $('wsT').textContent=`${t.name}님에게 편지 달기`;
-    $('wsLead').textContent= t.openMode==='xmas' && !lettersOpen(t) ? `편지는 ${t.name}님만, 12월 25일부터 읽을 수 있어요.` : `편지는 ${t.name}님만 읽을 수 있어요.`;
+    $('wsT').textContent=`${t.name}님 마을에 집 지어 주기`;
+    $('wsLead').textContent=lettersOpen()?`편지는 ${t.name}님만 읽을 수 있어요.`:`편지는 집 안에 봉인돼 있다가 12월 25일에 ${t.name}님만 열어 볼 수 있어요.`;
     $('wNick').value=store.get('xmas-nick',''); $('wCount').textContent=`${$('wText').value.length} / 500`;
     openSheet('writeSheet');
   }
@@ -890,10 +958,10 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     e.preventDefault(); if(sending) return;
     const nick=$('wNick').value.trim().slice(0,10), text=$('wText').value.trim().slice(0,500);
     if(!nick||!text){ toast('이름과 편지를 모두 적어 주세요'); return; }
-    sending=true; const b=$('writeSubmit'); b.disabled=true; b.textContent='다는 중…';
-    try{ const a=await api(); await a.addLetter(cur.id,{kind:wKind,nick,text}); store.set('xmas-nick',nick); $('wText').value=''; closeSheet('writeSheet'); toast('편지를 달았어요!'); }
-    catch(err){ console.error(err); toast('편지를 달지 못했어요. 잠시 후 다시 해 주세요'); }
-    finally{ sending=false; b.disabled=false; b.textContent='트리에 달기'; }
+    sending=true; const b=$('writeSubmit'); b.disabled=true; b.textContent='짓는 중…';
+    try{ const a=await api(); await a.addLetter(cur.id,{kind:wKind,nick,text}); store.set('xmas-nick',nick); $('wText').value=''; closeSheet('writeSheet'); toast('집을 지었어요! 크리스마스에 편지가 열려요'); }
+    catch(err){ console.error(err); toast('집을 짓지 못했어요. 잠시 후 다시 해 주세요'); }
+    finally{ sending=false; b.disabled=false; b.textContent='집 짓기'; }
   });
 
   /* ================= router ================= */
@@ -936,11 +1004,11 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     f.rows.forEach(([label,n,text])=>{ const row=document.createElement('div'); row.className='luck';
       row.innerHTML=`<div><b>${label}</b><div class="dots" role="img" aria-label="5점 중 ${n}점">${[1,2,3,4,5].map(i=>`<i${i<=n?' class="on"':''}></i>`).join('')}</div></div><p>${text}</p>`; el.appendChild(row); });
     const lk=document.createElement('div'); lk.className='lucky';
-    lk.innerHTML=`<div><small>행운의 장식</small><b>${iconSVG(f.kind)}${KIND_NAME[f.kind]}</b></div><div><small>행운의 색</small><b>${f.color}</b></div><div><small>행운의 시간</small><b>${f.time}</b></div><div><small>크리스마스에 하면 좋은 일</small><b>${f.todo}</b></div>`;
+    lk.innerHTML=`<div><small>행운의 건물</small><b>${iconSVG(f.kind)}${KIND_NAME[f.kind]}</b></div><div><small>행운의 색</small><b>${f.color}</b></div><div><small>행운의 시간</small><b>${f.time}</b></div><div><small>크리스마스에 하면 좋은 일</small><b>${f.todo}</b></div>`;
     el.appendChild(lk);
     const row=document.createElement('div'); row.className='row';
     const c=document.createElement('button'); c.className='btn'; c.type='button'; c.textContent='결과 복사';
-    c.onclick=async()=>{ const text=[`${name}님의 ${xYear} 크리스마스 운세`,`${f.animal}띠, ${f.trait}`,'',...f.rows.map(([l,n,t])=>`${l} ${'●'.repeat(n)}${'○'.repeat(5-n)}\n${t}`),'',`행운의 장식: ${KIND_NAME[f.kind]}`,`행운의 색: ${f.color}`,`행운의 시간: ${f.time}`,`하면 좋은 일: ${f.todo}`,'',location.origin+location.pathname].join('\n'); toast(await copyText(text)?'운세를 복사했어요':'복사가 막혀 있어요'); };
+    c.onclick=async()=>{ const text=[`${name}님의 ${xYear} 크리스마스 운세`,`${f.animal}띠, ${f.trait}`,'',...f.rows.map(([l,n,t])=>`${l} ${'●'.repeat(n)}${'○'.repeat(5-n)}\n${t}`),'',`행운의 건물: ${KIND_NAME[f.kind]}`,`행운의 색: ${f.color}`,`행운의 시간: ${f.time}`,`하면 좋은 일: ${f.todo}`,'',location.origin+location.pathname].join('\n'); toast(await copyText(text)?'운세를 복사했어요':'복사가 막혀 있어요'); };
     row.appendChild(c); el.appendChild(row); out.appendChild(el);
   }
   (function(){
@@ -961,14 +1029,6 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     el.onclick=()=>{ if(!can){ toast(`12월 ${n}일에 열 수 있어요`); return; } if(!el.classList.contains('open')){ el.classList.add('open'); opened.add(n); store.set('xmas-advent-'+xYear,[...opened]); } toast(`${d[1]}: ${d[2]}`); };
     $('advent').appendChild(el); });
 
-  /* ================= christmas card ================= */
-  const card=store.get('xmas-card',{to:'',msg:'',from:'',t:'red'}); const cTo=$('cTo'),cMsg=$('cMsg'),cFrom=$('cFrom'); cTo.value=card.to; cMsg.value=card.msg; cFrom.value=card.from;
-  function renderCard(){ $('pTo').textContent=cTo.value.trim()||cTo.placeholder; $('pMsg').textContent=cMsg.value.trim()||cMsg.placeholder; $('pFrom').textContent='— '+(cFrom.value.trim()||cFrom.placeholder); $('xcard').className='xcard t-'+card.t; document.querySelectorAll('.cbtn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===card.t)); card.to=cTo.value; card.msg=cMsg.value; card.from=cFrom.value; store.set('xmas-card',card); }
-  [cTo,cMsg,cFrom].forEach(i=>i.addEventListener('input',renderCard)); document.querySelectorAll('.cbtn').forEach(b=>b.onclick=()=>{ card.t=b.dataset.t; renderCard(); });
-  const ideas=['올 한 해 곁에 있어 줘서 정말 고마워요.\n따뜻하고 행복한 크리스마스 보내세요!','바쁜 한 해였지만 덕분에 많이 웃었어.\n메리 크리스마스, 내년에도 잘 부탁해!','눈처럼 포근하고 트리처럼 반짝이는\n크리스마스가 되길 바라요.','작은 카드에 큰 마음을 담아 보내요.\n항상 건강하고 행복하세요.','올해의 좋은 일은 오래 기억하고,\n아쉬운 일은 눈처럼 녹아 버리길!'];
-  let ii=-1; $('ideaBtn').onclick=()=>{ ii=(ii+1)%ideas.length; cMsg.value=ideas[ii]; renderCard(); };
-  $('copyBtn').onclick=async()=>{ const text=`${$('pTo').textContent}\n\n${$('pMsg').textContent}\n\n${$('pFrom').textContent}\n🎄 Merry Christmas`; toast(await copyText(text)?'카드 내용을 복사했어요':'복사가 막혀 있어요. 직접 선택해서 복사해 주세요'); };
-  renderCard();
 })();
 </script>
 </body>
