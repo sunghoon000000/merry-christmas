@@ -1,0 +1,97 @@
+rules_version = '2';
+
+// 우리들의 크리스마스 — Firestore 보안 규칙
+// - 트리와 장식(보낸 사람 이름, 장식 종류)은 누구나 볼 수 있어요.
+// - 편지 내용은 트리 주인만, 그리고 '크리스마스에 열기'인 트리는 2026-12-25 0시(KST) 이후에만 읽을 수 있어요.
+// - 관리 코드는 아무도 읽을 수 없고, 다른 기기에서 주인임을 증명할 때만 쓰여요.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function treeDoc(t) { return /databases/$(database)/documents/trees/$(t); }
+    function isOwner(t) {
+      return signedIn() && (
+        get(treeDoc(t)).data.ownerUid == request.auth.uid ||
+        exists(/databases/$(database)/documents/trees/$(t)/owners/$(request.auth.uid))
+      );
+    }
+    // 2026-12-25 00:00 KST = 1798124400000 ms (index.html의 OPEN_AT과 같은 값)
+    function lettersOpen(t) {
+      return get(treeDoc(t)).data.openMode == 'now'
+        || request.time >= timestamp.value(1798124400000);
+    }
+    function str(v, minLen, maxLen) { return v is string && v.size() >= minLen && v.size() <= maxLen; }
+    function kinds() { return ['red','gold','blue','star','candy','sock','gift','bell','flake','ginger']; }
+
+    match /trees/{t} {
+      allow get: if true;
+      allow list: if false; // 트리 목록은 아무도 훑어볼 수 없어요
+      allow create: if signedIn()
+        && t.matches('^[a-z0-9]{8}$')
+        && request.resource.data.keys().hasOnly(['name','style','openMode','ownerUid','createdAt'])
+        && request.resource.data.ownerUid == request.auth.uid
+        && str(request.resource.data.name, 1, 10)
+        && request.resource.data.style in ['classic','frost','berry']
+        && request.resource.data.openMode in ['xmas','now']
+        && request.resource.data.createdAt == request.time;
+      allow update: if isOwner(t)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name','style','openMode'])
+        && str(request.resource.data.name, 1, 10)
+        && request.resource.data.style in ['classic','frost','berry']
+        && request.resource.data.openMode in ['xmas','now'];
+      allow delete: if false;
+
+      // 관리 코드: 트리를 만들 때 한 번만 만들 수 있고, 아무도 읽을 수 없어요.
+      match /keys/{k} {
+        allow read, update, delete: if false;
+        allow create: if signedIn()
+          && k.matches('^[A-Z0-9]{12}$')
+          && request.resource.data.keys().size() == 0
+          && !exists(treeDoc(t))
+          && getAfter(treeDoc(t)).data.ownerUid == request.auth.uid;
+      }
+
+      // 다른 기기에서 관리 코드로 주인 등록
+      match /owners/{uid} {
+        allow get: if signedIn() && request.auth.uid == uid;
+        allow list, update, delete: if false;
+        allow create: if signedIn() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['key'])
+          && request.resource.data.key is string
+          && request.resource.data.key.matches('^[A-Z0-9]{12}$')
+          && exists(/databases/$(database)/documents/trees/$(t)/keys/$(request.resource.data.key));
+      }
+
+      // 장식: 누구나 보고, 누구나 (편지와 함께) 달 수 있어요.
+      match /ornaments/{o} {
+        allow get, list: if true;
+        allow create: if signedIn()
+          && exists(treeDoc(t))
+          && request.resource.data.keys().hasOnly(['kind','nick','createdAt','authorUid'])
+          && request.resource.data.authorUid == request.auth.uid
+          && request.resource.data.kind in kinds()
+          && str(request.resource.data.nick, 1, 10)
+          && request.resource.data.createdAt == request.time
+          && existsAfter(/databases/$(database)/documents/trees/$(t)/letters/$(o));
+        allow update: if false;
+        allow delete: if isOwner(t) || (signedIn() && resource.data.authorUid == request.auth.uid);
+      }
+
+      // 편지: 트리 주인만, 열리는 날 이후에만 읽을 수 있어요.
+      match /letters/{o} {
+        allow get, list: if isOwner(t) && lettersOpen(t);
+        allow create: if signedIn()
+          && exists(treeDoc(t))
+          && request.resource.data.keys().hasOnly(['text','nick','createdAt','authorUid'])
+          && request.resource.data.authorUid == request.auth.uid
+          && str(request.resource.data.text, 1, 500)
+          && str(request.resource.data.nick, 1, 10)
+          && request.resource.data.createdAt == request.time
+          && existsAfter(/databases/$(database)/documents/trees/$(t)/ornaments/$(o));
+        allow update: if false;
+        allow delete: if isOwner(t) || (signedIn() && resource.data.authorUid == request.auth.uid);
+      }
+    }
+  }
+}
