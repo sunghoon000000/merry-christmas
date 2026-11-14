@@ -118,37 +118,26 @@
   .field input,.field textarea,.add-row input{background:#fff;border:1px solid rgba(22,36,31,.22);border-radius:10px;padding:12px 14px;color:var(--ink);resize:vertical;min-width:0}
   .field input:focus,.field textarea:focus,.add-row input:focus{outline:none;border-color:var(--spruce);box-shadow:0 0 0 3px rgba(15,59,46,.12)}
 
-  /* ---------- manito ---------- */
-  .names{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-  .name-chip{background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:6px 8px 6px 14px;display:flex;align-items:center;gap:4px;font-weight:500}
-  .name-chip button{font-size:17px;color:var(--muted);padding:0 5px;line-height:1}
-  .add-row{display:flex;gap:8px;max-width:440px}
-  .add-row input{flex:1}
-  .tickets{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:6px}
-  .ticket{background:var(--red);color:var(--paper);border-radius:8px;padding:16px 12px;text-align:center;font-family:var(--display);font-weight:700;font-size:18px;
-    -webkit-mask:radial-gradient(circle 7px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 7px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;
-    mask:radial-gradient(circle 7px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 7px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat}
-  .ticket.done{background:#c7cec8;color:var(--muted)}
-  .ticket small{display:block;font-family:var(--body);font-weight:400;font-size:12px;opacity:.8}
-  .reveal{text-align:center}
-  .reveal .target{font-family:var(--display);font-weight:700;font-size:52px;color:var(--red);margin:6px 0 4px;line-height:1.15;word-break:break-all}
-  .cover{background:var(--spruce);color:var(--paper);border-radius:14px;padding:36px 16px;user-select:none;-webkit-user-select:none;touch-action:none}
-
-  /* ---------- party ---------- */
-  .tabs{display:flex;gap:6px;margin-bottom:22px}
-  .tab{padding:8px 18px;border-radius:999px;font-size:15px;font-weight:500;box-shadow:inset 0 0 0 1px var(--rule-light)}
-  .tab[aria-selected="true"]{background:var(--paper);color:var(--spruce);box-shadow:none}
-  .deck-area{display:flex;flex-direction:column;align-items:center;gap:16px}
-  .pcard{width:min(300px,80vw);aspect-ratio:5/7;perspective:1000px}
-  .pcard-in{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.1,.2,1);transform-style:preserve-3d}
-  .pcard.flipped .pcard-in{transform:rotateY(180deg)}
-  .pface{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px 26px;text-align:center;box-shadow:0 18px 40px rgba(3,16,12,.45)}
-  .pback{background:radial-gradient(circle,rgba(226,201,143,.4) 1.4px,transparent 2px) 0 0/18px 18px,var(--red);box-shadow:inset 0 0 0 9px var(--red),inset 0 0 0 10px var(--brass-soft),0 18px 40px rgba(3,16,12,.45)}
-  .pback span{background:var(--paper);color:var(--red);font-family:var(--display);font-weight:700;font-size:20px;padding:8px 18px;border-radius:999px}
-  .pfront{background:var(--paper);color:var(--ink);transform:rotateY(180deg)}
-  .pfront .kind{font-size:13px;font-weight:600;color:var(--red);margin-bottom:16px}
-  .pfront .txt{font-family:var(--display);font-weight:700;font-size:clamp(21px,5.6vw,25px);line-height:1.45;letter-spacing:-.02em}
-  .pfront .left{position:absolute;bottom:16px;font-size:12px;color:var(--muted)}
+  /* ---------- fortune ---------- */
+  .fortune-grid{display:grid;gap:26px}
+  @media(min-width:760px){.fortune-grid{grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}}
+  .blk.night .field label{color:rgba(251,246,234,.75)}
+  #fortuneOut{scroll-margin-top:64px}
+  .slip-empty{border:1px dashed var(--rule-light);border-radius:6px;padding:44px 22px;text-align:center;color:rgba(251,246,234,.7)}
+  .slip{background:var(--airmail) top/100% 8px no-repeat,var(--paper);color:var(--ink);border-radius:6px;padding:36px 24px 24px;box-shadow:0 18px 40px rgba(3,16,12,.45);animation:up .3s ease-out}
+  .slip h3{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.3;letter-spacing:-.025em}
+  .slip .who{color:var(--muted);font-size:14.5px;margin:4px 0 18px}
+  .luck{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--rule)}
+  .luck b{font-weight:600;font-size:15px}
+  .luck p{font-size:15px}
+  .dots{display:flex;gap:4px;margin-top:7px}
+  .dots i{width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--red)}
+  .dots i.on{background:var(--red)}
+  .lucky{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px;border-top:1px solid var(--rule);padding:16px 0 6px}
+  .lucky small{display:block;font-size:12.5px;color:var(--muted)}
+  .lucky b{font-family:var(--display);font-weight:700;font-size:17px;display:flex;align-items:center;gap:6px}
+  .lucky svg{width:26px;height:28px;flex:none}
+  .slip .row{margin-top:14px}
 
   /* ---------- advent ---------- */
   .advent{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -313,8 +302,7 @@
   <nav class="nav" aria-label="섹션">
     <div class="wrap">
       <a href="#how">트리 편지</a>
-      <a href="#manito">마니또</a>
-      <a href="#party">파티 카드</a>
+      <a href="#fortune">크리스마스 운세</a>
       <a href="#advent-sec">어드벤트 캘린더</a>
       <a href="#letter-sec">카드 쓰기</a>
     </div>
@@ -334,43 +322,17 @@
     </div>
   </section>
 
-  <section class="blk" id="manito">
+  <section class="blk night" id="fortune">
     <div class="wrap">
-      <h2>마니또 뽑기</h2>
-      <p class="desc">모인 사람 이름을 넣고 뽑은 뒤, 휴대폰을 돌려 가며 자기 이름표를 눌러 확인해요. 결과는 이 휴대폰에만 남아요.</p>
-      <div id="manitoSetup">
-        <form class="add-row" id="nameForm">
-          <input id="nameInput" maxlength="12" placeholder="이름 입력 후 추가" aria-label="참가자 이름">
-          <button class="btn" type="submit">추가</button>
+      <h2>크리스마스 운세</h2>
+      <p class="desc">이름과 생일을 넣으면 올해 크리스마스 운세를 뽑아 줘요. 같은 이름과 생일은 늘 같은 결과가 나와요. 재미로만 봐 주세요.</p>
+      <div class="fortune-grid">
+        <form id="fortuneForm">
+          <div class="field"><label for="fName">이름</label><input id="fName" maxlength="10" required placeholder="예: 지민"></div>
+          <div class="field"><label for="fBirth">생년월일</label><input id="fBirth" type="date" required min="1930-01-01"></div>
+          <button class="btn red" type="submit">운세 뽑기</button>
         </form>
-        <div class="names" id="names"></div>
-        <div class="row"><button class="btn red" id="drawBtn" disabled>마니또 뽑기</button><span class="note" id="nameNote"></span></div>
-      </div>
-      <div id="manitoPlay" hidden>
-        <p class="note" id="playNote" style="margin-bottom:10px"></p>
-        <div class="tickets" id="tickets"></div>
-        <div class="row" style="margin-top:18px"><button class="btn line" id="manitoReset">처음부터 다시</button></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="blk night" id="party">
-    <div class="wrap">
-      <h2>파티 카드</h2>
-      <p class="desc">덱을 고르고 카드를 눌러 한 장씩 뒤집어요. 같은 카드는 덱을 다 쓸 때까지 다시 나오지 않아요.</p>
-      <div class="tabs" role="tablist">
-        <button class="tab" role="tab" data-d="talk" aria-selected="true">토크</button>
-        <button class="tab" role="tab" data-d="mission" aria-selected="false">미션</button>
-        <button class="tab" role="tab" data-d="penalty" aria-selected="false">벌칙</button>
-      </div>
-      <div class="deck-area">
-        <button class="pcard" id="pcard" aria-label="카드 뒤집기">
-          <div class="pcard-in">
-            <div class="pface pback" id="pback"><span>뽑기</span></div>
-            <div class="pface pfront"><div class="kind" id="pKind"></div><div class="txt" id="pTxt"></div><div class="left" id="pLeft"></div></div>
-          </div>
-        </button>
-        <p class="note">카드를 누르면 다음 장으로 넘어가요</p>
+        <div id="fortuneOut" aria-live="polite"><div class="slip-empty">이름과 생일을 넣으면 여기에 운세가 나와요.</div></div>
       </div>
     </div>
   </section>
@@ -532,15 +494,6 @@
   </form>
 </div>
 
-<div class="sheet-bg" id="revealSheet" role="dialog" aria-modal="true">
-  <div class="sheet reveal">
-    <p class="note" id="rWho" style="font-size:15px"></p>
-    <div class="cover" id="rCover" tabindex="0">누르고 있는 동안만 보여요</div>
-    <div id="rShown" hidden><div class="target" id="rTarget"></div><p class="note">이 사람에게 몰래 잘해 주세요</p></div>
-    <div class="row" style="justify-content:center;margin-top:18px"><button class="btn" id="rDone">확인했어요</button></div>
-  </div>
-</div>
-
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -575,7 +528,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   /* ================= sheets ================= */
   let openSheets=[];
   function openSheet(id){ const el=$(id); el.classList.add('show'); openSheets.push(id); const f=el.querySelector('input,textarea'); if(f&&!('ontouchstart' in window)) setTimeout(()=>f.focus(),60); }
-  function closeSheet(id){ id=id||openSheets[openSheets.length-1]; if(!id) return; $(id).classList.remove('show'); openSheets=openSheets.filter(x=>x!==id); if(id==='revealSheet') revealFor=null; }
+  function closeSheet(id){ id=id||openSheets[openSheets.length-1]; if(!id) return; $(id).classList.remove('show'); openSheets=openSheets.filter(x=>x!==id); }
   document.querySelectorAll('.sheet-bg').forEach(bg=>{
     bg.addEventListener('click',e=>{ if(e.target===bg) closeSheet(bg.id); });
     bg.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeSheet(bg.id)));
@@ -946,41 +899,51 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   addEventListener('hashchange',route);
   route();
 
-  /* ================= manito ================= */
-  let names=store.get('xmas-manito-names',[]), pairs=store.get('xmas-manito-pairs',null), seen=new Set(store.get('xmas-manito-seen',[]));
-  const saveM=()=>{ store.set('xmas-manito-names',names); store.set('xmas-manito-pairs',pairs); store.set('xmas-manito-seen',[...seen]); };
-  function renderNames(){ const box=$('names'); box.innerHTML='';
-    names.forEach((n,i)=>{ const c=document.createElement('span'); c.className='name-chip'; const t=document.createElement('span'); t.textContent=n; const x=document.createElement('button'); x.type='button'; x.textContent='×'; x.setAttribute('aria-label',n+' 빼기'); x.onclick=()=>{ names.splice(i,1); saveM(); renderNames(); }; c.append(t,x); box.appendChild(c); });
-    $('drawBtn').disabled=names.length<3; $('nameNote').textContent=names.length<3?`3명 이상 넣어 주세요 (지금 ${names.length}명)`:`${names.length}명 준비됐어요`; }
-  $('nameForm').addEventListener('submit',e=>{ e.preventDefault(); const v=$('nameInput').value.trim(); if(!v) return; if(names.includes(v)){ toast('이미 있는 이름이에요'); return; } if(names.length>=30){ toast('30명까지 넣을 수 있어요'); return; } names.push(v); $('nameInput').value=''; saveM(); renderNames(); });
-  function derange(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } const m={}; a.forEach((n,i)=>m[n]=a[(i+1)%a.length]); return m; }
-  $('drawBtn').onclick=()=>{ pairs=derange(names); seen=new Set(); saveM(); showPlay(); toast('뽑기 완료! 각자 이름표를 눌러 확인해요'); };
-  function showPlay(){ $('manitoSetup').hidden=!!pairs; $('manitoPlay').hidden=!pairs; if(!pairs){ renderNames(); return; }
-    const box=$('tickets'); box.innerHTML='';
-    Object.keys(pairs).forEach(n=>{ const b=document.createElement('button'); b.className='ticket'+(seen.has(n)?' done':''); const s=document.createElement('small'); s.textContent=seen.has(n)?'확인함':'눌러서 확인'; b.append(s,document.createTextNode(n)); b.onclick=()=>openReveal(n); box.appendChild(b); });
-    $('playNote').textContent=`${seen.size} / ${Object.keys(pairs).length}명 확인했어요. 다른 사람 이름표는 누르지 마세요!`; }
-  let revealFor=null;
-  function openReveal(n){ revealFor=n; $('rWho').textContent=`${n}님의 마니또는`; $('rTarget').textContent=pairs[n]; $('rShown').hidden=true; $('rCover').hidden=false; openSheet('revealSheet'); revealFor=n; }
-  const cover=$('rCover');
-  const show=e=>{ e.preventDefault(); $('rShown').hidden=false; cover.hidden=true; };
-  const hide=()=>{ $('rShown').hidden=true; cover.hidden=false; };
-  cover.addEventListener('pointerdown',show); document.addEventListener('pointerup',()=>{ if(!$('rShown').hidden) hide(); }); document.addEventListener('pointercancel',()=>{ if(!$('rShown').hidden) hide(); });
-  cover.addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter') show(e); }); document.addEventListener('keyup',()=>{ if(!$('rShown').hidden) hide(); });
-  $('rDone').onclick=()=>{ if(revealFor){ seen.add(revealFor); saveM(); } closeSheet('revealSheet'); showPlay(); };
-  $('manitoReset').onclick=()=>{ pairs=null; seen=new Set(); saveM(); showPlay(); };
-  showPlay();
-
-  /* ================= party cards ================= */
-  const DECKS={
-    talk:{label:'토크',items:['올해 가장 크게 웃었던 순간은?','올해의 나에게 상을 준다면 무슨 상?','받았던 선물 중 최고와 최악은?','산타가 진짜 있다면 부탁하고 싶은 것 하나','올해 새로 생긴 취미나 습관은?','10년 뒤 크리스마스엔 어디서 뭘 하고 있을까?','여기 있는 사람의 첫인상과 지금 인상','올해 가장 잘한 소비는?','내년에 꼭 해 보고 싶은 것 하나','어릴 때 크리스마스 하면 떠오르는 기억','올해 나를 가장 힘나게 한 한마디','지금 당장 순간이동할 수 있다면 어디로?','올해의 노래 한 곡을 고른다면?','눈 오는 날 제일 하고 싶은 것은?','여기 있는 사람에게 고마웠던 일 하나']},
-    mission:{label:'미션',items:['오른쪽 사람에게 진심 담은 칭찬 세 가지','캐럴 한 소절을 최대한 웅장하게 부르기','휴대폰 사진첩 최근 사진 한 장 공개하기','루돌프 코 흉내 내고 10초 버티기','모두와 하이파이브 하고 오기','눈사람 포즈로 단체 사진 찍기','다음 차례까지 말끝마다 “메리”를 붙이기','산타 목소리로 “호호호” 세 번','왼쪽 사람 성대모사 하기','올해의 나에게 한 줄 편지 읽어 주기','가장 최근에 보낸 이모티콘 따라 하기','30초 동안 크리스마스 단어 많이 말하기','지금 분위기를 노래 제목으로 표현하기','한 사람을 골라 내년 운세 봐 주기']},
-    penalty:{label:'벌칙',items:['다음 판까지 존댓말 쓰기','다음 사람이 정해 주는 별명으로 불리기','애교 한 번','한 바퀴 돌면서 “메리 크리스마스”','다음 라운드 간식 담당','5초 동안 아무 춤이나','모두에게 덕담 한마디씩','다음 사진 찍을 때 머리띠 쓰기','즉석 삼행시: 크.리.스','눈을 감고 10초간 캐럴 허밍','오른쪽 사람의 작은 소원 하나 들어주기']}
+  /* ================= fortune ================= */
+  const FT={
+    total:['올해 크리스마스는 기다리던 소식이 먼저 찾아와요. 휴대폰을 가까이 두세요.','계획하지 않은 약속이 제일 즐거운 날이 돼요. 갑작스러운 연락을 반겨 보세요.','조용히 쉬는 시간이 복이 되는 때예요. 따뜻한 이불과 귤이면 충분해요.','작은 친절이 큰 선물로 돌아와요. 먼저 인사를 건네 보세요.','미뤄 둔 일을 하나 끝내면 마음이 가벼워져요. 연말 정리가 행운을 불러요.','웃을 일이 많은 연말이에요. 사진을 많이 남겨 두세요.','오래 못 본 사람과 다시 이어지는 운이에요. 생각나는 이름이 있다면 지금 연락해요.','새로운 시작의 기운이 들어와요. 내년 계획을 하나만 적어 보세요.'],
+    love:['눈이 마주치는 순간을 놓치지 마세요. 먼저 웃는 쪽이 이겨요.','말로 하기 어려운 마음은 편지가 대신해 줘요. 트리에 한 통 달아 보세요.','가까운 사람의 사소한 배려가 크게 느껴지는 때예요. 고맙다는 말을 아끼지 마세요.','혼자만의 시간도 달콤해요. 나에게 주는 선물을 하나 골라 보세요.','뜻밖의 자리에서 좋은 인연의 기운이 있어요. 모임 초대는 일단 수락해 보세요.','오래된 사이일수록 새로운 걸 같이 해 보세요. 처음 가 보는 곳이 좋아요.','솔직한 한마디가 관계를 따뜻하게 해요. 돌려 말하지 않아도 괜찮아요.'],
+    money:['충동구매를 조심해야 하는 때예요. 장바구니에 하루만 묵혀 두세요.','뜻밖의 기프티콘이나 작은 당첨운이 있어요.','선물에 쓴 돈은 아깝지 않게 돌아와요. 마음 가는 만큼 써도 좋아요.','지갑은 얇아져도 마음은 두둑해지는 연말이에요. 예산만 미리 정해 두세요.','잊고 있던 돈이 나타나요. 겨울 코트 주머니를 확인해 보세요.','나눠 낼수록 운이 좋아져요. 정산은 그날 바로 하세요.'],
+    friend:['먼저 연락하는 사람이 올해의 산타예요.','친구의 트리에 편지를 달면 두 배로 돌아와요.','오랜 친구와의 수다가 최고의 보약이에요. 통화 버튼을 눌러 보세요.','새 친구가 생길 기운이에요. 낯선 자리에서도 편하게 웃어 보세요.','친구의 부탁을 하나 들어주면 연말이 훈훈해져요.','같이 먹는 음식이 우정을 키워요. 맛집 약속을 잡아 보세요.'],
+    color:['전나무 초록','우체통 빨강','눈꽃 하양','황동 금색','밤하늘 남색','코코아 갈색'],
+    time:['오전 10시','오후 2시','오후 5시','저녁 7시','밤 9시','밤 11시'],
+    todo:['캐럴 크게 틀기','손편지 쓰기','코코아 마시기','창밖 눈 구경','크리스마스 영화 보기','먼저 연락하기','붕어빵 사 먹기'],
+    animal:[['쥐','눈치 빠른 선물 고르기 장인'],['소','묵묵히 챙겨 주는 든든한 산타'],['호랑이','모임 분위기를 이끄는 대장'],['토끼','다정한 편지의 달인'],['용','연말 계획의 큰손'],['뱀','센스 있는 깜짝 이벤트 기획자'],['말','어디든 달려가는 약속 부자'],['양','포근한 분위기 메이커'],['원숭이','웃음 담당 재간둥이'],['닭','부지런한 연말 정리왕'],['개','의리 있는 친구들의 수호자'],['돼지','복을 몰고 오는 맛집 탐험가']]
   };
-  let deck='talk'; const used={talk:[],mission:[],penalty:[]}; const pc=$('pcard');
-  function drawCard(){ const d=DECKS[deck]; let pool=d.items.map((_,i)=>i).filter(i=>!used[deck].includes(i)); if(!pool.length){ used[deck]=[]; pool=d.items.map((_,i)=>i); toast(`${d.label} 덱을 다 써서 다시 섞었어요`); }
-    const i=pool[Math.floor(Math.random()*pool.length)]; used[deck].push(i); $('pKind').textContent=d.label; $('pTxt').textContent=d.items[i]; $('pLeft').textContent=`남은 카드 ${d.items.length-used[deck].length}장`; }
-  pc.onclick=()=>{ if(pc.classList.contains('flipped')){ pc.classList.remove('flipped'); setTimeout(()=>{ drawCard(); pc.classList.add('flipped'); },reduce?0:380); } else { drawCard(); pc.classList.add('flipped'); } };
-  document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{ deck=t.dataset.d; document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t)); pc.classList.remove('flipped'); });
+  function seeded(str){ let h=2166136261; for(const ch of str){ h^=ch.codePointAt(0); h=Math.imul(h,16777619); } let a=h>>>0;
+    return ()=>{ a=(a+0x6D2B79F5)|0; let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
+  function fortune(name,birth){
+    const r=seeded(`${name}|${birth}|${xYear}`), pick=a=>a[Math.floor(r()*a.length)], score=()=>Math.min(5,2+Math.floor(r()*4));
+    const [y,m,d]=birth.split('-').map(Number); const zy=(m<2||(m===2&&d<4))?y-1:y; // 입춘(2월 4일 무렵) 기준
+    const an=FT.animal[((zy-4)%12+12)%12];
+    return {animal:an[0],trait:an[1],
+      rows:[['총운',score(),pick(FT.total)],['애정운',score(),pick(FT.love)],['재물운',score(),pick(FT.money)],['우정운',score(),pick(FT.friend)]],
+      kind:pick(KIND_IDS),color:pick(FT.color),time:pick(FT.time),todo:pick(FT.todo)};
+  }
+  function showFortune(name,birth){
+    const f=fortune(name,birth), out=$('fortuneOut'); out.innerHTML='';
+    const el=document.createElement('div'); el.className='slip';
+    const h=document.createElement('h3'); h.textContent=`${name}님의 ${xYear} 크리스마스 운세`;
+    const w=document.createElement('p'); w.className='who'; w.textContent=`${f.animal}띠, ${f.trait}`;
+    el.append(h,w);
+    f.rows.forEach(([label,n,text])=>{ const row=document.createElement('div'); row.className='luck';
+      row.innerHTML=`<div><b>${label}</b><div class="dots" role="img" aria-label="5점 중 ${n}점">${[1,2,3,4,5].map(i=>`<i${i<=n?' class="on"':''}></i>`).join('')}</div></div><p>${text}</p>`; el.appendChild(row); });
+    const lk=document.createElement('div'); lk.className='lucky';
+    lk.innerHTML=`<div><small>행운의 장식</small><b>${iconSVG(f.kind)}${KIND_NAME[f.kind]}</b></div><div><small>행운의 색</small><b>${f.color}</b></div><div><small>행운의 시간</small><b>${f.time}</b></div><div><small>크리스마스에 하면 좋은 일</small><b>${f.todo}</b></div>`;
+    el.appendChild(lk);
+    const row=document.createElement('div'); row.className='row';
+    const c=document.createElement('button'); c.className='btn'; c.type='button'; c.textContent='결과 복사';
+    c.onclick=async()=>{ const text=[`${name}님의 ${xYear} 크리스마스 운세`,`${f.animal}띠, ${f.trait}`,'',...f.rows.map(([l,n,t])=>`${l} ${'●'.repeat(n)}${'○'.repeat(5-n)}\n${t}`),'',`행운의 장식: ${KIND_NAME[f.kind]}`,`행운의 색: ${f.color}`,`행운의 시간: ${f.time}`,`하면 좋은 일: ${f.todo}`,'',location.origin+location.pathname].join('\n'); toast(await copyText(text)?'운세를 복사했어요':'복사가 막혀 있어요'); };
+    row.appendChild(c); el.appendChild(row); out.appendChild(el);
+  }
+  (function(){
+    const t=new Date(); $('fBirth').max=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+    const saved=store.get('xmas-fortune',null); if(saved&&saved.name&&/^\d{4}-\d{2}-\d{2}$/.test(saved.birth||'')){ $('fName').value=saved.name; $('fBirth').value=saved.birth; showFortune(saved.name,saved.birth); }
+    $('fortuneForm').addEventListener('submit',e=>{ e.preventDefault(); const name=$('fName').value.trim().slice(0,10), birth=$('fBirth').value;
+      if(!name||!/^\d{4}-\d{2}-\d{2}$/.test(birth)){ toast('이름과 생년월일을 넣어 주세요'); return; }
+      store.set('xmas-fortune',{name,birth}); showFortune(name,birth);
+      if(innerWidth<760) $('fortuneOut').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); });
+  })();
 
   /* ================= advent ================= */
   const days=[['🎄','트리 세우기','작은 트리나 장식 하나를 꺼내 두세요.'],['☕','코코아 타임','따뜻한 코코아 한 잔을 천천히 마셔요.'],['🎵','캐럴 한 곡','제일 좋아하는 캐럴을 크게 틀어요.'],['✉️','안부 문자','한동안 연락 못 한 친구에게 안부를 보내요.'],['🍪','겨울 간식','붕어빵이나 호떡을 하나 사 먹어요.'],['🧦','겨울 양말','두툼한 양말을 꺼내 신어요.'],['🎬','크리스마스 영화','저녁에 크리스마스 영화 한 편.'],['📸','겨울 사진','오늘 본 겨울 풍경을 한 장 찍어 둬요.'],['🎁','선물 리스트','챙기고 싶은 사람과 선물 아이디어를 적어요.'],['🕯️','촛불 저녁','불을 끄고 무드등 하나만 켜고 쉬어요.'],['🚶','저녁 산책','동네 조명을 보러 잠깐 걸어요.'],['📖','한 해 돌아보기','올해 좋았던 순간 세 가지를 떠올려요.'],['🧣','따뜻하게','목도리 꼭 두르고 나가기.'],['💌','트리 편지','친구 트리에 편지를 하나 달아 줘요.'],['🍲','따끈한 한 끼','좋아하는 사람과 국물 요리를 먹어요.'],['✂️','종이 눈송이','종이를 접고 오려 창문에 붙여요.'],['🤝','작은 나눔','기부나 작은 친절을 하나 해요.'],['🛁','쉬는 날','오늘은 일찍 씻고 푹 쉬어요.'],['🎨','겨울 그림','눈사람이든 트리든 하나 그려 봐요.'],['🎶','플레이리스트','나만의 크리스마스 플레이리스트를 만들어요.'],['⭐','동지','밤이 가장 긴 날. 팥죽 한 그릇 어때요?'],['🎀','선물 포장','준비한 선물을 정성껏 포장해요.'],['🏠','조금 정리','방 한 구석만 깨끗하게 치워요.'],['🔔','크리스마스 이브','오늘 밤은 마음껏 설레도 좋아요.']];
