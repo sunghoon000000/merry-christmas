@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>설야 — 편지로 짓는 겨울 마을</title>
+<title>슈가플럼 — 편지로 짓는 크리스마스 마을</title>
 <meta name="description" content="내 마을 링크를 보내면 친구들이 편지를 담은 집을 하나씩 지어 줘요. 편지는 크리스마스에 열려요.">
 <meta name="theme-color" content="#07201a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="설야 — 편지로 짓는 겨울 마을">
+<meta property="og:title" content="슈가플럼 — 편지로 짓는 크리스마스 마을">
 <meta property="og:description" content="내 마을에 집을 하나 지어 줘! 편지는 크리스마스에 열려요">
 <meta property="og:image" content="https://sunghoon000000.github.io/merry-christmas/og.jpg">
 <meta property="og:url" content="https://sunghoon000000.github.io/merry-christmas/">
@@ -261,6 +261,21 @@
   .toast.show{opacity:1;transform:translate(-50%,0)}
 
   @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+  /* sugarplum illustrated village */
+  #treeSvg{max-width:min(560px,calc(84vh * .604));border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  #treeSvg:not(.lit) .vbg{filter:brightness(.78) saturate(.9)}
+  .vbg{transition:filter .5s ease}
+  .pager{bottom:40%}
+  @media (max-width:700px){.pager{bottom:10px;padding:0 14px}}
+  .pageinfo{bottom:16px}.pageinfo:not(:empty){left:50%;right:auto;transform:translateX(-50%);background:rgba(7,20,16,.62);color:#fbf6ea;padding:4px 12px;border-radius:999px}
+  .hero-tree .tree{overflow:hidden;-webkit-mask-image:radial-gradient(closest-side,#000 74%,transparent 100%);mask-image:radial-gradient(closest-side,#000 74%,transparent 100%)}
+  .pick{background:#222838}.pick[aria-pressed="true"]{background:#33283a}
+  .picks{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .pick{min-width:0;overflow:hidden;padding:0;position:relative}
+  .pick img{position:absolute;left:8%;top:8%;width:84%;height:84%;object-fit:contain;pointer-events:none}
+  .bigorn img{width:120px;height:120px;object-fit:contain;background:#222838;border-radius:18px;padding:10px}
+  .orn-g .lab rect{filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
 </style>
 </head>
 <body>
@@ -282,7 +297,7 @@
   <header class="hero" id="hero">
     <canvas class="snowfx" id="snow1" aria-hidden="true"></canvas>
     <div class="hero-top">
-      <span class="wordmark">설야</span>
+      <span class="wordmark">슈가플럼</span>
       <div class="row" style="gap:6px">
         <button class="chip" id="musicBtn" aria-pressed="false">♪ 징글벨</button>
         <button class="chip snowBtn" aria-pressed="true">눈 내리기</button>
@@ -299,12 +314,12 @@
         <p class="clock" id="clock">&nbsp;</p>
       </div>
       <div class="hero-tree">
-        <svg class="tree lit" id="heroSvg" viewBox="0 0 400 360" aria-hidden="true"></svg>
+        <svg class="tree lit" id="heroSvg" viewBox="0 430 900 1060" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
         <svg class="postmark" viewBox="0 0 200 200" role="img" aria-labelledby="nights lead">
           <defs><path id="pmArc" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"/></defs>
           <circle cx="100" cy="100" r="96" stroke-width="3"/>
           <circle cx="100" cy="100" r="60" stroke-width="1.5"/>
-          <text font-size="14.5" font-weight="500" letter-spacing="2.2"><textPath href="#pmArc" id="pmText">설야 ★ 편지 개봉일 12.25 ★</textPath></text>
+          <text font-size="14.5" font-weight="500" letter-spacing="2.2"><textPath href="#pmArc" id="pmText">슈가플럼 ★ 편지 개봉일 12.25 ★</textPath></text>
           <text x="100" y="80" text-anchor="middle" font-size="13" font-weight="500">크리스마스까지</text>
           <text x="100" y="124" text-anchor="middle" font-size="50" font-weight="700" id="nights">0</text>
           <text x="100" y="144" text-anchor="middle" font-size="13" font-weight="500" id="lead">밤</text>
@@ -326,9 +341,9 @@
       <h2>편지로 마을 짓기</h2>
       <p class="desc">로그인 없이 만들 수 있어요. 누가 어떤 집을 지었는지는 모두 보이지만, 집 안의 편지는 마을 주인만 크리스마스에 열어 볼 수 있어요.</p>
       <div class="steps">
-        <div class="step"><b>1</b><div><h3>마을을 만들어요</h3><p>이름을 적으면 언덕 위에 작은 트리 하나가 있는 마을이 생겨요.</p></div></div>
+        <div class="step"><b>1</b><div><h3>마을을 만들어요</h3><p>이름을 적으면 커다란 트리 하나가 서 있는 눈 덮인 광장이 생겨요.</p></div></div>
         <div class="step"><b>2</b><div><h3>친구들이 집을 지어 줘요</h3><p>링크를 받은 친구가 오두막, 빵집, 눈사람 같은 것을 고르고 그 안에 편지를 넣어요.</p></div></div>
-        <div class="step"><b>3</b><div><h3>마을이 자라요</h3><p>편지가 쌓일수록 트리가 커지고 가로등, 얼음 연못, 오로라가 생겨요. 매일 불을 밝히면 보상도 있어요.</p></div></div>
+        <div class="step"><b>3</b><div><h3>마을이 자라요</h3><p>편지가 쌓일수록 트리에 불이 켜지고 사탕 가게, 우체국, 회전목마가 들어서요. 눈밭은 벽돌 광장이 되고 하늘엔 오로라가 떠요.</p></div></div>
         <div class="step"><b>4</b><div><h3>크리스마스에 열어요</h3><p>12월 25일, 창문마다 불이 켜지면 편지를 열어 보고 올해의 마을 카드를 받아요.</p></div></div>
       </div>
       <div class="mytrees" id="myTrees"></div>
@@ -362,7 +377,7 @@
 
   <footer>
     <div class="airmail" aria-hidden="true"></div>
-    <div class="wrap"><b>설야</b><span>눈 내리는 밤, 편지로 짓는 겨울 마을</span></div>
+    <div class="wrap"><b>슈가플럼</b><span>눈 내리는 밤, 편지로 짓는 크리스마스 마을</span></div>
   </footer>
 </div>
 
@@ -392,7 +407,7 @@
     </div>
     <div style="text-align:center"><span class="demo-banner" id="demoBanner" hidden>미리보기 모드: 이 기기에만 저장돼요</span></div>
     <div class="scene">
-      <svg id="treeSvg" viewBox="0 0 400 360" role="img" aria-label="겨울 마을"></svg>
+      <svg id="treeSvg" viewBox="0 110 900 1490" role="img" aria-label="슈가플럼 마을"></svg>
       <div class="pager"><button id="prevPg" aria-label="이전 집들">‹</button><button id="nextPg" aria-label="다음 집들">›</button></div>
       <div class="pageinfo" id="pageInfo"></div>
     </div>
@@ -406,7 +421,7 @@
     <h3 id="csT">내 마을 만들기</h3>
     <p class="lead">친구들이 볼 이름이에요. 마을 이름은 "○○의 마을"이 돼요.</p>
     <div class="field"><label for="tName">이름</label><input id="tName" maxlength="10" required placeholder="예: 지민"></div>
-    <div class="field"><span class="lbl">마을 한가운데 트리 색</span><div class="styles" id="styleRow"></div></div>
+    <div class="field" hidden><span class="lbl">마을 한가운데 트리 색</span><div class="styles" id="styleRow"></div></div>
     <div class="row"><button class="btn red" type="submit" id="createSubmit" style="flex:1">마을 만들기</button><button class="btn line" type="button" data-close>취소</button></div>
   </form>
 </div>
@@ -461,7 +476,7 @@
     <div class="yearcard">
       <p class="yc-kicker" id="ycKicker"></p>
       <h3 id="ycT"></h3>
-      <svg id="ycSvg" viewBox="0 0 400 360" aria-hidden="true"></svg>
+      <svg id="ycSvg" viewBox="0 380 900 1220" aria-hidden="true"></svg>
       <div class="lucky" id="ycStats"></div>
     </div>
     <div class="row" style="margin-top:14px"><button class="btn red" id="ycCopy" style="flex:1">결과 복사</button><button class="btn line" data-close>닫기</button></div>
@@ -559,7 +574,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   /* ================= countdown ================= */
   const now0=new Date(); let xYear=now0.getFullYear(); if(now0.getMonth()===11&&now0.getDate()>25) xYear++;
   const target=new Date(xYear,11,25); const pad=n=>String(n).padStart(2,'0');
-  $('pmText').textContent=`설야 ★ 편지 개봉일 ${xYear}.12.25 ★`;
+  $('pmText').textContent=`슈가플럼 ★ 편지 개봉일 ${xYear}.12.25 ★`;
   function tick(){
     const now=new Date();
     if(now.getFullYear()===xYear&&now.getMonth()===11&&now.getDate()===25){ $('nights').textContent='오늘'; $('nights').setAttribute('font-size','40'); $('nights').setAttribute('y','120'); $('lead').textContent='열어 보세요'; $('clock').textContent='메리 크리스마스! 트리에 달린 편지를 열어 보세요'; return; }
@@ -583,7 +598,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('musicBtn').onclick=()=>playing?stop():play();
 
   /* ================= ornaments & tree art ================= */
-  const KINDS=[['cabin','통나무 오두막'],['house','빨간 지붕 집'],['bakery','빵집'],['tower','종탑'],['lodge','산장'],['snowman','눈사람'],['lamp','가로등'],['sled','선물 썰매'],['deer','루돌프'],['fir','작은 전나무']];
+  const KINDS=[['cabin','통나무 오두막'],['house','빨간 지붕 집'],['bakery','빵집'],['tower','종탑'],['lodge','산장'],['snowman','눈사람'],['lamp','가로등'],['sled','선물 썰매'],['deer','순록'],['fir','작은 전나무']];
   const KIND_IDS=KINDS.map(k=>k[0]); const KIND_NAME=Object.fromEntries(KINDS);
   const SNOW='#f6f8f4';
   const smoke=x=>`<path class="smoke" d="M${x} -41 q-4 -5 0 -9 q4 -4 0 -9" fill="none" stroke="#e6ece9" stroke-width="2.2" stroke-linecap="round"/>`;
@@ -602,7 +617,9 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     }
     return '';
   }
-  const iconSVG=k=>`<svg viewBox="-30 -66 60 70" aria-hidden="true">${ornSVG(k)}</svg>`;
+  const ART='assets/v/';
+  const SPR={"bakery":[-78.7,-204.3,174.3,226.0],"cabin":[-75.7,-209.3,168.0,231.0],"deer":[-34.0,-91.3,82.3,100.0],"fir":[-76.7,-195.3,153.3,210.3],"house":[-67.3,-214.3,149.3,236.0],"lamp":[-44.7,-102.0,89.3,115.0],"lodge":[-97.0,-206.3,213.3,227.0],"sled":[-46.0,-53.7,90.3,63.0],"snowman":[-29.3,-79.0,58.7,86.7],"tower":[-39.0,-182.7,87.0,203.3]};
+  const iconSVG=k=>`<img src="${ART}k-${k}.webp" alt="" draggable="false">`;
   const STYLES={
     classic:{label:'초록',base:'#1f6b4a',snow:'#f6f8f4'},
     frost:{label:'눈꽃',base:'#7fb4c6',snow:'#ffffff'},
@@ -637,9 +654,9 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         h+=`<g class="bulb" style="animation-delay:${(i*.29%1.8).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="6" fill="${c}" opacity=".25"/><circle cx="${x}" cy="${y}" r="2.4" fill="${c}"/></g>`; i++; } });
     el.innerHTML=h;
   }
-  const LEVELS=[[0,'빈 언덕'],[3,'반짝이는 언덕'],[7,'가로등 길'],[12,'얼음 연못 마을'],[20,'오로라 마을'],[30,'산타가 들르는 마을']];
+  const LEVELS=[[0,'첫눈 내린 광장'],[3,'불 켜진 트리'],[7,'가로등 골목'],[12,'사탕 가게 거리'],[20,'오로라 마을'],[30,'슈가플럼 마을']];
   function levelOf(n){ let l=1; LEVELS.forEach(([min],i)=>{ if(n>=min) l=i+1; }); return l; }
-  const SLOTS=[[40,214,.8],[98,210,.8],[302,210,.8],[360,214,.8],[30,260,1],[88,256,1],[146,264,1],[254,264,1],[312,256,1],[370,260,1],[50,324,1.22],[124,328,1.22],[276,328,1.22],[350,324,1.22]];
+  const SLOTS=[[222,942,.7],[672,942,.7],[230,818,.56],[670,818,.56],[135,818,.56],[765,818,.56],[40,818,.56],[860,818,.56]];
   const PER=SLOTS.length;
   const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function bulbsSVG(){
@@ -668,29 +685,21 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   function dayKey(off){ return new Date(Date.now()+9*36e5+off*864e5).toISOString().slice(0,10); }
   // o: {style, level, streak, open, items:[{id,kind,nick,isNew}], labels}
   function villageSVG(o){
-    const L=o.level; let g='';
-    g+=`<circle cx="62" cy="58" r="17" fill="#f3ead2" opacity=".92"/><circle cx="69" cy="53" r="15" fill="#0b2a20" opacity=".25"/>`;
-    if(L>=5) g+=`<g class="aurora" opacity=".6"><path d="M-10 70 Q80 20 170 60 T360 40 T420 60 V110 Q330 80 250 105 T80 100 T-10 120Z" fill="url(#gAur)"/></g><g class="shoot"><path d="M300 26 l26 -12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></g>`;
-    if(o.streak>=14) g+=[[60,70],[110,40],[250,52],[300,90]].map(([x,y],i)=>`<g class="lantern" style="animation-delay:${i*.7}s"><rect x="${x-4}" y="${y-6}" width="8" height="10" rx="2" fill="#ffb347"/><rect x="${x-4}" y="${y-6}" width="8" height="10" rx="2" fill="#fff" opacity=".25"/></g>`).join('');
-    if(L>=6) g+=`<g class="sleigh"><g transform="translate(0 70) scale(.7)" fill="#16241f" opacity=".75"><path d="M0 10 h34 q6 0 6 -6 M6 10 v-4 M26 10 v-4" stroke="#16241f" stroke-width="2" fill="none"/><path d="M4 6 h26 l3 -10 h-29z"/><circle cx="20" cy="-8" r="5"/><path d="M40 2 l18 -2 M58 0 l10 -6 l4 2 l-6 6z M66 -6 l-2 -6 M70 -4 l2 -6"/><path d="M40 2 q10 -4 16 -2" stroke="#16241f" stroke-width="1" fill="none"/></g></g>`;
-    g+=`<path d="M0 232 Q90 192 200 206 Q310 190 400 226 V360 H0Z" fill="#d9e3df"/>`;
-    if(L>=4) g+=`<ellipse cx="330" cy="236" rx="50" ry="9" fill="#a9d6e5" opacity=".9"/><path d="M302 234 h18 M338 238 h16" stroke="#fff" stroke-width="1.5" opacity=".75" stroke-linecap="round"/>`;
-    g+=`<path d="M0 264 Q100 238 200 252 Q300 238 400 260 V360 H0Z" fill="#e9f0ec"/>`;
-    if(L>=3) g+=`<path d="M176 360 Q186 300 195 262 Q199 238 199 214 L203 214 Q205 238 211 262 Q224 300 238 360Z" fill="#dbe5e0"/>`;
-    g+=villageTree(o.style,L);
-    g+=`<path d="M0 302 Q120 286 200 294 Q290 284 400 302 V360 H0Z" fill="#f7faf8"/>`;
-    if(L>=3) g+=[[172,312],[230,312]].map(([x,y])=>`<g transform="translate(${x} ${y}) scale(.85)">${ornSVG('lamp')}</g>`).join('');
+    const L=o.level; let g=`<image class="vbg" href="${ART}bg${L}.webp" width="900" height="1600" preserveAspectRatio="none"/>`;
+    if(o.streak>=14) g+=[[130,250],[260,190],[640,240],[790,300]].map(([x,y],i)=>`<g class="lantern" style="animation-delay:${i*.7}s"><circle cx="${x}" cy="${y}" r="26" fill="#ffb347" opacity=".22"/><rect x="${x-9}" y="${y-13}" width="18" height="22" rx="5" fill="#ffb347"/><rect x="${x-9}" y="${y-13}" width="18" height="7" rx="3" fill="#ffd98a"/></g>`).join('');
     const slots=o.items.slice(0,PER).map((it,i)=>({it,i,slot:SLOTS[i]})).sort((a,b)=>a.slot[1]-b.slot[1]);
-    slots.forEach(({it,i,slot:[x,y,sc]})=>{
-      const nick=String(it.nick||'').slice(0,10)||'익명', short=nick.length>5?nick.slice(0,5)+'…':nick, w=Math.max(26,short.length*9.5+12);
-      const lab=o.labels?`<g class="lab" transform="translate(0 4)"><rect x="${-w/2}" y="0" width="${w}" height="15" rx="3" fill="#fbf6ea"/><text text-anchor="middle" y="11" font-size="9.5" font-weight="500" fill="#16241f" font-family="IBM Plex Sans KR, sans-serif">${esc(short)}</text></g>`:'';
+    slots.forEach(({it,i,slot:[x,y,sc,stag]})=>{
+      const b=SPR[it.kind]; if(!b) return;
+      const nick=String(it.nick||'').slice(0,10)||'익명', short=[...nick].length>3?[...nick].slice(0,3).join('')+'…':nick, w=Math.max(46,[...short].length*22+18);
+      const lx=Math.min(Math.max(0,8+w/2-x),892-w/2-x), ly=8+(stag?30:0);
+      const lab=o.labels?`<g class="lab" transform="translate(${lx.toFixed(1)} ${ly})"><rect x="${-w/2}" y="0" width="${w}" height="32" rx="7" fill="#fbf6ea" fill-opacity=".94"/><text text-anchor="middle" y="23" font-size="21" font-weight="600" fill="#16241f" font-family="IBM Plex Sans KR, sans-serif">${esc(short)}</text></g>`:'';
       const attrs=it.id?` class="orn-g${it.isNew?' new':''}" data-id="${esc(it.id)}" tabindex="0" role="button" aria-label="${esc(nick)}님이 지은 ${KIND_NAME[it.kind]}"`:'';
-      g+=`<g transform="translate(${x} ${y})"${attrs}><g class="orn" style="--d:${(i*.22).toFixed(2)}s"><g transform="scale(${sc})"><rect x="-22" y="-50" width="44" height="52" fill="transparent"/>${ornSVG(it.kind)}</g></g>${lab}</g>`;
+      g+=`<g transform="translate(${x} ${y})"${attrs}><g class="orn" style="--d:${(i*.22).toFixed(2)}s"><image href="${ART}k-${it.kind}.webp" x="${(b[0]*sc).toFixed(1)}" y="${(b[1]*sc).toFixed(1)}" width="${(b[2]*sc).toFixed(1)}" height="${(b[3]*sc).toFixed(1)}"/></g>${lab}</g>`;
     });
     return g;
   }
   function paintVillage(svg,o){ svg.innerHTML=villageSVG(o); svg.classList.toggle('glow',o.streak>=7||!!o.open); svg.classList.toggle('smoky',o.streak>=3||!!o.open); svg.classList.toggle('open',!!o.open); }
-  paintVillage($('heroSvg'),{style:'classic',level:5,streak:7,open:false,labels:false,items:['lodge','house','cabin','tower','snowman','bakery','fir','sled','house','deer','cabin','lamp','bakery','snowman'].map(k=>({kind:k}))});
+  paintVillage($('heroSvg'),{style:'classic',level:6,streak:7,open:false,labels:false,items:['cabin','house','bakery','lodge','tower','deer','snowman','fir'].map(k=>({kind:k}))});
 
   /* ================= backends ================= */
   function demoBackend(){
@@ -784,7 +793,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   const shareUrl=id=>location.origin+location.pathname+'#t-'+id;
   async function share(id,name){
     const url=shareUrl(id), text=`${name}의 겨울 마을에 집을 하나 지어 줘! 편지는 크리스마스에 열려요`;
-    if(navigator.share){ try{ await navigator.share({title:'설야',text,url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+    if(navigator.share){ try{ await navigator.share({title:'슈가플럼',text,url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
     toast(await copyText(`${text}\n${url}`)?'링크를 복사했어요. 카톡에 붙여 넣어 보내요':'링크를 길게 눌러 복사해 주세요');
   }
 
@@ -842,7 +851,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     if(!lettersOpen()){ lock.hidden=false; lock.textContent=`편지 개봉일 12월 25일 · D-${daysToOpen()}`+(st?` · 연속 ${st}일째 불 밝힘`:''); }
     else if(cur.owner&&n){ lock.hidden=false; lock.textContent='창문마다 불이 켜졌어요. 집을 눌러 편지를 열어 보세요'; }
     else lock.hidden=true;
-    document.title=`${t.name}의 마을 · 설야`;
+    document.title=`${t.name}의 마을 · 슈가플럼`;
   }
   function renderBar(){
     const bar=$('tpBar'); bar.innerHTML='';
@@ -925,11 +934,11 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     const t=cur.tree, n=cur.orns.length, L=levelOf(n), st=Number((t.lit||{}).days)||0;
     const cnt={}; cur.orns.forEach(o=>cnt[o.kind]=(cnt[o.kind]||0)+1); const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
     const first=cur.orns[0];
-    $('ycKicker').textContent=`${xYear} 설야 · 올해의 마을`; $('ycT').textContent=`${t.name}의 마을`;
+    $('ycKicker').textContent=`${xYear} 슈가플럼 · 올해의 마을`; $('ycT').textContent=`${t.name}의 마을`;
     paintVillage($('ycSvg'),{style:t.style,level:L,streak:st,open:true,labels:false,items:cur.orns.slice(0,PER)});
     const stats=[['지어진 집',`${n}채`],['마을 단계',`Lv.${L} ${LEVELS[L-1][1]}`],['연속 불 밝힘',`${st}일`],['첫 번째로 지어 준 친구',first?String(first.nick||'익명').slice(0,10):'-'],['가장 많이 지어진 것',top?`${KIND_NAME[top[0]]} ${top[1]}채`:'-']];
     $('ycStats').innerHTML=''; stats.forEach(([a,b])=>{ const d=document.createElement('div'); const s1=document.createElement('small'); s1.textContent=a; const b1=document.createElement('b'); b1.textContent=b; d.append(s1,b1); $('ycStats').appendChild(d); });
-    $('ycCopy').onclick=async()=>{ const text=[`${xYear} 설야 · ${t.name}의 마을`,...stats.map(([a,b])=>`${a}: ${b}`),'',shareUrl(cur.id)].join('\n'); toast(await copyText(text)?'마을 카드를 복사했어요':'복사가 막혀 있어요'); };
+    $('ycCopy').onclick=async()=>{ const text=[`${xYear} 슈가플럼 · ${t.name}의 마을`,...stats.map(([a,b])=>`${a}: ${b}`),'',shareUrl(cur.id)].join('\n'); toast(await copyText(text)?'마을 카드를 복사했어요':'복사가 막혀 있어요'); };
     openSheet('yearSheet');
   }
   function openOwner(){ const m=myTrees.find(t=>t.id===cur.id); const has=!!(m&&m.code); $('osHasCode').hidden=!has; $('osNoCode').hidden=has; if(has) $('osCode').textContent=fmtCode(m.code); openSheet('ownerSheet'); }
