@@ -588,14 +588,14 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
 
   /* ================= music: original warm piano accompaniment ================= */
   const PIANO=(()=>{
-    // original piece: 4/4 at 100 bpm, driving 8th-note pentatonic figure in the middle register over a rolling bass
+    // original piece in F major: 4/4 at 100 bpm, driving 8th-note pentatonic figure in the middle register over a rolling bass
     const EIGHTH=60/100/2;
     let seed=1225; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
-    const V={ Dm9:[38,45,52,53,60], Bb9:[46,53,57,60,62], FA:[45,52,53,60,64], Gm9:[43,50,57,58,65], Cs:[48,55,60,65,67],
-      Bb11:[46,53,57,62,64], Gm11:[43,50,53,58,60], As:[45,52,57,62,64], A:[45,52,57,61,64] };
-    const RH={ Dm9:[64,65,69,72], Bb9:[62,65,69,72], FA:[64,65,69,72], Gm9:[62,65,69,70], Cs:[65,67,72,74],
-      Bb11:[62,64,69,74], Gm11:[62,65,67,70], As:[62,64,69,74], A:[61,64,69,73] };
-    const PROG=[['Dm9'],['Bb9'],['FA'],['Gm9','Cs'],['Dm9'],['Bb11'],['Gm11'],['As','A']];
+    const V={ F9:[41,48,52,55,57], CE:[40,48,55,60,62], Dm9:[38,45,52,53,57], Bb9:[46,53,57,60,62], Cs:[48,55,60,65,67],
+      Am7:[45,52,55,60,64], Bb7:[46,53,57,62,65], C:[48,55,60,64,67] };
+    const RH={ F9:[65,67,69,72], CE:[64,67,72,74], Dm9:[64,65,69,72], Bb9:[65,69,72,74], Cs:[65,67,72,74],
+      Am7:[64,67,69,72], Bb7:[65,69,70,74], C:[64,67,72,76] };
+    const PROG=[['F9'],['CE'],['Dm9'],['Bb9','Cs'],['F9'],['Am7'],['Bb7'],['Cs','C']];
     const FIG=[0,2,3,1,2,3,1,2], ACC=[1,0,0,1,0,0,1,0];
     function build(){
       const ev=[]; const push=(u,n,d,v,h)=>ev.push([u,n,d,v,h]);
@@ -605,7 +605,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         // bass + left hand on the beats
         const c0=V[ch[0]];
         push(u0,c0[0],8,.5,0); if(sec===2) push(u0,c0[0]-12,8,.34,0);
-        if(last){ V.Dm9.forEach((n,k)=>push(u0+k*.2,n,14,.36,0)); [64,69,72].forEach((n,k)=>push(u0+1+k*.25,n,14,.2,1)); continue; }
+        if(last){ V.F9.forEach((n,k)=>push(u0+k*.2,n,14,.36,0)); [69,72,76].forEach((n,k)=>push(u0+1+k*.25,n,14,.2,1)); continue; }
         push(u0+2,V[at(2)][1],6,.32,0); push(u0+4,V[at(4)][ch.length>1?0:2],4,.36,0); push(u0+6,V[at(6)][1],3,.3,0);
         // the driving figure
         const fig=sec===0&&i<2?0:sec===3&&i>=4?.5:1, lvl=sec===0?.72:sec===2?1.1:sec===3?.8:1;
@@ -625,7 +625,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       for(let c=0;c<2;c++){ const d=b.getChannelData(c); let lp=0; for(let i=0;i<n;i++){ const t=i/n; lp+= (Math.random()*2-1-lp)*.35; d[i]=lp*Math.pow(1-t,2.6)*(i<r*.012?i/(r*.012):1); } } return b; }
     function rig(ctx){
       const master=ctx.createGain(); master.gain.value=0;
-      const tone=ctx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=2000; tone.Q.value=.4;
+      const tone=ctx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=2700; tone.Q.value=.4;
       const dry=ctx.createGain(); dry.gain.value=.78; const wet=ctx.createGain(); wet.gain.value=.42;
       const verb=ctx.createConvolver(); verb.buffer=reverbIR(ctx,3.2);
       tone.connect(dry); tone.connect(verb); verb.connect(wet); dry.connect(master); wet.connect(master); master.connect(ctx.destination);
