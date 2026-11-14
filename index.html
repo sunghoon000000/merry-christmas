@@ -299,7 +299,7 @@
     <div class="hero-top">
       <span class="wordmark">슈가플럼</span>
       <div class="row" style="gap:6px">
-        <button class="chip" id="musicBtn" aria-pressed="false">♪ 징글벨</button>
+        <button class="chip musicBtn" id="musicBtn" aria-pressed="false">♪ 피아노</button>
         <button class="chip snowBtn" aria-pressed="true">눈 내리기</button>
       </div>
     </div>
@@ -387,6 +387,7 @@
   <div class="tp-top">
     <a href="#" id="homeLink">← 처음으로</a>
     <div class="row">
+      <button class="chip musicBtn" aria-pressed="false">♪ 피아노</button>
       <button class="chip snowBtn" aria-pressed="true">눈</button>
       <button class="chip" id="lightsBtn" aria-pressed="true">전구</button>
     </div>
@@ -585,17 +586,105 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   }
   tick(); setInterval(tick,1000);
 
-  /* ================= music ================= */
-  let actx,playing=false,nodes=[],endT;
-  const F={C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392};
-  const A=[['E4',1],['E4',1],['E4',2],['E4',1],['E4',1],['E4',2],['E4',1],['G4',1],['C4',1.5],['D4',.5],['E4',4],['F4',1],['F4',1],['F4',1.5],['F4',.5],['F4',1],['E4',1],['E4',1],['E4',.5],['E4',.5]];
-  const tune=[...A,['E4',1],['D4',1],['D4',1],['E4',1],['D4',2],['G4',2],...A,['G4',1],['G4',1],['F4',1],['D4',1],['C4',4]];
-  function bell(f,t,d){ const o=actx.createOscillator(),o2=actx.createOscillator(),g=actx.createGain(),g2=actx.createGain(); o.type='triangle';o.frequency.value=f*2;o2.type='sine';o2.frequency.value=f*4;g2.gain.value=.25; o.connect(g);o2.connect(g2);g2.connect(g);g.connect(actx.destination); g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.01);g.gain.exponentialRampToValueAtTime(.001,t+Math.max(.35,d*1.4)); o.start(t);o2.start(t);o.stop(t+d*1.5+.4);o2.stop(t+d*1.5+.4);nodes.push(o,o2); }
-  function play(){ try{ actx=actx||new(window.AudioContext||window.webkitAudioContext)(); actx.resume&&actx.resume(); }catch(e){ toast('이 브라우저에서는 소리를 낼 수 없어요'); return; }
-    const b=.26; let t=actx.currentTime+.05; for(const [n,d] of tune){ bell(F[n],t,d*b); t+=d*b; }
-    playing=true; $('musicBtn').setAttribute('aria-pressed',true); $('musicBtn').textContent='■ 멈추기'; clearTimeout(endT); endT=setTimeout(stop,(t-actx.currentTime)*1000+600); }
-  function stop(){ nodes.forEach(n=>{try{n.stop()}catch(e){}}); nodes=[]; playing=false; $('musicBtn').setAttribute('aria-pressed',false); $('musicBtn').textContent='♪ 징글벨'; }
-  $('musicBtn').onclick=()=>playing?stop():play();
+  /* ================= music: warm piano, "Silent Night" (Gruber, 1818, public domain) ================= */
+  const PIANO=(()=>{
+    // time unit = one eighth note (6/8). pitches written in C, transposed to F.
+    const KEY=5, EIGHTH=.4;
+    const nm=s=>{ const m=/^([A-G])(#|b)?(\d)$/.exec(s); return 12*(+m[3]+1)+{C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]]+(m[2]==='#'?1:m[2]==='b'?-1:0); };
+    const MEL=[ // [start-in-bar, note, length] per bar
+      [[0,'G4',1.5],[1.5,'A4',.5],[2,'G4',1],[3,'E4',3]],
+      [[0,'G4',1.5],[1.5,'A4',.5],[2,'G4',1],[3,'E4',3]],
+      [[0,'D5',2],[2,'D5',1],[3,'B4',3]],
+      [[0,'C5',2],[2,'C5',1],[3,'G4',3]],
+      [[0,'A4',2],[2,'A4',1],[3,'C5',1.5],[4.5,'B4',.5],[5,'A4',1]],
+      [[0,'G4',1.5],[1.5,'A4',.5],[2,'G4',1],[3,'E4',3]],
+      [[0,'A4',2],[2,'A4',1],[3,'C5',1.5],[4.5,'B4',.5],[5,'A4',1]],
+      [[0,'G4',1.5],[1.5,'A4',.5],[2,'G4',1],[3,'E4',3]],
+      [[0,'D5',2],[2,'D5',1],[3,'F5',1.5],[4.5,'D5',.5],[5,'B4',1]],
+      [[0,'C5',3],[3,'E5',3]],
+      [[0,'C5',1],[1,'G4',1],[2,'E4',1],[3,'G4',1.5],[4.5,'F4',.5],[5,'D4',1]],
+      [[0,'C4',6]]
+    ];
+    const CH={ Am9:['A2','E3','B3','C4'], F7:['F2','C3','E3','A3'], CE:['E2','C3','G3','C4'], Am7:['A2','E3','G3','C4'],
+      Em7:['E2','B2','D3','G3'], G6B:['B2','E3','G3','D4'], F9:['F2','C3','G3','A3'], Dm7:['D2','A2','C3','F3'],
+      Dm9:['D2','A2','E3','F3'], Am:['A2','E3','A3','C4'], GB:['B2','D3','G3','D4'], G7:['G2','D3','F3','B3'],
+      CG:['G2','C3','E3','G3'], Dm7G:['G2','D3','F3','A3'], C9:['C2','G2','D3','E3'] };
+    const HARM=[['Am9','F7'],['CE','Am7'],['Em7','G6B'],['F7','CE'],['F9','Dm7'],['CE','Am7'],['F7','Dm9'],['Em7','Am'],['GB','G7'],['Am7','F7'],['CG','Dm7G'],['C9','C9']];
+    const INTRO=[['Am9','Am9'],['F7','F7'],['CE','CE'],['Dm9','Dm7G']];
+    const SPARK=[[[0,'E5',3],[3,'C6',3]],[[0,'A5',4.5],[4.5,'G5',1.5]],[[0,'E5',3],[3,'G5',3]],[[0,'F5',3],[3,'D5',3]]];
+    function build(){
+      const ev=[]; let bar=0;
+      const at=(b,x)=>(b*6+x);
+      const arp=(b,half,name,vel,full)=>{ const c=CH[name].map(nm), t=at(b,half*3);
+        ev.push([t,c[0],6,vel*.9,0],[t+1,c[1],5,vel*.62,0],[t+2,c[2],4,vel*.6,0]);
+        if(full) ev.push([t+2,c[3],4,vel*.5,0]); };
+      // intro: open chords with a few high, bell-like notes
+      INTRO.forEach((h,i)=>{ arp(bar,0,h[0],.55,true); arp(bar,1,h[1],.5,true); SPARK[i].forEach(([x,n,d])=>ev.push([at(bar,x),nm(n),d+2,.32,1])); bar++; });
+      // verse 1: melody in the middle, soft broken chords
+      MEL.forEach((m,i)=>{ arp(bar,0,HARM[i][0],.5,false); if(i<11) arp(bar,1,HARM[i][1],.46,false);
+        m.forEach(([x,n,d])=>ev.push([at(bar,x),nm(n),d+.6,.58,1])); bar++; });
+      // short breath
+      arp(bar,0,'Am9',.45,true); ev.push([at(bar,3),nm('E6'),4,.28,1]); bar++;
+      // verse 2: melody an octave up, doubled, fuller left hand
+      MEL.forEach((m,i)=>{ arp(bar,0,HARM[i][0],.56,true); if(i<11) arp(bar,1,HARM[i][1],.5,true);
+        m.forEach(([x,n,d])=>{ ev.push([at(bar,x),nm(n)+12,d+.8,.5,1],[at(bar,x),nm(n),d+.6,.3,1]); });
+        if(i===3||i===7) ev.push([at(bar,4.5),nm('E6'),2,.24,1]); bar++; });
+      // outro
+      arp(bar,0,'F7',.42,true); ev.push([at(bar,0),nm('A5'),5,.26,1],[at(bar,3),nm('G5'),5,.24,1]); bar++;
+      ev.push([at(bar,0),nm('C2'),10,.4,0],[at(bar,.15),nm('G2'),10,.34,0],[at(bar,.3),nm('D3'),10,.3,0],[at(bar,.45),nm('E3'),10,.3,0],[at(bar,.7),nm('B3'),10,.26,1],[at(bar,1),nm('E5'),10,.26,1],[at(bar,1.4),nm('G5'),10,.22,1]); bar+=2;
+      // gentle ritardando into the end of each verse and the outro
+      const rit=u=>{ const b=u/6; let s=0; const slow=[[14,16,1.12],[27,29,1.12],[29,32,1.25]];
+        for(const [a,z,k] of slow){ if(b>a) s+=(Math.min(b,z)-a)*6*(k-1); } return (u+s)*EIGHTH; };
+      const out=ev.map(([u,n,d,v,hand])=>[rit(u),n+KEY,rit(u+d)-rit(u),v,hand]).sort((a,b)=>a[0]-b[0]);
+      return {ev:out,len:rit(bar*6)+2.5};
+    }
+    const SCORE=build();
+    function reverbIR(ctx,sec){ const r=ctx.sampleRate,n=Math.floor(r*sec),b=ctx.createBuffer(2,n,r);
+      for(let c=0;c<2;c++){ const d=b.getChannelData(c); let lp=0; for(let i=0;i<n;i++){ const t=i/n; lp+= (Math.random()*2-1-lp)*.35; d[i]=lp*Math.pow(1-t,2.6)*(i<r*.012?i/(r*.012):1); } } return b; }
+    function rig(ctx){
+      const master=ctx.createGain(); master.gain.value=0;
+      const tone=ctx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=3600; tone.Q.value=.4;
+      const dry=ctx.createGain(); dry.gain.value=.78; const wet=ctx.createGain(); wet.gain.value=.42;
+      const verb=ctx.createConvolver(); verb.buffer=reverbIR(ctx,3.2);
+      tone.connect(dry); tone.connect(verb); verb.connect(wet); dry.connect(master); wet.connect(master); master.connect(ctx.destination);
+      const pan=[-.18,.18].map(p=>{ const g=ctx.createGain(); let node=g; if(ctx.createStereoPanner){ const s=ctx.createStereoPanner(); s.pan.value=p; g.connect(s); s.connect(tone); } else g.connect(tone); return node; });
+      return {master,pan};
+    }
+    const PART=[1,.42,.22,.12,.07,.045,.03];
+    function note(ctx,bus,t,midi,dur,vel){
+      const f=440*Math.pow(2,(midi-69)/12), base=Math.min(7,Math.max(.9,3.4*Math.pow(262/f,.55)));
+      const g=ctx.createGain(); g.gain.value=1; g.connect(bus);
+      const end=t+dur, rel=.16, stopAt=end+rel*5;
+      PART.forEach((a,k)=>{ const fk=f*(k+1)*Math.sqrt(1+.00035*(k+1)*(k+1)); if(fk>9000) return;
+        const o=ctx.createOscillator(); o.frequency.value=fk*(1+(Math.random()-.5)*.0008);
+        const e=ctx.createGain(); const amp=a*vel*.16*(k===0?1:Math.pow(vel+.2,.6));
+        e.gain.setValueAtTime(0,t); e.gain.linearRampToValueAtTime(amp,t+.005+k*.001);
+        e.gain.setTargetAtTime(0,t+.006,base/(1+.75*k)); e.gain.setTargetAtTime(0,end,rel);
+        o.connect(e); e.connect(g); o.start(t); o.stop(stopAt); });
+    }
+    let ctx=null,r=null,timer=null,on=false,start=0,idx=0;
+    function tick(){ const now=ctx.currentTime;
+      while(true){ if(idx>=SCORE.ev.length){ start+=SCORE.len; idx=0; }
+        const [t,n,d,v,h]=SCORE.ev[idx], at=start+t; if(at>now+.6) break;
+        if(at>now-.05){ const hum=(Math.random()-.5)*.018; note(ctx,r.pan[h],at+hum,n,d,v*(.92+Math.random()*.16)); }
+        idx++; } }
+    return {
+      score:SCORE, note, rig,
+      get on(){ return on; },
+      play(){ try{ ctx=ctx||new(window.AudioContext||window.webkitAudioContext)(); ctx.resume&&ctx.resume(); }catch(e){ return false; }
+        if(!r) r=rig(ctx); const now=ctx.currentTime; r.master.gain.cancelScheduledValues(now); r.master.gain.setValueAtTime(r.master.gain.value,now); r.master.gain.linearRampToValueAtTime(1.4,now+2.5);
+        if(!on){ start=now+.15; idx=0; clearInterval(timer); timer=setInterval(tick,120); tick(); } on=true; return true; },
+      stop(){ if(!ctx||!on) return; on=false; const now=ctx.currentTime; r.master.gain.cancelScheduledValues(now); r.master.gain.setValueAtTime(r.master.gain.value,now); r.master.gain.linearRampToValueAtTime(0,now+.9);
+        clearInterval(timer); timer=null; const keep=r; setTimeout(()=>{ if(!on&&keep===r){ /* let tails ring out */ } },1000); }
+    };
+  })();
+  const mBtns=[...document.querySelectorAll('.musicBtn')];
+  function syncM(){ mBtns.forEach(b=>{ b.setAttribute('aria-pressed',PIANO.on); b.textContent=PIANO.on?'■ 음악 끄기':'♪ 피아노'; }); }
+  mBtns.forEach(b=>b.onclick=()=>{ if(PIANO.on){ PIANO.stop(); store.set('xmas-music',false); } else { if(!PIANO.play()){ toast('이 브라우저에서는 소리를 낼 수 없어요'); return; } store.set('xmas-music',true); } syncM(); });
+  if(store.get('xmas-music',false)){ const once=e=>{ removeEventListener('pointerdown',once,true); removeEventListener('keydown',once,true);
+      if(e.target&&e.target.closest&&e.target.closest('.musicBtn')) return; if(!PIANO.on&&PIANO.play()) syncM(); };
+    addEventListener('pointerdown',once,true); addEventListener('keydown',once,true); }
+  syncM();
 
   /* ================= ornaments & tree art ================= */
   const KINDS=[['cabin','통나무 오두막'],['house','빨간 지붕 집'],['bakery','빵집'],['tower','종탑'],['lodge','산장'],['snowman','눈사람'],['lamp','가로등'],['sled','선물 썰매'],['deer','순록'],['fir','작은 전나무']];
