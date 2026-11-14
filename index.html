@@ -594,7 +594,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     const V={ Dm9:[38,45,52,53,60], Bb9:[46,53,57,60,62], FA:[45,52,53,60,64], Gm9:[43,50,57,58,65], Cs:[48,55,60,65,67],
       Bb11:[46,53,57,62,64], Gm11:[43,50,53,58,60], As:[45,52,57,62,64], A:[45,52,57,61,64] };
     const PROG=[['Dm9'],['Bb9'],['FA'],['Gm9','Cs'],['Dm9'],['Bb11'],['Gm11'],['As','A']];
-    const PENT=[62,65,67,69,72,74,76,77,79,81,84,86]; // D minor pentatonic + 9th, upper register
+    const PENT=[60,62,65,67,69,72,74,76]; // D minor pentatonic + 9th, upper register
     function build(){
       const ev=[]; const push=(u,n,d,v,h)=>ev.push([u,n,d,v,h]);
       for(let sec=0;sec<4;sec++) for(let i=0;i<8;i++){
@@ -606,19 +606,19 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         pat.forEach((k,e)=>{ const name=ch.length>1&&e>=4?ch[1]:ch[0], c=V[name];
           if(last&&e>3) return;
           push(u0+e,c[k],k===0?8:5,(e===0?.5:.36)*(sec===2?1.08:1),0); });
-        if(last){ V.Dm9.forEach((n,k)=>push(u0+4+k*.18,n,12,.34,0)); push(u0+5,81,12,.22,1); push(u0+5.6,76,12,.2,1); continue; }
+        if(last){ V.Dm9.forEach((n,k)=>push(u0+4+k*.18,n,12,.34,0)); push(u0+5,69,12,.18,1); push(u0+5.6,74,12,.16,1); continue; }
         const tones=V[ch[ch.length-1]].map(n=>n%12);
         const pick=(lo,hi)=>{ const ok=PENT.filter(n=>n>=lo&&n<=hi&&tones.concat([2,9]).includes(n%12)); return ok[Math.floor(rnd()*ok.length)]; };
         if(sec===0||sec===3){ // sparse chimes
-          if(i%2===0) push(u0+1+Math.floor(rnd()*2),pick(74,86),6,.24,1);
-          else if(rnd()<.6) push(u0+5,pick(72,84),5,.2,1);
+          if(i%2===0) push(u0+1+Math.floor(rnd()*2),pick(67,76),6,.2,1);
+          else if(rnd()<.6) push(u0+5,pick(65,74),5,.17,1);
         } else if(sec===1){ // open fourths/fifths swelling in
-          const top=pick(69,79); push(u0,top-5,7,.22,1); push(u0+.08,top,7,.24,1);
-          if(rnd()<.7) push(u0+5,pick(76,88),4,.2,1);
+          const top=pick(67,74); push(u0,top-5,7,.18,1); push(u0+.08,top,7,.19,1);
+          if(rnd()<.7) push(u0+5,pick(69,76),4,.16,1);
         } else { // brighter: gentle broken chord tones up high
-          const hi=V[ch[0]].slice(2).map(n=>n+24);
-          [0,2,3,5,6].forEach((e,q)=>push(u0+e,hi[(q+i)%hi.length],3,.18+.04*(q===0),1));
-          if(i%2===1) push(u0+4,pick(81,88),4,.2,1);
+          const hi=V[ch[0]].slice(2).map(n=>n+12);
+          [0,2,3,5,6].forEach((e,q)=>push(u0+e,hi[(q+i)%hi.length],3,.15+.03*(q===0),1));
+          if(i%2===1) push(u0+4,pick(69,76),4,.15,1);
         }
       }
       const total=32*8;
@@ -631,22 +631,22 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       for(let c=0;c<2;c++){ const d=b.getChannelData(c); let lp=0; for(let i=0;i<n;i++){ const t=i/n; lp+= (Math.random()*2-1-lp)*.35; d[i]=lp*Math.pow(1-t,2.6)*(i<r*.012?i/(r*.012):1); } } return b; }
     function rig(ctx){
       const master=ctx.createGain(); master.gain.value=0;
-      const tone=ctx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=3600; tone.Q.value=.4;
+      const tone=ctx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=2000; tone.Q.value=.4;
       const dry=ctx.createGain(); dry.gain.value=.78; const wet=ctx.createGain(); wet.gain.value=.42;
       const verb=ctx.createConvolver(); verb.buffer=reverbIR(ctx,3.2);
       tone.connect(dry); tone.connect(verb); verb.connect(wet); dry.connect(master); wet.connect(master); master.connect(ctx.destination);
       const pan=[-.18,.18].map(p=>{ const g=ctx.createGain(); let node=g; if(ctx.createStereoPanner){ const s=ctx.createStereoPanner(); s.pan.value=p; g.connect(s); s.connect(tone); } else g.connect(tone); return node; });
       return {master,pan};
     }
-    const PART=[1,.42,.22,.12,.07,.045,.03];
+    const PART=[1,.34,.14,.07,.035,.02];
     function note(ctx,bus,t,midi,dur,vel){
       const f=440*Math.pow(2,(midi-69)/12), base=Math.min(7,Math.max(.9,3.4*Math.pow(262/f,.55)));
       const g=ctx.createGain(); g.gain.value=1; g.connect(bus);
       const end=t+dur, rel=.16, stopAt=end+rel*5;
-      PART.forEach((a,k)=>{ const fk=f*(k+1)*Math.sqrt(1+.00035*(k+1)*(k+1)); if(fk>9000) return;
+      PART.forEach((a,k)=>{ const fk=f*(k+1)*Math.sqrt(1+.00035*(k+1)*(k+1)); if(fk>4200) return;
         const o=ctx.createOscillator(); o.frequency.value=fk*(1+(Math.random()-.5)*.0008);
-        const e=ctx.createGain(); const amp=a*vel*.16*(k===0?1:Math.pow(vel+.2,.6));
-        e.gain.setValueAtTime(0,t); e.gain.linearRampToValueAtTime(amp,t+.005+k*.001);
+        const e=ctx.createGain(); const amp=a*vel*.16*(k===0?1:Math.pow(vel+.2,.6))*(f>500?Math.pow(500/f,.8):1);
+        e.gain.setValueAtTime(0,t); e.gain.linearRampToValueAtTime(amp,t+.014+k*.002);
         e.gain.setTargetAtTime(0,t+.006,base/(1+.75*k)); e.gain.setTargetAtTime(0,end,rel);
         o.connect(e); e.connect(g); o.start(t); o.stop(stopAt); });
     }
