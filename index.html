@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>슈가플럼 — 편지로 짓는 크리스마스 마을</title>
-<meta name="description" content="내 마을 링크를 보내면 친구들이 편지를 담은 집을 하나씩 지어 줘요. 편지는 크리스마스에 열려요.">
+<meta name="description" content="우리 학교가 다 함께 짓는 크리스마스 마을. 집을 하나 짓고 편지를 걸어 주세요.">
 <meta name="theme-color" content="#07201a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="슈가플럼 — 편지로 짓는 크리스마스 마을">
-<meta property="og:description" content="내 마을에 집을 하나 지어 줘! 편지는 크리스마스에 열려요">
+<meta property="og:description" content="우리 학교가 다 함께 짓는 크리스마스 마을. 집을 하나 짓고 편지를 걸어 주세요.">
 <meta property="og:image" content="https://sunghoon000000.github.io/merry-christmas/og.jpg">
 <meta property="og:url" content="https://sunghoon000000.github.io/merry-christmas/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f3b2e'/%3E%3Cpath d='M50 14 L80 78 L20 78 Z' fill='%231f6b4a'/%3E%3Ccircle cx='50' cy='16' r='8' fill='%23e2c98f'/%3E%3Ccircle cx='42' cy='52' r='6' fill='%23b3261e'/%3E%3Ccircle cx='60' cy='66' r='6' fill='%23fbf6ea'/%3E%3C/svg%3E">
@@ -300,6 +300,23 @@
   .readletter.unfold>*{animation:inkin .6s .55s ease both}
   @keyframes unfold{0%{clip-path:inset(0 0 92% 0);transform:scaleY(.9) translateY(-14px);opacity:.6}60%{opacity:1}100%{clip-path:inset(0 0 0 0);transform:none;opacity:1}}
   @keyframes inkin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* school village: letter board */
+  .board{background:var(--snow);color:var(--ink);padding:26px 18px 48px;border-top:1px solid var(--rule)}
+  .board h2{font-family:var(--display);font-size:24px;letter-spacing:-.02em;text-align:center}
+  .bd-lead{text-align:center;color:var(--muted);font-size:14px;margin:6px 0 18px}
+  .bd-list{display:grid;gap:14px;max-width:640px;margin:0 auto 18px}
+  .bd-card{background:#fffdf7;border:1px solid var(--rule);border-radius:12px;padding:14px 16px 12px;display:grid;grid-template-columns:44px 1fr;gap:4px 12px}
+  .bd-card img{width:44px;height:44px;object-fit:contain;background:#222838;border-radius:10px;padding:3px;grid-row:span 2}
+  .bd-card .who{font-weight:600;font-size:15px;align-self:end}
+  .bd-card .when{font-size:12px;color:var(--muted)}
+  .bd-card .txt{grid-column:1/-1;font-family:var(--hand);font-size:24px;line-height:30px;white-space:pre-wrap;word-break:break-word;margin-top:8px}
+  .bd-card .acts{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;align-items:center;margin-top:4px}
+  .bd-card .acts button{font-size:13px;color:var(--muted);padding:6px 10px;border-radius:8px}
+  .bd-card .acts button:hover{background:rgba(22,36,31,.06)}
+  .bd-card .acts .tag{font-size:12px;color:var(--red);margin-right:auto}
+  .bd-card.off{opacity:.55}
+  .bd-card.pending .txt{font-family:inherit;font-size:14px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -317,7 +334,7 @@
 </svg>
 
 <!-- ================= LANDING ================= -->
-<div id="landing">
+<div id="landing" hidden>
   <header class="hero" id="hero">
     <canvas class="snowfx" id="snow1" aria-hidden="true"></canvas>
     <div class="hero-top">
@@ -406,10 +423,10 @@
 </div>
 
 <!-- ================= TREE PAGE ================= -->
-<div id="treePage" class="tp" hidden>
+<div id="treePage" class="tp">
   <canvas class="snowfx" id="snow2" aria-hidden="true"></canvas>
   <div class="tp-top">
-    <a href="#" id="homeLink">← 처음으로</a>
+    <a href="#" id="homeLink">슈가플럼</a>
     <div class="row">
       <button class="chip musicBtn" aria-pressed="false">♪ 피아노</button>
       <button class="chip snowBtn" aria-pressed="true">눈</button>
@@ -437,6 +454,12 @@
       <div class="pageinfo" id="pageInfo"></div>
     </div>
     <div class="tp-bar" id="tpBar"></div>
+    <section class="board" id="board" aria-labelledby="bdT">
+      <h2 id="bdT">마을에 걸린 편지</h2>
+      <p class="bd-lead" id="bdLead"></p>
+      <div class="bd-list" id="bdList"></div>
+      <div class="row" style="justify-content:center"><button class="btn line" id="bdMore" hidden>편지 더 보기</button></div>
+    </section>
   </div>
 </div>
 
@@ -483,7 +506,7 @@
     <h3 id="rsT" style="text-align:center"></h3>
     <p class="lead" id="rsLead" style="text-align:center"></p>
     <div id="rsBody"></div>
-    <div class="row" style="justify-content:center"><button class="btn" data-close>닫기</button><button class="btn line" id="rsDelete" hidden>집 치우기</button></div>
+    <div class="row" style="justify-content:center"><button class="btn" data-close>닫기</button><button class="btn line" id="rsReport" hidden>신고하기</button><button class="btn line" id="rsHide" hidden>숨기기</button><button class="btn line" id="rsDelete" hidden>지우기</button></div>
   </div>
 </div>
 
@@ -523,10 +546,10 @@
 
 <div class="sheet-bg" id="claimSheet" role="dialog" aria-modal="true" aria-labelledby="clT">
   <form class="sheet" id="claimForm">
-    <h3 id="clT">내 마을 불러오기</h3>
-    <p class="lead">마을을 만들 때 받은 관리 코드를 넣으면, 이 기기에서도 주인으로 편지를 읽을 수 있어요.</p>
+    <h3 id="clT">관리자 로그인</h3>
+    <p class="lead">관리 코드를 넣으면 이 기기에서 편지를 숨기거나 지울 수 있어요.</p>
     <div class="field"><label for="clCode">관리 코드</label><input id="clCode" maxlength="14" required placeholder="ABCD-EFGH-JKLM" autocapitalize="characters" autocomplete="off" style="letter-spacing:.08em"></div>
-    <div class="row"><button class="btn red" type="submit" style="flex:1">불러오기</button><button class="btn line" type="button" data-close>취소</button></div>
+    <div class="row"><button class="btn red" type="submit" style="flex:1">로그인</button><button class="btn line" type="button" data-close>취소</button></div>
   </form>
 </div>
 
@@ -545,6 +568,7 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "252119817235",
   appId: "1:252119817235:web:f8e900ef330bc4661bb3e6"
 };
+const SCHOOL = 'school26', SCHOOL_NAME = '우리 학교';
 const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같은 값)
 
 (function(){
@@ -562,6 +586,10 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   const fmtCode=c=>c.replace(/(.{4})(?=.)/g,'$1-');
   const normCode=c=>String(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
   const lettersOpen=()=>Date.now()>=OPEN_AT;
+  const BAD=/(시발|씨발|씨빨|ㅅㅂ|ㅆㅂ|병신|븅신|ㅂㅅ|좆|존나|졸라|ㅈㄴ|개새|개색|새끼|섀끼|지랄|ㅈㄹ|닥쳐|꺼져|뒤져|죽여|애미|애비|느금|니미|미친놈|미친년|fuck|shit|bitch)/;
+  const isBad=t=>BAD.test(String(t).toLowerCase().replace(/[^0-9a-zㄱ-ㅎㅏ-ㅣ가-힣]/g,''));
+  const REPORT_HIDE=3;
+  const visibleOrn=o=>!o.hidden&&(o.ok||(o.reports||0)<REPORT_HIDE);
   const daysToOpen=()=>Math.max(0,Math.ceil((OPEN_AT-Date.now())/864e5));
   async function copyText(text){
     try{ await navigator.clipboard.writeText(text); return true; }
@@ -749,7 +777,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         h+=`<g class="bulb" style="animation-delay:${(i*.29%1.8).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="6" fill="${c}" opacity=".25"/><circle cx="${x}" cy="${y}" r="2.4" fill="${c}"/></g>`; i++; } });
     el.innerHTML=h;
   }
-  const LEVELS=[[0,'첫눈 내린 광장'],[3,'불 켜진 트리'],[7,'가로등 골목'],[12,'사탕 가게 거리'],[20,'오로라 마을'],[30,'슈가플럼 마을']];
+  const LEVELS=[[0,'첫눈 내린 광장'],[10,'불 켜진 트리'],[25,'가로등 골목'],[50,'사탕 가게 거리'],[90,'오로라 마을'],[150,'슈가플럼 마을']];
   function levelOf(n){ let l=1; LEVELS.forEach(([min],i)=>{ if(n>=min) l=i+1; }); return l; }
   const SLOTS=[[222,942,.7],[672,942,.7],[230,818,.56],[670,818,.56],[135,818,.56],[765,818,.56],[40,818,.56],[860,818,.56]];
   const PER=SLOTS.length;
@@ -813,8 +841,12 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       async lightUp(id,lit){ const db=load(); db.trees[id].lit=lit; save(db); },
       async isOwner(id,t){ return t.ownerUid===uid||(load().owners[id]||[]).includes(uid); },
       async claim(id,code){ const db=load(); if(db.keys[id]&&db.keys[id]===code){ (db.owners[id]=db.owners[id]||[]).push(uid); save(db); return true; } return false; },
-      async addLetter(id,{kind,nick,text}){ const db=load(); if(!db.trees[id]) throw new Error('missing'); const oid=rand(16); const at=Date.now(); db.orn[id].push({id:oid,kind,nick,createdAt:at,authorUid:uid}); db.letters[id][oid]={text,nick,createdAt:at}; save(db); return oid; },
-      async readLetters(id){ const db=load(); if(!lettersOpen()) throw new Error('locked'); return db.letters[id]||{}; },
+      async addLetter(id,{kind,nick,text}){ const db=load(); if(!db.trees[id]) throw new Error('missing'); if(isBad(nick)||isBad(text)) throw Object.assign(new Error('bad'),{code:'permission-denied'}); if(Date.now()-(db.last||0)<20000) throw Object.assign(new Error('limit'),{code:'permission-denied'}); db.last=Date.now(); const oid=rand(16); const at=Date.now(); db.orn[id].push({id:oid,kind,nick,createdAt:at,authorUid:uid}); db.letters[id][oid]={text,nick,createdAt:at}; save(db); return oid; },
+      async readLetters(id){ return load().letters[id]||{}; },
+      watchLetters(id,cb){ return sub(()=>cb({...(load().letters[id]||{})})); },
+      async report(id,oid){ const db=load(); const k='rep_'+oid+'_'+uid; if(db[k]) throw new Error('dup'); db[k]=1; const o=(db.orn[id]||[]).find(x=>x.id===oid); if(o) o.reports=(o.reports||0)+1; save(db); },
+      async moderate(id,oid,patch){ const db=load(); const o=(db.orn[id]||[]).find(x=>x.id===oid); if(o) Object.assign(o,patch); save(db); },
+      async createSchool(name){ const db=load(); const code=rand(12,CODE_ALPHA); db.trees[SCHOOL]={name,style:'classic',ownerUid:uid,createdAt:Date.now()}; db.keys[SCHOOL]=code; db.orn[SCHOOL]=[]; db.letters[SCHOOL]={}; save(db); return code; },
       async removeLetter(id,oid){ const db=load(); db.orn[id]=(db.orn[id]||[]).filter(o=>o.id!==oid); if(db.letters[id]) delete db.letters[id][oid]; save(db); }
     };
   }
@@ -824,7 +856,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     const app=appM.initializeApp(cfg); const auth=authM.getAuth(app); const db=fs.getFirestore(app);
     await auth.authStateReady(); if(!auth.currentUser) await authM.signInAnonymously(auth);
     const uid=auth.currentUser.uid;
-    const {doc,getDoc,setDoc,updateDoc,collection,writeBatch,serverTimestamp,onSnapshot,query,orderBy,getDocs}=fs;
+    const {doc,getDoc,setDoc,updateDoc,deleteDoc,collection,writeBatch,serverTimestamp,onSnapshot,query,orderBy,getDocs,increment}=fs;
     const ms=v=>v&&typeof v.toMillis==='function'?v.toMillis():Date.now();
     return {
       mode:'live', uid,
@@ -834,12 +866,16 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
           try{ await b.commit(); return {id,code}; }catch(e){ if(i===2) throw e; } }
       },
       watchTree(id,cb,err){ return onSnapshot(doc(db,'trees',id),s=>cb(s.exists()?s.data():null),err); },
-      watchOrnaments(id,cb,err){ return onSnapshot(query(collection(db,'trees',id,'ornaments'),orderBy('createdAt')),s=>cb(s.docs.map(d=>{ const x=d.data({serverTimestamps:'estimate'}); return {id:d.id,kind:x.kind,nick:x.nick,createdAt:ms(x.createdAt),authorUid:x.authorUid}; })),err); },
+      watchOrnaments(id,cb,err){ return onSnapshot(query(collection(db,'trees',id,'ornaments'),orderBy('createdAt')),s=>cb(s.docs.map(d=>{ const x=d.data({serverTimestamps:'estimate'}); return {id:d.id,kind:x.kind,nick:x.nick,createdAt:ms(x.createdAt),authorUid:x.authorUid,reports:x.reports||0,hidden:!!x.hidden,ok:!!x.ok}; })),err); },
+      watchLetters(id,cb,err){ return onSnapshot(collection(db,'trees',id,'letters'),s=>{ const m={}; s.forEach(d=>{ const x=d.data({serverTimestamps:'estimate'}); m[d.id]={text:x.text,nick:x.nick,createdAt:ms(x.createdAt)}; }); cb(m); },err); },
+      async report(id,oid){ const b=writeBatch(db); b.set(doc(db,'trees',id,'reports',oid+'_'+uid),{o:oid,at:serverTimestamp()}); b.update(doc(db,'trees',id,'ornaments',oid),{reports:increment(1)}); await b.commit(); },
+      async moderate(id,oid,patch){ await updateDoc(doc(db,'trees',id,'ornaments',oid),patch); },
+      async createSchool(name){ const code=rand(12,CODE_ALPHA); const b=writeBatch(db); b.set(doc(db,'trees',SCHOOL),{name,style:'classic',ownerUid:uid,createdAt:serverTimestamp()}); b.set(doc(db,'trees',SCHOOL,'keys',code),{}); await b.commit(); return code; },
       async lightUp(id,lit){ await updateDoc(doc(db,'trees',id),{lit}); },
       async isOwner(id,t){ if(t.ownerUid===uid) return true; try{ return (await getDoc(doc(db,'trees',id,'owners',uid))).exists(); }catch(e){ return false; } },
       async claim(id,code){ try{ await setDoc(doc(db,'trees',id,'owners',uid),{key:code}); return true; }catch(e){ return false; } },
       async addLetter(id,{kind,nick,text}){ const ref=doc(collection(db,'trees',id,'ornaments')); const b=writeBatch(db);
-        b.set(ref,{kind,nick,createdAt:serverTimestamp(),authorUid:uid}); b.set(doc(db,'trees',id,'letters',ref.id),{text,nick,createdAt:serverTimestamp(),authorUid:uid}); await b.commit(); return ref.id; },
+        b.set(ref,{kind,nick,createdAt:serverTimestamp(),authorUid:uid}); b.set(doc(db,'trees',id,'letters',ref.id),{text,nick,createdAt:serverTimestamp(),authorUid:uid}); b.set(doc(db,'limits',uid),{at:serverTimestamp()}); await b.commit(); return ref.id; },
       async readLetters(id){ const s=await getDocs(collection(db,'trees',id,'letters')); const m={}; s.forEach(d=>{ const x=d.data(); m[d.id]={text:x.text,nick:x.nick,createdAt:ms(x.createdAt)}; }); return m; },
       async removeLetter(id,oid){ const b=writeBatch(db); b.delete(doc(db,'trees',id,'ornaments',oid)); b.delete(doc(db,'trees',id,'letters',oid)); await b.commit(); }
     };
@@ -902,7 +938,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     $('landing').hidden=true; $('treePage').hidden=false; snow1.stop(); snow2.start(); window.scrollTo(0,0);
     if(cur&&cur.id===id) return;
     leaveTree();
-    cur={id,tree:null,orns:[],owner:false,page:0,unsubs:[],letters:null,lastNew:null,firstLoad:true,level:0};
+    cur={id,tree:null,all:[],orns:[],owner:false,page:0,unsubs:[],letters:null,letterWait:[],lastNew:null,firstLoad:true,level:0,shown:20};
     $('tpLoading').hidden=false; $('tpMissing').hidden=true; $('tpMain').hidden=true;
     const mine=myTrees.find(t=>t.id===id);
     api().then(a=>{
@@ -914,20 +950,23 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         if(!cur||cur.id!==id) return;
         if(!t){ $('tpLoading').hidden=true; $('tpMain').hidden=true; $('tpMissing').hidden=false; return; }
         cur.tree=t;
-        cur.owner=await a.isOwner(id,t);
+        cur.owner=!store.get('xmas-admin-off',false)&&await a.isOwner(id,t);
         if(cur.owner&&!mine) saveMine({id,name:t.name,code:''});
         $('tpLoading').hidden=true; $('tpMissing').hidden=true; $('tpMain').hidden=false;
-        renderOrns(); renderTreeMeta(); renderBar(); snow2.start();
+        renderOrns(); renderTreeMeta(); renderBar(); renderBoard(); snow2.start();
       },e=>{ console.error(e); $('tpLoading').querySelector('p').textContent='마을을 불러오지 못했어요. 페이지를 새로 고쳐 주세요.'; }));
       cur.unsubs.push(a.watchOrnaments(id,list=>{
         if(!cur||cur.id!==id) return;
         const before=new Set(cur.orns.map(o=>o.id));
-        cur.orns=list.filter(o=>KIND_IDS.includes(o.kind)).sort((x,y)=>x.createdAt-y.createdAt);
+        cur.all=list.filter(o=>KIND_IDS.includes(o.kind)).sort((x,y)=>x.createdAt-y.createdAt);
+        cur.orns=cur.all.filter(visibleOrn);
+        if(cur.firstLoad) cur.page=Math.max(0,Math.ceil(cur.orns.length/PER)-1);
         if(!cur.firstLoad){ const nw=cur.orns.find(o=>!before.has(o.id)); if(nw){ cur.lastNew=nw.id; cur.page=Math.floor(cur.orns.indexOf(nw)/PER); } }
         const lv=levelOf(cur.orns.length); if(!cur.firstLoad&&cur.level&&lv>cur.level) toast(`마을이 Lv.${lv} ${LEVELS[lv-1][1]}(으)로 자랐어요!`); cur.level=lv;
-        cur.firstLoad=false; cur.letters=null;
-        if(cur.tree){ renderOrns(); renderTreeMeta(); renderBar(); }
+        cur.firstLoad=false;
+        if(cur.tree){ renderOrns(); renderTreeMeta(); renderBar(); renderBoard(); }
       },e=>console.error(e)));
+      cur.unsubs.push(a.watchLetters(id,m=>{ if(!cur||cur.id!==id) return; cur.letters=m; (cur.letterWait||[]).forEach(f=>f(m)); cur.letterWait=[]; renderBoard(); },e=>console.error(e)));
     }).catch(()=>{ $('tpLoading').querySelector('p').textContent='서버에 연결하지 못했어요.'; });
   }
   function leaveTree(){ if(cur){ cur.unsubs.forEach(u=>{ try{u()}catch(e){} }); } cur=null; }
@@ -935,40 +974,24 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
 
   function renderTreeMeta(){
     const t=cur.tree; if(!t) return;
-    const n=cur.orns.length, L=levelOf(n), next=LEVELS[L]?LEVELS[L][0]:null, prev=LEVELS[L-1][0], st=streakOf(t);
-    $('tpTitle').textContent=`${t.name}의 마을`;
+    const n=cur.orns.length, L=levelOf(n), next=LEVELS[L]?LEVELS[L][0]:null, prev=LEVELS[L-1][0];
+    $('tpTitle').textContent=`${t.name} 슈가플럼 마을`;
     $('lvBadge').textContent=`Lv.${L}`; $('lvName').textContent=LEVELS[L-1][1];
     $('lvFill').style.width=(next===null?100:Math.round((n-prev)/(next-prev)*100))+'%';
-    let line = n ? `집 ${n}채` : (cur.owner?'아직 집이 없어요. 링크를 보내 보세요':'첫 번째 집을 지어 주세요');
-    if(next!==null) line+=` · 다음 단계까지 편지 ${next-n}통`; else line+=' · 최고 단계예요';
+    let line = n ? `지금까지 집 ${n}채` : '첫 번째 집을 지어 주세요';
+    if(next!==null) line+=` · 다음 단계까지 ${next-n}채`; else line+=' · 최고 단계예요';
     $('tpCount').textContent=line;
-    const lock=$('tpLock');
-    if(!lettersOpen()){ lock.hidden=false; lock.textContent=`편지 개봉일 12월 25일 · D-${daysToOpen()}`+(st?` · 연속 ${st}일째 불 밝힘`:''); }
-    else if(cur.owner&&n){ lock.hidden=false; lock.textContent='창문마다 불이 켜졌어요. 집을 눌러 편지를 열어 보세요'; }
-    else lock.hidden=true;
-    document.title=`${t.name}의 마을 · 슈가플럼`;
+    const lock=$('tpLock'); lock.hidden=false;
+    lock.textContent=cur.owner?'관리자 모드 · 편지마다 숨기기·지우기가 보여요':'편지는 누구나 읽을 수 있어요 · 집을 눌러 보세요';
+    document.title=`${t.name} 슈가플럼 마을`;
   }
   function renderBar(){
     const bar=$('tpBar'); bar.innerHTML='';
     const row=document.createElement('div'); row.className='row';
     const mk=(txt,cls,fn)=>{ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=txt; b.onclick=fn; return b; };
-    const sub=document.createElement('div'); sub.className='sub';
-    const link=(txt,fn)=>{ const a=document.createElement('button'); a.className='linkish note'; a.style.margin='0 8px'; a.textContent=txt; a.onclick=fn; sub.appendChild(a); };
-    if(cur.owner){
-      if(lettersOpen()){ row.append(mk('편지 모아 보기','red',openAll),mk('올해의 마을 카드','',openYear)); link('링크 공유하기',()=>share(cur.id,cur.tree.name)); }
-      else {
-        const lit=cur.tree.lit&&cur.tree.lit.last===dayKey(0);
-        const b=mk(lit?`오늘 불 밝힘 · ${streakOf(cur.tree)}일째`:'오늘 불 밝히기','',lightUp); b.disabled=!!lit;
-        row.append(mk('링크 공유하기','red',()=>share(cur.id,cur.tree.name)),b);
-        link('보상 보기',()=>toast('연속 3일: 굴뚝 연기 · 7일: 창문 불빛 · 14일: 하늘 등불'));
-      }
-      link('관리 코드 보기',openOwner);
-    } else {
-      row.append(mk('집 지어 주기','red',openWrite));
-      row.append(mk('나도 만들기','line',()=>{ location.hash=''; setTimeout(openCreate,200); }));
-      link('내 마을인데 주인으로 안 보여요',()=>openSheet('claimSheet'));
-    }
-    bar.append(row,sub);
+    row.append(mk('집 짓고 편지 걸기','red',openWrite),mk('편지 읽기','line',()=>$('board').scrollIntoView({behavior:reduce?'auto':'smooth'})));
+    bar.append(row);
+    if(cur.owner){ const sub=document.createElement('div'); sub.className='sub'; const a=document.createElement('button'); a.className='linkish note'; a.textContent='관리자 로그아웃'; a.onclick=()=>{ cur.owner=false; store.set('xmas-admin-off',true); renderTreeMeta(); renderBar(); renderBoard(); toast('관리자 모드를 껐어요. #admin 으로 다시 켤 수 있어요'); }; sub.appendChild(a); bar.appendChild(sub); }
   }
   let lighting=false;
   async function lightUp(){
@@ -994,24 +1017,66 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('prevPg').onclick=()=>{ if(cur&&cur.page>0){ cur.page--; renderOrns(); } };
   $('nextPg').onclick=()=>{ if(cur){ cur.page++; renderOrns(); } };
 
-  async function getLetters(){
-    if(cur.letters) return cur.letters;
-    const a=await api(); cur.letters=await a.readLetters(cur.id); return cur.letters;
+  function getLetters(){
+    if(cur.letters) return Promise.resolve(cur.letters);
+    return new Promise(res=>cur.letterWait.push(res));
   }
   async function openOrn(o){
-    const t=cur.tree; const nick=String(o.nick||'익명');
-    $('rsOrn').innerHTML=iconSVG(o.kind); $('rsBody').innerHTML=''; $('rsDelete').hidden=true;
+    const nick=String(o.nick||'익명');
+    $('rsOrn').innerHTML=iconSVG(o.kind); $('rsBody').innerHTML='';
     $('rsT').textContent=`${nick}님이 지은 ${KIND_NAME[o.kind]}`;
-    if(!cur.owner){ $('rsLead').textContent=`안에 든 편지는 ${t.name}님만 크리스마스에 열어 볼 수 있어요.`; openSheet('readSheet'); return; }
-    $('rsDelete').hidden=false; $('rsDelete').onclick=()=>removeOrn(o);
-    if(!lettersOpen()){ $('rsLead').textContent=`편지가 집 안에 봉인돼 있어요. 12월 25일에 열려요 · D-${daysToOpen()}`; openSheet('readSheet'); return; }
-    $('rsLead').textContent='편지를 여는 중…'; openSheet('readSheet');
-    try{ const L=await getLetters(); const l=L[o.id];
-      if(!l){ $('rsLead').textContent='편지를 찾을 수 없어요.'; return; }
-      $('rsLead').textContent=new Date(l.createdAt||o.createdAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'})+'에 지어진 집';
-      $('rsBody').appendChild(envelopeEl(l.text,nick));
-    }catch(e){ console.error(e); $('rsLead').textContent='편지를 열지 못했어요. 잠시 후 다시 눌러 주세요.'; }
+    $('rsLead').textContent='편지를 꺼내는 중…'; openSheet('readSheet');
+    setModButtons(o,()=>closeSheet('readSheet'));
+    const L=await getLetters(); const l=L[o.id];
+    if(!l){ $('rsLead').textContent='편지를 찾을 수 없어요.'; return; }
+    $('rsLead').textContent=new Date(l.createdAt||o.createdAt).toLocaleDateString('ko-KR',{month:'long',day:'numeric'})+'에 지어진 집';
+    $('rsBody').appendChild(envelopeEl(l.text,nick));
   }
+  const myReports=new Set(store.get('xmas-reported',[]));
+  async function reportOrn(o){
+    if(myReports.has(o.id)){ toast('이미 신고한 편지예요'); return false; }
+    try{ const a=await api(); await a.report(cur.id,o.id); }catch(e){ console.error(e); toast('신고하지 못했어요. 이미 신고했을 수 있어요'); return false; }
+    myReports.add(o.id); store.set('xmas-reported',[...myReports]);
+    toast(`신고했어요. 신고가 ${REPORT_HIDE}번 쌓이면 편지가 가려져요`); return true;
+  }
+  async function moderate(o,patch,msg){ try{ const a=await api(); await a.moderate(cur.id,o.id,patch); toast(msg); }catch(e){ console.error(e); toast('바꾸지 못했어요'); } }
+  async function deleteOrn(o){ try{ const a=await api(); await a.removeLetter(cur.id,o.id); toast('편지를 지웠어요'); }catch(e){ console.error(e); toast('지우지 못했어요'); } }
+  function setModButtons(o,after){
+    const rep=$('rsReport'), hide=$('rsHide'), del=$('rsDelete');
+    rep.hidden=cur.owner; hide.hidden=!cur.owner; del.hidden=!cur.owner; del.dataset.confirm=''; del.textContent='지우기';
+    rep.onclick=async()=>{ if(await reportOrn(o)) after(); };
+    hide.textContent=o.hidden?'다시 보이기':'숨기기';
+    hide.onclick=async()=>{ await moderate(o,o.hidden?{hidden:false,ok:true}:{hidden:true},o.hidden?'다시 보이게 했어요':'편지를 숨겼어요'); after(); };
+    del.onclick=async()=>{ if(del.dataset.confirm!=='1'){ del.dataset.confirm='1'; del.textContent='한 번 더 누르면 지워져요'; return; } await deleteOrn(o); after(); };
+  }
+  /* ---------- letter board ---------- */
+  function renderBoard(){
+    if(!cur||!cur.tree) return;
+    const L=cur.letters, list=(cur.owner?cur.all:cur.orns).slice().reverse();
+    const box=$('bdList'); box.innerHTML='';
+    $('bdT').textContent=`마을에 걸린 편지 ${cur.orns.length}통`;
+    $('bdLead').textContent=cur.owner?'관리자에게는 가려진 편지도 흐리게 보여요.':'다른 친구가 보기 불편한 편지는 신고해 주세요. 신고가 쌓이면 가려져요.';
+    if(!list.length){ const p=document.createElement('p'); p.className='bd-lead'; p.textContent='아직 걸린 편지가 없어요. 첫 편지를 걸어 주세요.'; box.appendChild(p); $('bdMore').hidden=true; return; }
+    list.slice(0,cur.shown).forEach(o=>{
+      const l=L&&L[o.id]; const c=document.createElement('article'); c.className='bd-card'+(visibleOrn(o)?'':' off')+(l?'':' pending');
+      const img=document.createElement('img'); img.src=`${ART}k-${o.kind}.webp`; img.alt=KIND_NAME[o.kind]||'';
+      const who=document.createElement('div'); who.className='who'; who.textContent=String(o.nick||'익명');
+      const when=document.createElement('div'); when.className='when'; when.textContent=new Date(o.createdAt).toLocaleString('ko-KR',{month:'long',day:'numeric',hour:'numeric',minute:'2-digit'})+` · ${KIND_NAME[o.kind]}`;
+      const txt=document.createElement('div'); txt.className='txt'; txt.textContent=l?l.text:(L?'편지를 찾을 수 없어요':'편지를 불러오는 중…');
+      const acts=document.createElement('div'); acts.className='acts';
+      const btn=(label,fn)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=label; b.onclick=fn; acts.appendChild(b); return b; };
+      if(cur.owner){
+        const tag=document.createElement('span'); tag.className='tag'; tag.textContent=o.hidden?'숨김':(o.reports?`신고 ${o.reports}`+(visibleOrn(o)?'':' · 가려짐'):''); acts.appendChild(tag);
+        btn(o.hidden||!visibleOrn(o)?'다시 보이기':'숨기기',()=>moderate(o,(o.hidden||!visibleOrn(o))?{hidden:false,ok:true}:{hidden:true,ok:false},(o.hidden||!visibleOrn(o))?'다시 보이게 했어요':'편지를 숨겼어요'));
+        const d=btn('지우기',()=>{ if(d.dataset.confirm!=='1'){ d.dataset.confirm='1'; d.textContent='한 번 더 누르면 지워져요'; return; } deleteOrn(o); });
+      } else {
+        const b=btn(myReports.has(o.id)?'신고함':'신고',async()=>{ if(await reportOrn(o)){ b.textContent='신고함'; b.disabled=true; } }); b.disabled=myReports.has(o.id);
+      }
+      c.append(img,who,when,txt,acts); box.appendChild(c);
+    });
+    $('bdMore').hidden=list.length<=cur.shown;
+  }
+  $('bdMore').onclick=()=>{ if(cur){ cur.shown+=20; renderBoard(); } };
   function envelopeEl(text,nick){
     const stage=document.createElement('div'); stage.className='env-stage';
     const env=document.createElement('button'); env.type='button'; env.className='env'; env.setAttribute('aria-label',`${nick}님의 편지 열기`);
@@ -1058,7 +1123,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('claimForm').addEventListener('submit',async e=>{
     e.preventDefault(); const code=normCode($('clCode').value); if(code.length!==12){ toast('코드 12자리를 확인해 주세요'); return; }
     const a=await api(); const ok=await a.claim(cur.id,code);
-    if(ok){ cur.owner=true; saveMine({id:cur.id,name:cur.tree.name,code}); closeSheet('claimSheet'); $('clCode').value=''; renderTreeMeta(); renderBar(); toast('이제 이 기기에서도 내 마을이에요'); }
+    if(ok){ cur.owner=true; store.set('xmas-admin-off',false); saveMine({id:cur.id,name:cur.tree.name,code}); closeSheet('claimSheet'); $('clCode').value=''; renderTreeMeta(); renderBar(); renderBoard(); toast('관리자 모드예요'); }
     else toast('코드가 맞지 않아요');
   });
 
@@ -1069,8 +1134,8 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('wText').addEventListener('input',()=>{ $('wCount').textContent=`${$('wText').value.length} / 500`; });
   function openWrite(){
     const t=cur.tree; wKind=KIND_IDS[Math.floor(Math.random()*KIND_IDS.length)]; syncPicks();
-    $('wsT').textContent=`${t.name}님 마을에 집 지어 주기`;
-    $('wsLead').textContent=lettersOpen()?`편지는 ${t.name}님만 읽을 수 있어요.`:`편지는 집 안에 봉인돼 있다가 12월 25일에 ${t.name}님만 열어 볼 수 있어요.`;
+    $('wsT').textContent=`${t.name} 마을에 집 짓기`;
+    $('wsLead').textContent='편지는 마을에 걸려서 누구나 읽을 수 있어요. 친구에게 쓴다면 첫 줄에 받는 친구 이름을 적어 주세요.';
     $('wNick').value=store.get('xmas-nick',''); $('wCount').textContent=`${$('wText').value.length} / 500`;
     openSheet('writeSheet');
   }
@@ -1079,19 +1144,30 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     e.preventDefault(); if(sending) return;
     const nick=$('wNick').value.trim().slice(0,10), text=$('wText').value.trim().slice(0,500);
     if(!nick||!text){ toast('이름과 편지를 모두 적어 주세요'); return; }
+    if(isBad(nick)||isBad(text)){ toast('쓸 수 없는 말이 들어 있어요. 고쳐서 다시 걸어 주세요'); return; }
+    const wait=20-Math.floor((Date.now()-store.get('xmas-last-send',0))/1000); if(wait>0){ toast(`도배를 막으려고 ${wait}초 뒤에 다시 지을 수 있어요`); return; }
     sending=true; const b=$('writeSubmit'); b.disabled=true; b.textContent='짓는 중…';
-    try{ const a=await api(); await a.addLetter(cur.id,{kind:wKind,nick,text}); store.set('xmas-nick',nick); $('wText').value=''; closeSheet('writeSheet'); toast('집을 지었어요! 크리스마스에 편지가 열려요'); }
-    catch(err){ console.error(err); toast('집을 짓지 못했어요. 잠시 후 다시 해 주세요'); }
+    try{ const a=await api(); await a.addLetter(cur.id,{kind:wKind,nick,text}); store.set('xmas-nick',nick); store.set('xmas-last-send',Date.now()); $('wText').value=''; closeSheet('writeSheet'); cur.page=Math.max(0,Math.ceil(cur.orns.length/PER)-1); toast('집을 지었어요! 편지가 마을에 걸렸어요'); }
+    catch(err){ console.error(err); toast(err&&err.code==='permission-denied'?'잠시 뒤에 다시 지어 주세요. 쓸 수 없는 말이 있으면 고쳐 주세요':'집을 짓지 못했어요. 잠시 후 다시 해 주세요'); }
     finally{ sending=false; b.disabled=false; b.textContent='집 짓기'; }
   });
 
   /* ================= router ================= */
   function route(){
-    const m=/^#t-([a-z0-9]{8})$/.exec(location.hash);
     openSheets.slice().forEach(id=>{ if(id!=='doneSheet') closeSheet(id); });
-    if(m) showTreePage(m[1]); else if(!$('treePage').hidden||!cur) { if(!$('treePage').hidden) showLanding(); else snow1.start(); }
+    const h=location.hash;
+    if(h==='#setup'){ history.replaceState(null,'',location.pathname); setupSchool(); }
+    if(h==='#admin'){ history.replaceState(null,'',location.pathname); store.set('xmas-admin-off',false); showTreePage(SCHOOL); setTimeout(()=>{ if(cur&&cur.owner) toast('관리자 모드예요'); else openSheet('claimSheet'); },1500); return; }
+    showTreePage(SCHOOL);
   }
-  $('homeLink').addEventListener('click',e=>{ e.preventDefault(); history.pushState(null,'',location.pathname); showLanding(); window.scrollTo(0,0); });
+  async function setupSchool(){
+    const a=await api();
+    let done=false; const off=a.watchTree(SCHOOL,async t=>{ if(done) return; done=true; setTimeout(()=>off&&off(),0); if(t){ toast('학교 마을이 이미 있어요'); return; }
+      try{ const code=await a.createSchool(SCHOOL_NAME); saveMine({id:SCHOOL,name:SCHOOL_NAME,code});
+        $('dsLink').textContent=shareUrl(SCHOOL).replace('#t-'+SCHOOL,''); $('dsCode').textContent=fmtCode(code); $('dsShare').onclick=()=>copyText(fmtCode(code));
+        setTimeout(()=>openSheet('doneSheet'),400); }catch(e){ console.error(e); toast('학교 마을을 만들지 못했어요'); } });
+  }
+  $('homeLink').addEventListener('click',e=>{ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
   addEventListener('hashchange',route);
   route();
 

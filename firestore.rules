@@ -1,14 +1,17 @@
 rules_version = '2';
 
-// 설야 — Firestore 보안 규칙
-// - 마을과 지어진 집(보낸 사람 이름, 건물 종류)은 누구나 볼 수 있어요.
-// - 편지 내용은 마을 주인만, 2026-12-25 0시(KST) 이후에만 읽을 수 있어요.
-// - 관리 코드는 아무도 읽을 수 없고, 다른 기기에서 주인임을 증명할 때만 쓰여요.
+// 슈가플럼 — Firestore 보안 규칙
+// - 학교 마을(school26)의 편지는 누구나 읽을 수 있어요.
+// - 그 밖의 예전 마을 편지는 지금처럼 주인만, 2026-12-25 0시(KST) 이후에만 읽을 수 있어요.
+// - 집 짓기는 한 기기에서 20초에 한 번만 돼요(도배 방지).
+// - 욕설이 들어간 이름·편지는 저장되지 않아요.
+// - 누구나 편지를 한 번씩 신고할 수 있고, 관리자는 숨기거나 다시 보이게 할 수 있어요.
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
     function signedIn() { return request.auth != null; }
+    function school() { return 'school26'; }
     function treeDoc(t) { return /databases/$(database)/documents/trees/$(t); }
     function isOwner(t) {
       return signedIn() && (
@@ -16,29 +19,44 @@ service cloud.firestore {
         exists(/databases/$(database)/documents/trees/$(t)/owners/$(request.auth.uid))
       );
     }
-    // 2026-12-25 00:00 KST = 1798124400000 ms (index.html의 OPEN_AT과 같은 값)
-    function lettersOpen() {
-      return request.time >= timestamp.value(1798124400000);
-    }
+    // 2026-12-25 00:00 KST = 1798124400000 ms
+    function lettersOpen() { return request.time >= timestamp.value(1798124400000); }
     function str(v, minLen, maxLen) { return v is string && v.size() >= minLen && v.size() <= maxLen; }
+    function clean(s) {
+      return !s.lower().replace('[^0-9a-zㄱ-ㅎㅏ-ㅣ가-힣]', '').matches(
+        '.*(시발|씨발|씨빨|ㅅㅂ|ㅆㅂ|병신|븅신|ㅂㅅ|좆|존나|졸라|ㅈㄴ|개새|개색|새끼|섀끼|지랄|ㅈㄹ|닥쳐|꺼져|뒤져|죽여|애미|애비|느금|니미|미친놈|미친년|fuck|shit|bitch).*');
+    }
     function kinds() { return ['cabin','house','bakery','tower','lodge','snowman','lamp','sled','deer','fir']; }
     function validLit(l) {
       return l is map && l.keys().hasOnly(['days','last'])
         && l.days is int && l.days >= 1 && l.days <= 400
         && l.last is string && l.last.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
     }
+    function limitPath() { return /databases/$(database)/documents/limits/$(request.auth.uid); }
+
+    // 도배 방지: 기기마다 마지막으로 집을 지은 시각
+    match /limits/{u} {
+      allow read, delete: if false;
+      allow create: if signedIn() && u == request.auth.uid
+        && request.resource.data.keys().hasOnly(['at'])
+        && request.resource.data.at == request.time;
+      allow update: if signedIn() && u == request.auth.uid
+        && request.resource.data.keys().hasOnly(['at'])
+        && request.resource.data.at == request.time
+        && resource.data.at < request.time - duration.value(20, 's');
+    }
 
     match /trees/{t} {
       allow get: if true;
-      allow list: if false; // 마을 목록은 아무도 훑어볼 수 없어요
+      allow list: if false;
+      // 새 마을은 학교 마을 하나만 만들 수 있어요(처음 한 번).
       allow create: if signedIn()
-        && t.matches('^[a-z0-9]{8}$')
+        && t == school()
         && request.resource.data.keys().hasOnly(['name','style','ownerUid','createdAt'])
         && request.resource.data.ownerUid == request.auth.uid
         && str(request.resource.data.name, 1, 10)
         && request.resource.data.style in ['classic','frost','berry']
         && request.resource.data.createdAt == request.time;
-      // 주인은 이름·색을 바꾸거나 매일 불 밝히기(lit)를 기록할 수 있어요.
       allow update: if isOwner(t)
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name','style','lit'])
         && str(request.resource.data.name, 1, 10)
@@ -46,7 +64,6 @@ service cloud.firestore {
         && (!('lit' in request.resource.data) || validLit(request.resource.data.lit));
       allow delete: if false;
 
-      // 관리 코드: 마을을 만들 때 한 번만 만들 수 있고, 아무도 읽을 수 없어요.
       match /keys/{k} {
         allow read, update, delete: if false;
         allow create: if signedIn()
@@ -56,7 +73,6 @@ service cloud.firestore {
           && getAfter(treeDoc(t)).data.ownerUid == request.auth.uid;
       }
 
-      // 다른 기기에서 관리 코드로 주인 등록
       match /owners/{uid} {
         allow get: if signedIn() && request.auth.uid == uid;
         allow list, update, delete: if false;
@@ -67,7 +83,6 @@ service cloud.firestore {
           && exists(/databases/$(database)/documents/trees/$(t)/keys/$(request.resource.data.key));
       }
 
-      // 지어진 집: 누구나 보고, 누구나 (편지와 함께) 지을 수 있어요.
       match /ornaments/{o} {
         allow get, list: if true;
         allow create: if signedIn()
@@ -76,21 +91,49 @@ service cloud.firestore {
           && request.resource.data.authorUid == request.auth.uid
           && request.resource.data.kind in kinds()
           && str(request.resource.data.nick, 1, 10)
+          && clean(request.resource.data.nick)
           && request.resource.data.createdAt == request.time
-          && existsAfter(/databases/$(database)/documents/trees/$(t)/letters/$(o));
-        allow update: if false;
+          && existsAfter(/databases/$(database)/documents/trees/$(t)/letters/$(o))
+          && existsAfter(limitPath())
+          && getAfter(limitPath()).data.at == request.time;
+        // 신고: 한 사람이 한 편지에 한 번, 신고 수를 1씩만 올릴 수 있어요.
+        // 관리자: 숨기기(hidden) / 신고와 상관없이 보이기(ok)
+        allow update: if signedIn() && (
+          (
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reports'])
+            && request.resource.data.reports == resource.data.get('reports', 0) + 1
+            && !exists(/databases/$(database)/documents/trees/$(t)/reports/$(o + '_' + request.auth.uid))
+            && existsAfter(/databases/$(database)/documents/trees/$(t)/reports/$(o + '_' + request.auth.uid))
+          ) || (
+            isOwner(t)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hidden','ok'])
+            && request.resource.data.get('hidden', false) is bool
+            && request.resource.data.get('ok', false) is bool
+          )
+        );
         allow delete: if isOwner(t) || (signedIn() && resource.data.authorUid == request.auth.uid);
       }
 
-      // 편지: 마을 주인만, 12월 25일 이후에만 읽을 수 있어요.
+      match /reports/{r} {
+        allow read, update, delete: if false;
+        allow create: if signedIn()
+          && request.resource.data.keys().hasOnly(['o','at'])
+          && request.resource.data.o is string
+          && r == request.resource.data.o + '_' + request.auth.uid
+          && request.resource.data.at == request.time
+          && exists(/databases/$(database)/documents/trees/$(t)/ornaments/$(request.resource.data.o));
+      }
+
       match /letters/{o} {
-        allow get, list: if isOwner(t) && lettersOpen();
+        allow get, list: if t == school() || (isOwner(t) && lettersOpen());
         allow create: if signedIn()
           && exists(treeDoc(t))
           && request.resource.data.keys().hasOnly(['text','nick','createdAt','authorUid'])
           && request.resource.data.authorUid == request.auth.uid
           && str(request.resource.data.text, 1, 500)
           && str(request.resource.data.nick, 1, 10)
+          && clean(request.resource.data.text)
+          && clean(request.resource.data.nick)
           && request.resource.data.createdAt == request.time
           && existsAfter(/databases/$(database)/documents/trees/$(t)/ornaments/$(o));
         allow update: if false;
