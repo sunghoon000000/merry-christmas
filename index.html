@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>슈가플럼 — 편지로 짓는 크리스마스 마을</title>
-<meta name="description" content="우리 학교가 다 함께 짓는 크리스마스 마을. 집을 하나 짓고 편지를 걸어 주세요.">
+<title>도원고 크리스마스 마을</title>
+<meta name="description" content="도원고가 다 함께 짓는 크리스마스 마을. 집을 하나 짓고 편지를 걸어 주세요.">
 <meta name="theme-color" content="#07201a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="슈가플럼 — 편지로 짓는 크리스마스 마을">
-<meta property="og:description" content="우리 학교가 다 함께 짓는 크리스마스 마을. 집을 하나 짓고 편지를 걸어 주세요.">
+<meta property="og:title" content="도원고 크리스마스 마을">
+<meta property="og:description" content="도원고가 다 함께 짓는 크리스마스 마을. 집을 하나 짓고 편지를 걸어 주세요.">
 <meta property="og:image" content="https://sunghoon000000.github.io/merry-christmas/og.jpg">
 <meta property="og:url" content="https://sunghoon000000.github.io/merry-christmas/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f3b2e'/%3E%3Cpath d='M50 14 L80 78 L20 78 Z' fill='%231f6b4a'/%3E%3Ccircle cx='50' cy='16' r='8' fill='%23e2c98f'/%3E%3Ccircle cx='42' cy='52' r='6' fill='%23b3261e'/%3E%3Ccircle cx='60' cy='66' r='6' fill='%23fbf6ea'/%3E%3C/svg%3E">
@@ -317,6 +317,16 @@
   .bd-card .acts .tag{font-size:12px;color:var(--red);margin-right:auto}
   .bd-card.off{opacity:.55}
   .bd-card.pending .txt{font-family:inherit;font-size:14px;color:var(--muted)}
+
+  /* how-to guide */
+  .guide{background:var(--snow);color:var(--ink);padding:26px 18px 6px;border-top:1px solid var(--rule)}
+  .guide h2{font-family:var(--display);font-size:24px;letter-spacing:-.02em;text-align:center;margin-bottom:16px}
+  .gd-steps{list-style:none;display:grid;gap:12px;max-width:640px;margin:0 auto}
+  .gd-steps li{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:#fffdf7;border:1px solid var(--rule);border-radius:12px;padding:14px 16px;word-break:keep-all}
+  .gd-steps b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--red);color:var(--paper);font-size:15px}
+  .gd-steps strong{display:block;font-size:16px;margin-bottom:3px}
+  .gd-steps span{font-size:14px;line-height:1.55;color:var(--muted)}
+  .gd-rules{max-width:640px;margin:14px auto 0;padding:14px 18px 14px 34px;border-radius:12px;background:rgba(179,38,30,.06);font-size:13.5px;line-height:1.6;color:var(--ink);word-break:keep-all}
 </style>
 </head>
 <body>
@@ -449,11 +459,25 @@
     </div>
     <div style="text-align:center"><span class="demo-banner" id="demoBanner" hidden>미리보기 모드: 이 기기에만 저장돼요</span></div>
     <div class="scene">
-      <svg id="treeSvg" viewBox="0 110 900 1490" role="img" aria-label="슈가플럼 마을"></svg>
+      <svg id="treeSvg" viewBox="0 110 900 1490" role="img" aria-label="도원고 크리스마스 마을"></svg>
       <div class="pager"><button id="prevPg" aria-label="이전 집들">‹</button><button id="nextPg" aria-label="다음 집들">›</button></div>
       <div class="pageinfo" id="pageInfo"></div>
     </div>
     <div class="tp-bar" id="tpBar"></div>
+    <section class="guide" id="guide" aria-labelledby="gdT">
+      <h2 id="gdT">이렇게 참여해요</h2>
+      <ol class="gd-steps">
+        <li><b>1</b><div><strong>'집 짓고 편지 걸기'를 눌러요</strong><span>오두막, 빵집, 눈사람, 순록처럼 지을 것을 하나 골라요.</span></div></li>
+        <li><b>2</b><div><strong>이름과 편지를 써요</strong><span>친구에게 쓰는 편지라면 첫 줄에 'To. 2학년 3반 ○○'처럼 받는 사람을 적어 주세요.</span></div></li>
+        <li><b>3</b><div><strong>마을에 집이 생겨요</strong><span>편지는 아래 게시판에 걸리고 누구나 읽을 수 있어요. 마을의 집을 누르면 봉투를 열어 편지를 볼 수 있어요.</span></div></li>
+        <li><b>4</b><div><strong>집이 모일수록 마을이 자라요</strong><span>10채면 트리에 불이 켜지고, 25·50·90채마다 가로등, 사탕 가게, 오로라가 생겨요. 150채가 되면 회전목마와 썰매가 나타나요.</span></div></li>
+      </ol>
+      <ul class="gd-rules">
+        <li>모두가 읽는 편지예요. 고운 말로 써 주세요. 욕설은 저장되지 않아요.</li>
+        <li>집은 한 휴대폰에서 20초에 한 번 지을 수 있어요.</li>
+        <li>보기 불편한 편지는 '신고'를 눌러 주세요. 신고가 3번 쌓이면 가려져요.</li>
+      </ul>
+    </section>
     <section class="board" id="board" aria-labelledby="bdT">
       <h2 id="bdT">마을에 걸린 편지</h2>
       <p class="bd-lead" id="bdLead"></p>
@@ -569,7 +593,7 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "252119817235",
   appId: "1:252119817235:web:f8e900ef330bc4661bb3e6"
 };
-const SCHOOL = 'school26', SCHOOL_NAME = '우리 학교';
+const SCHOOL = 'school26', SCHOOL_NAME = '도원고', TOWN = '도원고 크리스마스 마을';
 const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같은 값)
 
 (function(){
@@ -778,7 +802,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         h+=`<g class="bulb" style="animation-delay:${(i*.29%1.8).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="6" fill="${c}" opacity=".25"/><circle cx="${x}" cy="${y}" r="2.4" fill="${c}"/></g>`; i++; } });
     el.innerHTML=h;
   }
-  const LEVELS=[[0,'첫눈 내린 광장'],[10,'불 켜진 트리'],[25,'가로등 골목'],[50,'사탕 가게 거리'],[90,'오로라 마을'],[150,'슈가플럼 마을']];
+  const LEVELS=[[0,'첫눈 내린 광장'],[10,'불 켜진 트리'],[25,'가로등 골목'],[50,'사탕 가게 거리'],[90,'오로라 마을'],[150,'도원고 크리스마스 마을']];
   function levelOf(n){ let l=1; LEVELS.forEach(([min],i)=>{ if(n>=min) l=i+1; }); return l; }
   const SLOTS=[[222,942,.7],[672,942,.7],[230,818,.56],[670,818,.56],[135,818,.56],[765,818,.56],[40,818,.56],[860,818,.56]];
   const PER=SLOTS.length;
@@ -1001,7 +1025,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   function renderTreeMeta(){
     const t=cur.tree; if(!t) return;
     const n=cur.total, L=levelOf(n), next=LEVELS[L]?LEVELS[L][0]:null, prev=LEVELS[L-1][0];
-    $('tpTitle').textContent=`${t.name} 슈가플럼 마을`;
+    $('tpTitle').textContent=TOWN;
     $('lvBadge').textContent=`Lv.${L}`; $('lvName').textContent=LEVELS[L-1][1];
     $('lvFill').style.width=(next===null?100:Math.round((n-prev)/(next-prev)*100))+'%';
     let line = n ? `지금까지 집 ${n}채` : '첫 번째 집을 지어 주세요';
@@ -1009,7 +1033,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     $('tpCount').textContent=line;
     const lock=$('tpLock'); lock.hidden=false;
     lock.textContent=cur.owner?'관리자 모드 · 편지마다 숨기기·지우기가 보여요':'편지는 누구나 읽을 수 있어요 · 집을 눌러 보세요';
-    document.title=`${t.name} 슈가플럼 마을`;
+    document.title=TOWN;
   }
   function renderBar(){
     const bar=$('tpBar'); bar.innerHTML='';
@@ -1017,6 +1041,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     const mk=(txt,cls,fn)=>{ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=txt; b.onclick=fn; return b; };
     row.append(mk('집 짓고 편지 걸기','red',openWrite),mk('편지 읽기','line',()=>$('board').scrollIntoView({behavior:reduce?'auto':'smooth'})));
     bar.append(row);
+    { const sub=document.createElement('div'); sub.className='sub'; const a=document.createElement('button'); a.className='linkish note'; a.textContent='처음이에요? 이용 방법 보기'; a.onclick=()=>$('guide').scrollIntoView({behavior:reduce?'auto':'smooth'}); sub.appendChild(a); bar.appendChild(sub); }
     if(cur.owner){ const sub=document.createElement('div'); sub.className='sub'; const a=document.createElement('button'); a.className='linkish note'; a.textContent='관리자 로그아웃'; a.onclick=()=>{ cur.owner=false; store.set('xmas-admin-off',true); renderTreeMeta(); renderBar(); renderBoard(); toast('관리자 모드를 껐어요. #admin 으로 다시 켤 수 있어요'); }; sub.appendChild(a); bar.appendChild(sub); }
   }
   let lighting=false;
@@ -1158,7 +1183,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
   $('wText').addEventListener('input',()=>{ $('wCount').textContent=`${$('wText').value.length} / 500`; });
   function openWrite(){
     const t=cur.tree; wKind=KIND_IDS[Math.floor(Math.random()*KIND_IDS.length)]; syncPicks();
-    $('wsT').textContent=`${t.name} 마을에 집 짓기`;
+    $('wsT').textContent=`${TOWN}에 집 짓기`;
     $('wsLead').textContent='편지는 마을에 걸려서 누구나 읽을 수 있어요. 친구에게 쓴다면 첫 줄에 받는 친구 이름을 적어 주세요.';
     $('wNick').value=store.get('xmas-nick',''); $('wCount').textContent=`${$('wText').value.length} / 500`;
     openSheet('writeSheet');
