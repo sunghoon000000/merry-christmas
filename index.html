@@ -457,6 +457,7 @@
     <section class="board" id="board" aria-labelledby="bdT">
       <h2 id="bdT">마을에 걸린 편지</h2>
       <p class="bd-lead" id="bdLead"></p>
+      <div class="row" style="justify-content:center;margin-bottom:16px"><button class="btn line" id="bdRefresh" type="button">새 편지 불러오기</button></div>
       <div class="bd-list" id="bdList"></div>
       <div class="row" style="justify-content:center"><button class="btn line" id="bdMore" hidden>편지 더 보기</button></div>
     </section>
@@ -838,6 +839,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       async createTree(d){ const db=load(); const id=rand(8), code=rand(12,CODE_ALPHA); db.trees[id]={...d,ownerUid:uid,createdAt:Date.now()}; db.keys[id]=code; db.orn[id]=[]; db.letters[id]={}; save(db); return {id,code}; },
       watchTree(id,cb){ return sub(()=>cb(load().trees[id]||null)); },
       watchRecent(id,n,cb){ let prev=new Set(); return sub(()=>{ const db=load(); const L=db.letters[id]||{}; const all=(db.orn[id]||[]).map(o=>({...o,text:o.text||(L[o.id]||{}).text||''})).sort((a,b)=>b.createdAt-a.createdAt).slice(0,n); const ids=new Set(all.map(o=>o.id)); const ch=[...all.filter(o=>!prev.has(o.id)).map(o=>({type:'added',id:o.id})),...[...prev].filter(i=>!ids.has(i)).map(i=>({type:'removed',id:i}))]; prev=ids; cb(all,ch); }); },
+      async getRecent(id,n){ const db=load(); const L=db.letters[id]||{}; return (db.orn[id]||[]).map(o=>({...o,text:o.text||(L[o.id]||{}).text||''})).sort((a,b)=>b.createdAt-a.createdAt).slice(0,n); },
       async loadOlder(id,afterId,n){ const db=load(); const L=db.letters[id]||{}; const all=(db.orn[id]||[]).map(o=>({...o,text:o.text||(L[o.id]||{}).text||''})).sort((a,b)=>b.createdAt-a.createdAt); const i=all.findIndex(o=>o.id===afterId); return i<0?[]:all.slice(i+1,i+1+n); },
       async countOrns(id){ return (load().orn[id]||[]).length; },
       async lightUp(id,lit){ const db=load(); db.trees[id].lit=lit; save(db); },
@@ -871,6 +873,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       },
       watchTree(id,cb,err){ return onSnapshot(doc(db,'trees',id),s=>cb(s.exists()?s.data():null),err); },
       watchRecent(id,n,cb,err){ return onSnapshot(query(collection(db,'trees',id,'ornaments'),orderBy('createdAt','desc'),limit(n)),s=>cb(s.docs.map(toOrn),s.docChanges().map(c=>({type:c.type,id:c.doc.id}))),err); },
+      async getRecent(id,n){ const s=await getDocs(query(collection(db,'trees',id,'ornaments'),orderBy('createdAt','desc'),limit(n))); return s.docs.map(toOrn); },
       async loadOlder(id,afterId,n){ const cur=snaps.get(afterId); if(!cur) return []; const s=await getDocs(query(collection(db,'trees',id,'ornaments'),orderBy('createdAt','desc'),startAfter(cur),limit(n))); return s.docs.map(toOrn); },
       async countOrns(id){ const c=await getCountFromServer(collection(db,'trees',id,'ornaments')); return c.data().count; },
 
@@ -880,7 +883,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
       async lightUp(id,lit){ await updateDoc(doc(db,'trees',id),{lit}); },
       async isOwner(id,t){ if(t.ownerUid===uid) return true; try{ return (await getDoc(doc(db,'trees',id,'owners',uid))).exists(); }catch(e){ return false; } },
       async claim(id,code){ try{ await setDoc(doc(db,'trees',id,'owners',uid),{key:code}); return true; }catch(e){ return false; } },
-      async addLetter(id,{kind,nick,text}){ const ref=doc(collection(db,'trees',id,'ornaments')); const b=writeBatch(db);
+      async addLetter(id,{kind,nick,text}){ const ref=doc(collection(db,'trees',id,'ornaments')); snaps.delete(ref.id); const b=writeBatch(db);
         b.set(ref,{kind,nick,text,createdAt:serverTimestamp(),authorUid:uid}); b.set(doc(db,'limits',uid),{at:serverTimestamp()}); await b.commit(); return ref.id; },
 
       async removeLetter(id,oid){ await deleteDoc(doc(db,'trees',id,'ornaments',oid)); }
@@ -944,7 +947,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     $('landing').hidden=true; $('treePage').hidden=false; snow1.stop(); snow2.start(); window.scrollTo(0,0);
     if(cur&&cur.id===id) return;
     leaveTree();
-    cur={id,tree:null,loaded:new Map(),all:[],orns:[],total:0,hasMore:false,loadingMore:false,owner:false,page:0,unsubs:[],lastNew:null,firstLoad:true,level:0,shown:20};
+    cur={id,tree:null,loaded:new Map(),all:[],orns:[],total:0,hasMore:false,loadingMore:false,refreshing:false,loadedAt:0,owner:false,page:0,unsubs:[],lastNew:null,firstLoad:true,level:0,shown:12};
     $('tpLoading').hidden=false; $('tpMissing').hidden=true; $('tpMain').hidden=true;
     const mine=myTrees.find(t=>t.id===id);
     api().then(a=>{
@@ -961,29 +964,29 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
         $('tpLoading').hidden=true; $('tpMissing').hidden=true; $('tpMain').hidden=false;
         refreshAll(); snow2.start();
       },e=>{ console.error(e); $('tpLoading').querySelector('p').textContent='마을을 불러오지 못했어요. 페이지를 새로 고쳐 주세요.'; }));
-      a.countOrns(id).then(n=>{ if(!cur||cur.id!==id) return; cur.total=Math.max(n,cur.loaded.size); cur.hasMore=cur.total>cur.loaded.size; cur.level=levelOf(cur.total); refreshAll(); }).catch(e=>console.error(e));
-      cur.unsubs.push(a.watchRecent(id,RECENT,(list,changes)=>{
-        if(!cur||cur.id!==id) return;
-        const known=new Set(cur.loaded.keys()), newest=cur.all.length?cur.all[cur.all.length-1].createdAt:0;
-        const added=list.filter(o=>!known.has(o.id));
-        list.forEach(o=>cur.loaded.set(o.id,o));
-        if(!cur.firstLoad){
-          const fresh=added.filter(o=>o.createdAt>=newest);
-          // a doc leaving the window is either deleted or pushed out by a newer one
-          const removed=changes.filter(c=>c.type==='removed').map(c=>cur.loaded.get(c.id)).filter(Boolean).sort((x,y)=>x.createdAt-y.createdAt);
-          const deleted=removed.slice(Math.min(removed.length,fresh.length));
-          deleted.forEach(o=>cur.loaded.delete(o.id));
-          cur.total=Math.max(cur.loaded.size,cur.total+fresh.length-deleted.length);
-          const nw=fresh.filter(visibleOrn).sort((x,y)=>y.createdAt-x.createdAt)[0];
-          if(nw){ cur.lastNew=nw.id; cur.page=0; }
-          const lv=levelOf(cur.total); if(cur.level&&lv>cur.level) toast(`마을이 Lv.${lv} ${LEVELS[lv-1][1]}(으)로 자랐어요!`); cur.level=lv;
-        } else { cur.total=Math.max(cur.total,cur.loaded.size); }
-        cur.firstLoad=false;
-        refreshAll();
-      },e=>console.error(e)));
+      loadRecent(true);
     }).catch(()=>{ $('tpLoading').querySelector('p').textContent='서버에 연결하지 못했어요.'; });
   }
-  const RECENT=24;
+  const RECENT=12;
+  async function loadRecent(first){
+    if(!cur||cur.refreshing) return; const id=cur.id; cur.refreshing=true; const btn=$('bdRefresh'); if(btn){ btn.disabled=true; btn.textContent='불러오는 중…'; }
+    try{
+      const a=await api(); const [list,n]=await Promise.all([a.getRecent(id,RECENT),a.countOrns(id).catch(()=>null)]);
+      if(!cur||cur.id!==id) return;
+      const newestBefore=cur.all.length?cur.all[cur.all.length-1].createdAt:0, ids=new Set(list.map(o=>o.id));
+      const oldestFresh=list.length?Math.min(...list.map(o=>o.createdAt)):Infinity;
+      // houses that should be in the newest batch but are gone were deleted
+      [...cur.loaded.values()].forEach(o=>{ if(o.createdAt>=oldestFresh&&!ids.has(o.id)) cur.loaded.delete(o.id); });
+      const fresh=list.filter(o=>!cur.loaded.has(o.id)&&o.createdAt>newestBefore);
+      list.forEach(o=>cur.loaded.set(o.id,o));
+      cur.total=Math.max(n==null?cur.total:n,cur.loaded.size); cur.hasMore=cur.total>cur.loaded.size;
+      if(!first&&fresh.length){ cur.page=0; const nw=fresh.filter(visibleOrn).sort((x,y)=>y.createdAt-x.createdAt)[0]; if(nw) cur.lastNew=nw.id; toast(`새 편지 ${fresh.length}통이 걸렸어요`); }
+      const lv=levelOf(cur.total); if(!first&&cur.level&&lv>cur.level) toast(`마을이 Lv.${lv} ${LEVELS[lv-1][1]}(으)로 자랐어요!`); cur.level=lv;
+      cur.firstLoad=false; cur.loadedAt=Date.now(); refreshAll();
+    }catch(e){ console.error(e); toast('편지를 불러오지 못했어요. 잠시 후 다시 해 주세요'); }
+    finally{ if(cur) cur.refreshing=false; if(btn){ btn.disabled=false; btn.textContent='새 편지 불러오기'; } }
+  }
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&cur&&cur.loadedAt&&Date.now()-cur.loadedAt>60000) loadRecent(false); });
   function rebuild(){ cur.all=[...cur.loaded.values()].filter(o=>KIND_IDS.includes(o.kind)).sort((x,y)=>x.createdAt-y.createdAt); cur.orns=cur.all.filter(visibleOrn); }
   function refreshAll(){ rebuild(); if(cur.tree){ renderOrns(); renderTreeMeta(); renderBar(); renderBoard(); } }
   async function loadMore(){
@@ -1096,7 +1099,8 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     });
     $('bdMore').hidden=!(list.length>cur.shown||cur.hasMore);
   }
-  $('bdMore').onclick=async()=>{ if(!cur) return; const b=$('bdMore'); if(cur.shown+20>(cur.owner?cur.all:cur.orns).length&&cur.hasMore){ b.disabled=true; b.textContent='불러오는 중…'; await loadMore(); b.disabled=false; b.textContent='편지 더 보기'; } cur.shown+=20; refreshAll(); };
+  $('bdMore').onclick=async()=>{ if(!cur) return; const b=$('bdMore'); if(cur.shown+RECENT>(cur.owner?cur.all:cur.orns).length&&cur.hasMore){ b.disabled=true; b.textContent='불러오는 중…'; await loadMore(); b.disabled=false; b.textContent='편지 더 보기'; } cur.shown+=RECENT; refreshAll(); };
+  $('bdRefresh').onclick=()=>loadRecent(false);
   function envelopeEl(text,nick){
     const stage=document.createElement('div'); stage.className='env-stage';
     const env=document.createElement('button'); env.type='button'; env.className='env'; env.setAttribute('aria-label',`${nick}님의 편지 열기`);
@@ -1167,7 +1171,7 @@ const OPEN_AT = 1798124400000; // 2026-12-25 00:00 KST (firestore.rules와 같�
     if(isBad(nick)||isBad(text)){ toast('쓸 수 없는 말이 들어 있어요. 고쳐서 다시 걸어 주세요'); return; }
     const wait=20-Math.floor((Date.now()-store.get('xmas-last-send',0))/1000); if(wait>0){ toast(`도배를 막으려고 ${wait}초 뒤에 다시 지을 수 있어요`); return; }
     sending=true; const b=$('writeSubmit'); b.disabled=true; b.textContent='짓는 중…';
-    try{ const a=await api(); await a.addLetter(cur.id,{kind:wKind,nick,text}); store.set('xmas-nick',nick); store.set('xmas-last-send',Date.now()); $('wText').value=''; closeSheet('writeSheet'); cur.page=Math.max(0,Math.ceil(cur.orns.length/PER)-1); toast('집을 지었어요! 편지가 마을에 걸렸어요'); }
+    try{ const a=await api(); const oid=await a.addLetter(cur.id,{kind:wKind,nick,text}); if(cur&&oid&&!cur.loaded.has(oid)){ cur.loaded.set(oid,{id:oid,kind:wKind,nick,text,createdAt:Date.now(),authorUid:a.uid,reports:0,hidden:false,ok:false}); cur.total++; cur.lastNew=oid; const lv=levelOf(cur.total); if(cur.level&&lv>cur.level) setTimeout(()=>toast(`마을이 Lv.${lv} ${LEVELS[lv-1][1]}(으)로 자랐어요!`),2600); cur.level=lv; refreshAll(); } store.set('xmas-nick',nick); store.set('xmas-last-send',Date.now()); $('wText').value=''; closeSheet('writeSheet'); cur.page=0; renderOrns(); toast('집을 지었어요! 편지가 마을에 걸렸어요'); }
     catch(err){ console.error(err); toast(err&&err.code==='permission-denied'?'잠시 뒤에 다시 지어 주세요. 쓸 수 없는 말이 있으면 고쳐 주세요':'집을 짓지 못했어요. 잠시 후 다시 해 주세요'); }
     finally{ sending=false; b.disabled=false; b.textContent='집 짓기'; }
   });
